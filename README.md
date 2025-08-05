@@ -2,7 +2,9 @@
 ## Are any NFL players squaring off against their ex-team?
 ### Week 1
 NYJ vs. PIT  
-NWE vs. RAI  
+- Justin Fields  
+NWE vs. RAI
+- Mack Hollins  
 etc.  
 ### Week 2
 
