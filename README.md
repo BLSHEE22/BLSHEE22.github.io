@@ -27,22 +27,26 @@ Summary
 ### Week 1
 Thursday, September 4th  
 - **Dallas Cowboys @ Philadelphia Eagles - Divisional Matchup**<br/><br/>
-  - | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png)                 | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/phi-2025.png)      |
-    | :------------------------------------------------------------------------------: | :-------------------------------------------------------------------: |
-    | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg)<br/>**Miles Sanders (RB, DAL)** has a primary grudge against PHI.<br/>He spent his first 4 seasons with PHI (2019-2022).<br/>His position rank in fantasy this season is 59.<br/><br/> | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   |
-    | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg)<br/> **Parris Campbell (WR, DAL)** has a grudge against PHI.<br/>He spent 1 season with PHI (2024).<br/>His position rank in fantasy this season is 153.<br/><br/> | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   |
+  | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png)                 | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/phi-2025.png)      |
+  | :------------------------------------------------------------------------------: | :-------------------------------------------------------------------: |
+  | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg)<br/>**Miles Sanders (RB, DAL)** has a primary grudge against PHI.<br/>He spent his first 4 seasons with PHI (2019-2022).<br/>His position rank in fantasy this season is 59.<br/><br/> | None |
+  | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg)<br/> **Parris Campbell (WR, DAL)** has a grudge against PHI.<br/>He spent 1 season with PHI (2024).<br/>His position rank in fantasy this season is 153.<br/><br/> | |
 
 Friday, September 5th  
 - **Kansas City Chiefs vs. Los Angeles Chargers - Divisional Matchup**<br/><br/>
-  - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/TillJe00_2024.jpg)<br/>**Jerry Tillery (DL, KAN)** has a primary grudge against SDG.<br/>He spent his first 4 seasons with SDG (2019-2022).<br/><br/>
-  - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/TranDr00_2024.jpg)<br/>**Drue Tranquill (LB, KAN)** has a primary grudge against SDG.<br/>He spent his first 4 seasons with SDG (2019-2022).<br/><br/>
-  - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/ChriCo00_2024.jpg)<br/>**Cole Christiansen (LB, KAN)** has a primary grudge against SDG.<br/>He spent his first 2 seasons with SDG (2020-2021).<br/><br/>
-  - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/FultKr00_2024.jpg)<br/>**Kristian Fulton (CB, KAN)** has a grudge against SDG.<br/>He spent one season with SDG (2024).<br/><br/>
+  | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/kan-2025.png)               | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/sdg-2025.png)      |   
+  | :----------------------------------------------------------------------------: | :-------------------------------------------------------------------: |
+  | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/TillJe00_2024.jpg)<br/>**Jerry Tillery (DL, KAN)** has a primary grudge against SDG.<br/>He spent his first 4 seasons with SDG (2019-2022).<br/><br/> | None |
+  | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/TranDr00_2024.jpg)<br/>**Drue Tranquill (LB, KAN)** has a primary grudge against SDG.<br/>He spent his first 4 seasons with SDG (2019-2022).<br/><br/> | |
+  | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/ChriCo00_2024.jpg)<br/>**Cole Christiansen (LB, KAN)** has a primary grudge against SDG.<br/>He spent his first 2 seasons with SDG (2020-2021).<br/><br/> | |
+  | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/FultKr00_2024.jpg)<br/>**Kristian Fulton (CB, KAN)** has a grudge against SDG.<br/>He spent one season with SDG (2024).<br/><br/> | |
 
 Sunday, September 7th  
-- Tampa Bay Buccaneers @ Atlanta Falcons - Divisional Matchup<br/><br/>
-  - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/PiniBr00_2024.jpg)<br/> **Bradley Pinion (K, ATL)** has a grudge against TAM.<br/> He spent 3 seasons with TAM (2019-2021).<br/><br/>
-- <ins>Cincinnati Bengals @ Cleveland Browns - Divisional Matchup</ins><br/><br/>
+- **Tampa Bay Buccaneers @ Atlanta Falcons - Divisional Matchup**<br/><br/>
+  | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/tam-2025.png)               | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/atl-2025.png)       |
+  | :----------------------------------------------------------------------------: | :--------------------------------------------------------------------: |
+  | | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/PiniBr00_2024.jpg)<br/> **Bradley Pinion (K, ATL)** has a grudge against TAM.<br/> He spent 3 seasons with TAM (2019-2021).<br/><br/> |
+- **Cincinnati Bengals @ Cleveland Browns - Divisional Matchup**<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/BrigGa00_2023.jpg)<br/> **Gary Brightwell (RB, CIN)** has a grudge against CLE.<br/> He spent 1 season with CLE (2024).<br/> His position rank in fantasy this season is 141.<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/BrowTo01_2024.jpg)<br/> **Tony Brown (CB, CLE)** has a grudge against CIN.<br/> He spent 1 season with CIN (2020).<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/ThomIs01_2022.jpg)<br/> **Isaiah Thomas (DE, CIN)** has a primary grudge against CLE.<br/> He spent his first season with CLE (2022).<br/><br/>
