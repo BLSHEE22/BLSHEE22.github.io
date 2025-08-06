@@ -40,13 +40,13 @@ Friday, September 5th
 
 Sunday, September 7th  
 - <ins>*TAM @ ATL - divisional matchup*</ins><br/><br/>
-  - **Bradley Pinion (K, ATL)** has a grudge against TAM.<br/> He spent 3 seasons with TAM (2019-2021).<br/>
-- <ins>*CIN @ CLE - divisional matchup*</ins>
+  - **Bradley Pinion (K, ATL)** has a grudge against TAM.<br/> He spent 3 seasons with TAM (2019-2021).<br/><br/>
+- <ins>*CIN @ CLE - divisional matchup*</ins><br/><br/>
   - **Gary Brightwell (RB, CIN)** has a grudge against CLE.<br/> He spent 1 season with CLE (2024).<br/> His position rank in fantasy this season is 141.<br/><br/>
   - **Tony Brown (CB, CLE)** has a grudge against CIN.<br/> He spent 1 season with CIN (2020).<br/><br/>
   - **<span style="color: red;">Isaiah Thomas (DE, CIN)</span>** has a primary grudge against CLE.<br/> He spent 1 season with CLE (2022).<br/><br/>
 - *MIA @ CLT*<br/><br/>
-  - **None**<br/><br/>
+  - None<br/><br/>
 - *CAR @ JAX*<br/><br/>
   - **Matthew Wright (K, CAR)** has a grudge against JAX.<br/> He spent one season with JAX (2021).<br/><br/>
 - *RAI @ NWE*<br/><br/>
@@ -58,7 +58,7 @@ Sunday, September 7th
   - **Robert Spillane, LB** (NWE) has a grudge against RAI.<br/> He spent 2 seasons with RAI (2023-2024).<br/><br/>
   - **K'Lavon Chaisson, LB** (NWE) has a grudge against RAI.<br/> He spent 1 season with RAI (2024).<br/><br/>
   - **Marcus Epps, S** (NWE) has a grudge against RAI.<br/> He spent 2 seasons with RAI (2023-2024).<br/><br/>
-- *CRD @ NOR*
+- *CRD @ NOR*<br/><br/>
   - **<span style="color: red;">Blake Gillikin (P, CRD)</span>** has a primary grudge against NOR.<br/> He spent 2 seasons with NOR (2021-2022).<br/><br/>
 - *PIT @ NYJ*<br/><br/>
   - **Aaron Rodgers (QB, PIT)** has a grudge against NYJ.<br/> He spent 2 seasons with NYJ (2023-2024).<br/> His position rank in fantasy this season is 15.<br/><br/>
@@ -73,18 +73,25 @@ Sunday, September 7th
   - **Cody Barton (LB, OTI)** has a grudge against DEN.<br/> He spent 1 season with DEN (2024).<br/><br/>
   - **<span style="color: red;">Lloyd Cushenberry III (OL, OTI)</span>** has a primary grudge against DEN.<br/> He spent 4 seasons with DEN (2020-2023).<br/><br/>
 - <ins>*SFO @ SEA - divisional matchup*</ins><br/><br/>
-  - **Sam Darnold (QB, SEA)** has a grudge against SFO.<br/> He spent 1 season with SFO (2023).<br/> His position rank in fantasy this year is 9.
+  - **Sam Darnold (QB, SEA)** has a grudge against SFO.<br/> He spent 1 season with SFO (2023).<br/> His position rank in fantasy this year is 9.<br/><br/>
   - **Eric Saubert (TE, SEA)** has a grudge against SFO.<br/> He spent 2 seasons with SFO (2023-2024).<br/> His position rank in fantasy this year is 63.<br/><br/>
-  - **Shemar Jean-Charles (CB, SEA)** has a grudge against SFO.</br> He spent 1 season with SFO (2023).<br/></br>
+  - **Shemar Jean-Charles (CB, SEA)** has a grudge against SFO.<br/> He spent 1 season with SFO (2023).<br/><br/>
   - **<span style="color: red;">Tre Brown (CB, SFO)</span>** has a primary grudge against SEA.<br/> He spent 4 seasons with SEA (2021-2024).<br/><br/>
 - <ins>*DET @ GNB - divisional matchup*</ins><br/><br/>
-  - **None**<br/><br/>
+  - None<br/><br/>
 - *HTX @ RAM*<br/><br/>
   - **<span style="color: red;">Zachary Thomas (OL, HTX)</span>** has a primary grudge against RAM.<br/> He spent 2 seasons with RAM (2022-2023).<br/><br/>
   - **<span style="color: red;">Russ Yeast (DB, HTX)</span>** has a primary grudge against RAM.<br/> He spent 3 seasons with RAM (2022-2024).<br/><br/>
 - *RAV @ BUF*<br/><br/>
-  - **None**<br/><br/>
-  
+  - None<br/><br/>
+
+Monday, September 8th  
+- <ins>*MIN @ CHI - divisional matchup*</ins><br/><br/>
+  - **Jonathan Harris (DE, MIN)** has a grudge against CHI.<br/> He spent 1 season with CHI (2019).<br/><br/>
+  - **<span style="color: red;">Reddy Stewart (CB, MIN)</span>** has a primary grudge against CHI.<br/> He spent 1 season with CHI (2024).<br/><br/>
+  - **Nahshon Wright (CB, CHI)** has a grudge against MIN.<br/> He spent 1 season with MIN (2024).<br/><br/>
+  - **Andrew DePaola (LS, MIN)** has a grudge against CHI.<br/> He spent 1 season with CHI (2017).<br/><br/>
+
 ### Week 2
 ### Week 3
 ### Week 4
