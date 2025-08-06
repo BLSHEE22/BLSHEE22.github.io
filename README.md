@@ -1,5 +1,9 @@
 # NFL Grudge Match Detector
-## When do NFL players square off against their ex-team?
+## Are any NFL players squaring off against their ex-team?
+[Link Text](#week-1)
+[Link Text](#week-2)
+[Link Text](#week-3)
+[Link Text](#week-4)
 ### Week 1
 Thursday, September 4th  
 - DAL @ PHI (divisional)
@@ -18,8 +22,11 @@ Sunday, September 7th
 - TAM @ ATL (divisional)
 - CIN @ CLE (divisional)
 - MIA @ CLT
+- 
 
 etc.   
 ### Week 2
+### Week 3
+### Week 4
 
 
