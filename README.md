@@ -18,12 +18,14 @@
 [Week 16](#week-16)<br/>
 [Week 17](#week-17)<br/>
 [Week 18](#week-18)<br/><br/>
-> Note: A "primary grudge" is a grudge involving a player's original team.
+> Definition of Terms
+> - A player has a **grudge** when competing against an ex-team.
+> - The grudge is considered a **primary grudge** when the ex-team is the player's original team.
 
 ### Week 1
 Thursday, September 4th  
 - *DAL @ PHI - <span style="color: blue;">divisional matchup</span>*
-  - **Miles Sanders, RB** (DAL) has a <span style="color: red;">primary</span> grudge against PHI.<br/> He spent 4 seasons with PHI (2019-2022).<br/> His position rank in fantasy this season is 59.<br/>
+  - **<span style="color: red;">Miles Sanders, RB</span>** (DAL) has a primary grudge against PHI.<br/> He spent 4 seasons with PHI (2019-2022).<br/> His position rank in fantasy this season is 59.<br/>
   - **Parris Campbell, WR** (DAL) has a grudge against PHI.<br/> He spent 1 season with PHI (2024).<br/> His position rank in fantasy this season is 153.<br/>
   - **K.J. Henry, DE** (PHI) has a grudge against DAL.<br/> He spent 1 season with DAL (2024).<br/>
 
