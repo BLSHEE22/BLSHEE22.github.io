@@ -25,29 +25,29 @@ Summary
 [Week 18](#week-18)<br/><br/>
 
 ### Week 1
-Thursday, September 4th  
-- <ins>**Dallas Cowboys @ Philadelphia Eagles - Divisional Matchup**</ins><br/><br/>
+####Thursday, September 4th  
+- <ins>Dallas Cowboys @ Philadelphia Eagles - Divisional Matchup</ins><br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg)<br/>**Miles Sanders (RB, DAL)** has a primary grudge against PHI.<br/>He spent his first 4 seasons with PHI (2019-2022).<br/>His position rank in fantasy this season is 59.<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg)<br/> **Parris Campbell (WR, DAL)** has a grudge against PHI.<br/>He spent 1 season with PHI (2024).<br/>His position rank in fantasy this season is 153.<br/><br/>
 
-Friday, September 5th  
-- <ins>**Kansas City Chiefs vs. Los Angeles Chargers - Divisional Matchup**</ins><br/><br/>
+####Friday, September 5th  
+- <ins>Kansas City Chiefs vs. Los Angeles Chargers - Divisional Matchup</ins><br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/TillJe00_2024.jpg)<br/>**Jerry Tillery (DL, KAN)** has a primary grudge against SDG.<br/>He spent his first 4 seasons with SDG (2019-2022).<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/TranDr00_2024.jpg)<br/>**Drue Tranquill (LB, KAN)** has a primary grudge against SDG.<br/>He spent his first 4 seasons with SDG (2019-2022).<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/ChriCo00_2024.jpg)<br/>**Cole Christiansen (LB, KAN)** has a primary grudge against SDG.<br/>He spent his first 2 seasons with SDG (2020-2021).<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/FultKr00_2024.jpg)<br/>**Kristian Fulton (CB, KAN)** has a grudge against SDG.<br/>He spent one season with SDG (2024).<br/><br/>
 
 Sunday, September 7th  
-- <ins>**Tampa Bay Buccaneers @ Atlanta Falcons - Divisional Matchup**</ins><br/><br/>
+- <ins>Tampa Bay Buccaneers @ Atlanta Falcons - Divisional Matchup</ins><br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/PiniBr00_2024.jpg)<br/> **Bradley Pinion (K, ATL)** has a grudge against TAM.<br/> He spent 3 seasons with TAM (2019-2021).<br/><br/>
-- <ins>**Cincinnati Bengals @ Cleveland Browns - Divisional Matchup**</ins><br/><br/>
+- <ins>Cincinnati Bengals @ Cleveland Browns - Divisional Matchup</ins><br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/BrigGa00_2023.jpg)<br/> **Gary Brightwell (RB, CIN)** has a grudge against CLE.<br/> He spent 1 season with CLE (2024).<br/> His position rank in fantasy this season is 141.<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/BrowTo01_2024.jpg)<br/> **Tony Brown (CB, CLE)** has a grudge against CIN.<br/> He spent 1 season with CIN (2020).<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/ThomIs01_2022.jpg)<br/> **Isaiah Thomas (DE, CIN)** has a primary grudge against CLE.<br/> He spent his first season with CLE (2022).<br/><br/>
   - ![ ]()<br/> **K.J. Henry (DE, CLE)** has a grudge against CIN.<br/> He spent 1 season with CIN (2024).<br/><br/>
-- **Miami Dolphins @ Indianapolis Colts**<br/><br/>
+- Miami Dolphins @ Indianapolis Colts<br/><br/>
   - None<br/><br/>
-- **Carolina Panthers @ Jacksonville Jaguars**<br/><br/>
+- Carolina Panthers @ Jacksonville Jaguars<br/><br/>
   - **Matthew Wright (K, CAR)** has a grudge against JAX.<br/> He spent one season with JAX (2021).<br/><br/>
 - *RAI @ NWE*<br/><br/>
   - **Jakobi Meyers (WR, RAI)** has a primary grudge against NWE.<br/> He spent his first 4 seasons with NWE (2019-2022).<br/> His position rank in fantasy this season is 29.<br/><br/>
@@ -58,16 +58,16 @@ Sunday, September 7th
   - **Robert Spillane, LB** (NWE) has a grudge against RAI.<br/> He spent 2 seasons with RAI (2023-2024).<br/><br/>
   - **K'Lavon Chaisson, LB** (NWE) has a grudge against RAI.<br/> He spent 1 season with RAI (2024).<br/><br/>
   - **Marcus Epps, S** (NWE) has a grudge against RAI.<br/> He spent 2 seasons with RAI (2023-2024).<br/><br/>
-- *CRD @ NOR*<br/><br/>
+- Arizon Cardinals @ New Orleans Saints<br/><br/>
   - **<span style="color: red;">Blake Gillikin (P, CRD)</span>** has a primary grudge against NOR.<br/> He spent 2 seasons with NOR (2021-2022).<br/><br/>
-- *PIT @ NYJ*<br/><br/>
+- Pittsburgh Steelers @ New York Jets<br/><br/>
   - **Aaron Rodgers (QB, PIT)** has a grudge against NYJ.<br/> He spent 2 seasons with NYJ (2023-2024).<br/> His position rank in fantasy this season is 15.<br/><br/>
   - **Justin Fields (QB, NYJ)** has a grudge against PIT.<br/> He spent 1 season with PIT (2024).<br/> His position rank in fantasy this season is 31.<br/><br/>
   - **<span style="color: red;">Chukwuma Okorafor (T, NYJ)</span>** has a primary grudge against PIT.<br/> He spent 6 seasons with PIT (2018-2023).<br/><br/>
   - **<span style="color: red;">Brandin Echols (CB, PIT)</span>** has a primary grudge against NYJ.<br/> He spent 4 seasons with NYJ (2021-2024).<br/><br/>
-- <ins>*NYG @ WAS - divisional matchup*</ins><br/><br/>
+- <ins>New York Giants @ Washington Commanders - Divisional Matchup</ins><br/><br/>
   - **Tyre Phillips (OL, WAS)** has a grudge against NYG.<br/> He spent 3 seasons with NYG (2022-2024).<br/><br/>
-- *OTI @ DEN*<br/><br/>
+- Tennessee Titans @ Denver Broncos<br/><br/>
   - **<span style="color: red;">Brandon Allen (QB, OTI)</span>** has a primary grudge against DEN.<br/> He spent 1 season with DEN (2019).<br/> His position rank in fantasy this season is 64.<br/><br/>
   - **<span style="color: red;">Dre'Mont Jones (DL, OTI)</span>** has a primary grudge against DEN.<br/> He spent 4 seasons with DEN (2019-2022).<br/><br/>
   - **Cody Barton (LB, OTI)** has a grudge against DEN.<br/> He spent 1 season with DEN (2024).<br/><br/>
