@@ -29,7 +29,7 @@ Thursday, September 4th
 - <ins>*DAL @ PHI - divisional matchup*</ins><br/><br/>
   - ![](https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg)<br/> **Miles Sanders (RB, DAL)** has a primary grudge against PHI.<br/> He spent his first 4 seasons with PHI (2019-2022).<br/> His position rank in fantasy this season is 59.<br/><br/>
   - ![](https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg)<br/> **Parris Campbell (WR, DAL)** has a grudge against PHI.<br/> He spent 1 season with PHI (2024).<br/> His position rank in fantasy this season is 153.<br/><br/>
-  - ![]()<br/> **K.J. Henry (DE, PHI)** has a grudge against DAL.<br/> He spent 1 season with DAL (2024).<br/>
+  - ![n/a]()<br/> **K.J. Henry (DE, PHI)** has a grudge against DAL.<br/> He spent 1 season with DAL (2024).<br/>
 
 Friday, September 5th  
 - <ins>*KAN vs. SDG - divisional matchup*</ins><br/><br/>
