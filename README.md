@@ -34,26 +34,27 @@ Thursday, September 4th
 
 Friday, September 5th  
 - **Kansas City Chiefs vs. Los Angeles Chargers - Divisional Matchup**<br/><br/>
-  | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/kan-2025.png)               | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/sdg-2025.png)      |   
-  | :----------------------------------------------------------------------------: | :-------------------------------------------------------------------: |
-  | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/TillJe00_2024.jpg)<br/>**Jerry Tillery (DL, KAN)** has a primary grudge against SDG.<br/>He spent his first 4 seasons with SDG (2019-2022).<br/><br/> | None |
-  | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/TranDr00_2024.jpg)<br/>**Drue Tranquill (LB, KAN)** has a primary grudge against SDG.<br/>He spent his first 4 seasons with SDG (2019-2022).<br/><br/> | |
-  | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/ChriCo00_2024.jpg)<br/>**Cole Christiansen (LB, KAN)** has a primary grudge against SDG.<br/>He spent his first 2 seasons with SDG (2020-2021).<br/><br/> | |
-  | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/FultKr00_2024.jpg)<br/>**Kristian Fulton (CB, KAN)** has a grudge against SDG.<br/>He spent one season with SDG (2024).<br/><br/> | |
+  - | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/kan-2025.png)               | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/sdg-2025.png)      |   
+    | :----------------------------------------------------------------------------: | :-------------------------------------------------------------------: |
+    | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/TillJe00_2024.jpg)<br/>**Jerry Tillery (DL, KAN)** has a primary grudge against SDG.<br/>He spent his first 4 seasons with SDG (2019-2022).<br/><br/> | None |
+    | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/TranDr00_2024.jpg)<br/>**Drue Tranquill (LB, KAN)** has a primary grudge against SDG.<br/>He spent his first 4 seasons with SDG (2019-2022).<br/><br/> | |
+    | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/ChriCo00_2024.jpg)<br/>**Cole Christiansen (LB, KAN)** has a primary grudge against SDG.<br/>He spent his first 2 seasons with SDG (2020-2021).<br/><br/> | |
+    | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/FultKr00_2024.jpg)<br/>**Kristian Fulton (CB, KAN)** has a grudge against SDG.<br/>He spent one season with SDG (2024).<br/><br/> | |
 
 Sunday, September 7th  
 - **Tampa Bay Buccaneers @ Atlanta Falcons - Divisional Matchup**<br/><br/>
-  | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/tam-2025.png)               | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/atl-2025.png)       |
-  | :----------------------------------------------------------------------------: | :--------------------------------------------------------------------: |
-  | | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/PiniBr00_2024.jpg)<br/> **Bradley Pinion (K, ATL)** has a grudge against TAM.<br/> He spent 3 seasons with TAM (2019-2021).<br/><br/> |
+  - | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/tam-2025.png)               | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/atl-2025.png)       |
+    | :----------------------------------------------------------------------------: | :--------------------------------------------------------------------: |
+    | | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/PiniBr00_2024.jpg)<br/> **Bradley Pinion (K, ATL)** has a grudge against TAM.<br/> He spent 3 seasons with TAM (2019-2021).<br/><br/> |
 - **Cincinnati Bengals @ Cleveland Browns - Divisional Matchup**<br/><br/>
-  - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/BrigGa00_2023.jpg)<br/> **Gary Brightwell (RB, CIN)** has a grudge against CLE.<br/> He spent 1 season with CLE (2024).<br/> His position rank in fantasy this season is 141.<br/><br/>
-  - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/BrowTo01_2024.jpg)<br/> **Tony Brown (CB, CLE)** has a grudge against CIN.<br/> He spent 1 season with CIN (2020).<br/><br/>
-  - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/ThomIs01_2022.jpg)<br/> **Isaiah Thomas (DE, CIN)** has a primary grudge against CLE.<br/> He spent his first season with CLE (2022).<br/><br/>
-  - ![ ]()<br/> **K.J. Henry (DE, CLE)** has a grudge against CIN.<br/> He spent 1 season with CIN (2024).<br/><br/>
-- Miami Dolphins @ Indianapolis Colts<br/><br/>
-  - None<br/><br/>
-- Carolina Panthers @ Jacksonville Jaguars<br/><br/>
+  - | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/cin-2025.png)               | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/cle-2025.png)       |
+    | :----------------------------------------------------------------------------: | :--------------------------------------------------------------------: |
+    | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/BrigGa00_2023.jpg)<br/> **Gary Brightwell (RB, CIN)** has a grudge against CLE.<br/> He spent 1 season with CLE (2024).<br/> His position rank in fantasy this season is 141.<br/><br/> | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/BrowTo01_2024.jpg)<br/> **Tony Brown (CB, CLE)** has a grudge against CIN.<br/> He spent 1 season with CIN (2020).<br/><br/> | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/ThomIs01_2022.jpg)<br/> **Isaiah Thomas (DE, CIN)** has a primary grudge against CLE.<br/> He spent his first season with CLE (2022).<br/><br/> | ![ ]()<br/> **K.J. Henry (DE, CLE)** has a grudge against CIN.<br/> He spent 1 season with CIN (2024).<br/><br/> | 
+- **Miami Dolphins @ Indianapolis Colts**<br/><br/>
+  - | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/mia-2025.png)               | ![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/clt-2025.png)       |
+    | :----------------------------------------------------------------------------: | :--------------------------------------------------------------------: |
+    | None<br/><br/> | None<br/><br/> |
+- **Carolina Panthers @ Jacksonville Jaguars**<br/><br/>
   - **Matthew Wright (K, CAR)** has a grudge against JAX.<br/> He spent one season with JAX (2021).<br/><br/>
 - *RAI @ NWE*<br/><br/>
   - **Jakobi Meyers (WR, RAI)** has a primary grudge against NWE.<br/> He spent his first 4 seasons with NWE (2019-2022).<br/> His position rank in fantasy this season is 29.<br/><br/>
