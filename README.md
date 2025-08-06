@@ -1,4 +1,8 @@
 # NFL Grudge Match Detector
+> Summary
+> - An NFL player holds a **grudge** when competing against an ex-team.
+> - A grudge is considered a **primary grudge** when the ex-team is the player's original team.
+>   - Players in these scenarios are considered to have 'extra motivation' and so are marked in <span style="color: red;">red</span>.
 ## Are any NFL players squaring off against their ex-team?
 [Week 1](#week-1)<br/>
 [Week 2](#week-2)<br/>
@@ -18,9 +22,6 @@
 [Week 16](#week-16)<br/>
 [Week 17](#week-17)<br/>
 [Week 18](#week-18)<br/><br/>
-> Definition of Terms
-> - A player has a **grudge** when competing against an ex-team.
-> - The grudge is considered a **primary grudge** when the ex-team is the player's original team.
 
 ### Week 1
 Thursday, September 4th  
