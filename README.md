@@ -24,18 +24,27 @@ Sunday, September 7th
 - *CIN @ CLE* (divisional)
   - **Gary Brightwell, RB** (CIN) has a grudge against CLE.<br/> He spent 1 season with CLE (2024).<br/> His position rank in fantasy this season is 141.<br/>
   - **Tony Brown, CB** (CLE) has a grudge against CIN.<br/> He spent 1 season with CIN (2020).<br/>
-  - **Isaiah Thomas, DE** (CIN) has a <span style="color: red;">primary</span> grudge against CLE.<br/> He spent 1 season with CLE (2022).
+  - **Isaiah Thomas, DE** (CIN) has a <span style="color: red;">primary</span> grudge against CLE.<br/> He spent 1 season with CLE (2022).<br/>
 - *MIA @ CLT*
 - *CAR @ JAX*
+  - **Matthew Wright, K** (CAR) has a grudge against JAX.<br/> He spent one season with JAX (2021).<br/>
 - *RAI @ NWE*
+  - **Jakobi Meyers, WR** (RAI) has a <span style="color: red;">primary</span> grudge against NWE.<br/> He spent 4 seasons with NWE (2019-2022).<br/> His position rank in fantasy this season is 29.<br/>
+  - **Mack Hollins, WR** (NWE) has a grudge against RAI.<br/> He spent 1 season with RAI (2022).<br/> His position rank in fantasy this season is 76.<br/>
+  -  **Austin Hooper, TE** (NWE) has a grudge against RAI.<br/> He spent 1 season with RAI (2023).<br/> His position rank in fantasy this season is 24.<br/>
+  - **Adam Butler, DT** (RAI) has a <span style="color: red;">primary</span> grudge against NWE.<br/> He spent 4 seasons with NWE (2017-2020).<br/>
+  - **Elandon Roberts, LB** (RAI) has a <span style="color: red;">primary</span> grudge against NWE.<br/> He spent 4 seasons with NWE (2016-2019).<br/>
+  - **Robert Spillane, LB** (NWE) has a grudge against RAI.<br/> He spent 2 seasons with RAI (2023-2024).<br/>
+  - **K'Lavon Chaisson, LB** (NWE) has a grudge against RAI.<br/> He spent 1 season with RAI (2024).<br/>
+  - **Marcus Epps, S** (NWE) has a grudge against RAI.<br/> He spent 2 seasons with RAI (2023-2024).<br/>
 - *CRD @ NOR*
-- PIT @ NYJ
-- NYG @ WAS (divisional)
-- OTI @ DEN
-- SFO @ SEA (divisional)
-- DET @ GNB (divisional)
-- HTX @ RAM
-- RAV @ BUF
+- *PIT @ NYJ*
+- *NYG @ WAS* (divisional)
+- *OTI @ DEN*
+- *SFO @ SEA* (divisional)
+- *DET @ GNB* (divisional)
+- *HTX @ RAM*
+- *RAV @ BUF*
   
 ### Week 2
 ### Week 3
