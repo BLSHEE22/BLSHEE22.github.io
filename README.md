@@ -25,10 +25,10 @@ Sunday, September 7th
   - **Gary Brightwell, RB** (CIN) has a grudge against CLE.<br/> He spent 1 season with CLE (2024).<br/> His position rank in fantasy this season is 141.<br/>
   - **Tony Brown, CB** (CLE) has a grudge against CIN.<br/> He spent 1 season with CIN (2020).<br/>
   - **Isaiah Thomas, DE** (CIN) has a <span style="color: red;">primary</span> grudge against CLE.<br/> He spent 1 season with CLE (2022).
-- MIA @ CLT
-- CAR @ JAX
-- RAI @ NWE
-- CRD @ NOR
+- *MIA @ CLT*
+- *CAR @ JAX*
+- *RAI @ NWE*
+- *CRD @ NOR*
 - PIT @ NYJ
 - NYG @ WAS (divisional)
 - OTI @ DEN
