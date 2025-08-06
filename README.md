@@ -1,8 +1,8 @@
 # NFL Grudge Match Detector
 Summary
 - An NFL player holds a **grudge** when competing against an ex-team.
-- A grudge is considered a **primary grudge** when the ex-team is the player's original team.
-  - Players with primary grudges are considered to have 'extra motivation' and so are marked in **<span style="color: red;">red</span>**.<br/>
+- A grudge is considered a **<span style="color: red;">primary grudge</span>** when the ex-team is the player's original team.
+  - Players with primary grudges are considered to have extra motivation.<br/>
 
 ## Are any NFL players squaring off against their ex-team?
 [Week 1](#week-1)<br/>
@@ -61,8 +61,12 @@ Sunday, September 7th
 - *CRD @ NOR*
   - **<span style="color: red;">Blake Gillikin (P, CRD)</span>** has a primary grudge against NOR.<br/> He spent 2 seasons with NOR (2021-2022).<br/><br/>
 - *PIT @ NYJ*
-  - **Aaron Rodgers (QB, PIT)** has a grudge against NYJ.<br/> He spent 2 seasons with NYJ (2023-2024).<br/> His position rank in fantasy this season is 15.
+  - **Aaron Rodgers (QB, PIT)** has a grudge against NYJ.<br/> He spent 2 seasons with NYJ (2023-2024).<br/> His position rank in fantasy this season is 15.<br/>
+  - **Justin Fileds (QB, NYJ)** has a grudge against PIT.<br/> He spent 1 season with PIT (2024).<br/> His position rank in fantasy this season is 31.<br/>
+  - **<span style="color: red;">Chukwuma Okorafor (T, NYJ)</span>** has a primary grudge against PIT.<br/> He spent 6 seasons with PIT (2018-2023).<br/>
+  - **<span style="color: red;">Brandin Echols (CB, PIT)</span>** has a primary grudge against NYJ.<br/> He spent 4 seasons with NYJ (2021-2024).<br/>
 - <ins>*NYG @ WAS - divisional matchup*</ins>
+  - 
 - *OTI @ DEN*
 - <ins>*SFO @ SEA - divisional matchup*</ins>
 - <ins>*DET @ GNB - divisional matchup*</ins>
