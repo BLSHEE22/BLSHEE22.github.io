@@ -1,8 +1,8 @@
 # NFL Grudge Match Detector
-> Summary
-> - An NFL player holds a **grudge** when competing against an ex-team.
-> - A grudge is considered a **primary grudge** when the ex-team is the player's original team.
->   - Players with primary grudges are considered to have 'extra motivation' and so are marked in **<span style="color: red;">red</span>**.<br/>
+Summary
+- An NFL player holds a **grudge** when competing against an ex-team.
+- A grudge is considered a **primary grudge** when the ex-team is the player's original team.
+  - Players with primary grudges are considered to have 'extra motivation' and so are marked in **<span style="color: red;">red</span>**.<br/>
 
 ## Are any NFL players squaring off against their ex-team?
 [Week 1](#week-1)<br/>
@@ -26,13 +26,13 @@
 
 ### Week 1
 Thursday, September 4th  
-- <ins>*DAL @ PHI - divisional matchup*</ins>
+- <ins>*DAL @ PHI - divisional matchup*</ins><br/>
   - **<span style="color: red;">Miles Sanders (RB, DAL)</span>** has a primary grudge against PHI.<br/> He spent 4 seasons with PHI (2019-2022).<br/> His position rank in fantasy this season is 59.<br/>
   - **Parris Campbell (WR, DAL)** has a grudge against PHI.<br/> He spent 1 season with PHI (2024).<br/> His position rank in fantasy this season is 153.<br/>
   - **K.J. Henry (DE, PHI)** has a grudge against DAL.<br/> He spent 1 season with DAL (2024).<br/><br/>
 
 Friday, September 5th  
-- <ins>*KAN vs. SDG - divisional matchup*</ins>
+- <ins>*KAN vs. SDG - divisional matchup*</ins><br/>
   - **<span style="color: red;">Jerry Tillery (DL, KAN)</span>** has a primary grudge against SDG.<br/> He spent 4 seasons with SDG (2019-2022).<br/><br/>
   - **<span style="color: red;">Drue Tranquill (LB, KAN)</span>** has a primary grudge against SDG.<br/> He spent 4 seasons with SDG (2019-2022).<br/><br/>
   - **<span style="color: red;">Cole Christiansen (LB, KAN)</span>** has a primary grudge against SDG.<br/> He spent 2 seasons with SDG (2020-2021).<br/><br/>
