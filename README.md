@@ -20,9 +20,22 @@ Friday, September 5th
 
 Sunday, September 7th  
 - TAM @ ATL (divisional)
+  - **Bradley Pinion, K** (ATL) has a grudge against TAM.<br/> He spent 3 seasons with TAM (2019-2021).<br/>
 - CIN @ CLE (divisional)
+  - **Gary Brightwell, RB** (CIN) has a grudge against CLE.<br/> He spent 1 season with CLE (2024).<br/> His position rank in fantasy this season is 141.<br/>
+  - **Tony Brown, CB** (CLE) has a grudge against CIN.<br/> He spent 1 season with CIN (2020).<br/>
+  - **Isaiah Thomas, DE** (CIN) has a <span style="color: red;">primary</span> grudge against CLE.<br/> He spent 1 season with CLE (2022).
 - MIA @ CLT
-- 
+- CAR @ JAX
+- RAI @ NWE
+- CRD @ NOR
+- PIT @ NYJ
+- NYG @ WAS (divisional)
+- OTI @ DEN
+- SFO @ SEA (divisional)
+- DET @ GNB (divisional)
+- HTX @ RAM
+- RAV @ BUF
 
 etc.   
 ### Week 2
