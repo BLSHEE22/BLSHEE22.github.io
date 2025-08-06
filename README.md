@@ -29,7 +29,7 @@ Thursday, September 4th
 - **Dallas Cowboys @ Philadelphia Eagles - Divisional Matchup**<br/><br/>
   - | DAL             | PHI       |
     | :-------------: | :-------: |
-    | Miles Sanders   | $250      |
+    | - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg)<br/>**Miles Sanders (RB, DAL)** has a primary grudge against PHI.<br/>He spent his first 4 seasons with PHI (2019-2022).<br/>His position rank in fantasy this season is 59.<br/><br/>   | $250      |
     | Parris Campbell | $80       |
     |                 | $420      |
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg)<br/>**Miles Sanders (RB, DAL)** has a primary grudge against PHI.<br/>He spent his first 4 seasons with PHI (2019-2022).<br/>His position rank in fantasy this season is 59.<br/><br/>
