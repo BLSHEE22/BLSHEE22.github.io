@@ -1,7 +1,7 @@
 # NFL Grudge Match Detector
 Summary
 - An NFL player holds a **grudge** when competing against an ex-team.
-- A grudge is considered **<span style="color: red;">primary</span>** when the ex-team is the player's original team.
+- A grudge is considered *primary* when the ex-team is the player's original team.
   - Players with primary grudges are considered to have extra motivation.<br/>
 
 ## Are any NFL players squaring off against their ex-team?
@@ -27,7 +27,7 @@ Summary
 ### Week 1
 Thursday, September 4th  
 - <ins>*DAL @ PHI - divisional matchup*</ins><br/><br/>
-  - ![headshot](https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg)<br/> **Miles Sanders (RB, DAL)** has a <span style="color: red;">primary grudge</span> against PHI.<br/> He spent 4 seasons with PHI (2019-2022).<br/> His position rank in fantasy this season is 59.<br/><br/>
+  - ![headshot](https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg)<br/> **Miles Sanders (RB, DAL)** has a *primary grudge* against PHI.<br/> He spent his first 4 seasons with PHI (2019-2022).<br/> His position rank in fantasy this season is 59.<br/><br/>
   - ![headshot](https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg)<br/> **Parris Campbell (WR, DAL)** has a grudge against PHI.<br/> He spent 1 season with PHI (2024).<br/> His position rank in fantasy this season is 153.<br/><br/>
   - **K.J. Henry (DE, PHI)** has a grudge against DAL.<br/> He spent 1 season with DAL (2024).<br/>
 
