@@ -26,12 +26,12 @@ Summary
 
 ### Week 1
 Thursday, September 4th  
-- Dallas Cowboys @ Philadelphia Eagles - Divisional Matchup<br/><br/>
+- **Dallas Cowboys @ Philadelphia Eagles - Divisional Matchup**<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg)<br/>**Miles Sanders (RB, DAL)** has a primary grudge against PHI.<br/>He spent his first 4 seasons with PHI (2019-2022).<br/>His position rank in fantasy this season is 59.<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg)<br/> **Parris Campbell (WR, DAL)** has a grudge against PHI.<br/>He spent 1 season with PHI (2024).<br/>His position rank in fantasy this season is 153.<br/><br/>
 
 Friday, September 5th  
-- Kansas City Chiefs vs. Los Angeles Chargers - Divisional Matchup<br/><br/>
+- **Kansas City Chiefs vs. Los Angeles Chargers - Divisional Matchup**<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/TillJe00_2024.jpg)<br/>**Jerry Tillery (DL, KAN)** has a primary grudge against SDG.<br/>He spent his first 4 seasons with SDG (2019-2022).<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/TranDr00_2024.jpg)<br/>**Drue Tranquill (LB, KAN)** has a primary grudge against SDG.<br/>He spent his first 4 seasons with SDG (2019-2022).<br/><br/>
   - ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/ChriCo00_2024.jpg)<br/>**Cole Christiansen (LB, KAN)** has a primary grudge against SDG.<br/>He spent his first 2 seasons with SDG (2020-2021).<br/><br/>
