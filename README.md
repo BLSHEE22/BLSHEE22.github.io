@@ -7,6 +7,11 @@ Thursday, September 4th
 Friday, September 5th  
 - KAN vs. SDG  
 
+Sunday, September 7th  
+- TAM @ ATL
+- CIN @ CLE
+- MIA @ CLT
+
 etc.   
 ### Week 2
 
