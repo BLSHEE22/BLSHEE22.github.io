@@ -4,11 +4,14 @@ layout: default
 <style>
   /* Style for all table cells (th and td) */
   thead, th, td, tr {
-    border-width: 3px; /* Sets the border width to 3 pixels */
+    border-width: 5px; /* Sets the border width to 3 pixels */
     border-style: solid; /* Defines the border style, e.g., solid, dotted, dashed */
     border-color: black; /* Sets the border color */
     width: "auto";
     text-align: center; /* Centers the text horizontally */
+  }
+  td:nth-child(1) {
+    border-right: 2px solid grey; /* Thicker, colored border on the right */
   }
 </style>
 <h1 id="nfl-grudge-match-detector">NFL Grudge Match Detector</h1>
