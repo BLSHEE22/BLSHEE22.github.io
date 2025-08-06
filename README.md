@@ -1,7 +1,7 @@
 # NFL Grudge Match Detector
 Summary
 - An NFL player holds a **grudge** when competing against an ex-team.
-- A grudge is considered a **<span style="color: red;">primary grudge</span>** when the ex-team is the player's original team.
+- A grudge is considered **<span style="color: red;">primary</span>** when the ex-team is the player's original team.
   - Players with primary grudges are considered to have extra motivation.<br/>
 
 ## Are any NFL players squaring off against their ex-team?
@@ -39,17 +39,17 @@ Friday, September 5th
   - **Kristian Fulton (CB, KAN)** has a grudge against SDG.<br/> He spent one season with SDG (2024).<br/>
 
 Sunday, September 7th  
-- <ins>*TAM @ ATL - divisional matchup*</ins>
+- <ins>*TAM @ ATL - divisional matchup*</ins><br/><br/>
   - **Bradley Pinion (K, ATL)** has a grudge against TAM.<br/> He spent 3 seasons with TAM (2019-2021).<br/>
 - <ins>*CIN @ CLE - divisional matchup*</ins>
   - **Gary Brightwell (RB, CIN)** has a grudge against CLE.<br/> He spent 1 season with CLE (2024).<br/> His position rank in fantasy this season is 141.<br/><br/>
   - **Tony Brown (CB, CLE)** has a grudge against CIN.<br/> He spent 1 season with CIN (2020).<br/><br/>
   - **<span style="color: red;">Isaiah Thomas (DE, CIN)</span>** has a primary grudge against CLE.<br/> He spent 1 season with CLE (2022).<br/><br/>
-- *MIA @ CLT*
-  - **None**
-- *CAR @ JAX*
+- *MIA @ CLT*<br/><br/>
+  - **None**<br/><br/>
+- *CAR @ JAX*<br/><br/>
   - **Matthew Wright (K, CAR)** has a grudge against JAX.<br/> He spent one season with JAX (2021).<br/><br/>
-- *RAI @ NWE*
+- *RAI @ NWE*<br/><br/>
   - **<span style="color: red;">Jakobi Meyers (WR, RAI)</span>** has a primary grudge against NWE.<br/> He spent 4 seasons with NWE (2019-2022).<br/> His position rank in fantasy this season is 29.<br/><br/>
   - **Mack Hollins (WR, NWE)** has a grudge against RAI.<br/> He spent 1 season with RAI (2022).<br/> His position rank in fantasy this season is 76.<br/><br/>
   -  **Austin Hooper (TE, NWE)** has a grudge against RAI.<br/> He spent 1 season with RAI (2023).<br/> His position rank in fantasy this season is 24.<br/><br/>
@@ -60,18 +60,30 @@ Sunday, September 7th
   - **Marcus Epps, S** (NWE) has a grudge against RAI.<br/> He spent 2 seasons with RAI (2023-2024).<br/><br/>
 - *CRD @ NOR*
   - **<span style="color: red;">Blake Gillikin (P, CRD)</span>** has a primary grudge against NOR.<br/> He spent 2 seasons with NOR (2021-2022).<br/><br/>
-- *PIT @ NYJ*
-  - **Aaron Rodgers (QB, PIT)** has a grudge against NYJ.<br/> He spent 2 seasons with NYJ (2023-2024).<br/> His position rank in fantasy this season is 15.<br/>
-  - **Justin Fileds (QB, NYJ)** has a grudge against PIT.<br/> He spent 1 season with PIT (2024).<br/> His position rank in fantasy this season is 31.<br/>
-  - **<span style="color: red;">Chukwuma Okorafor (T, NYJ)</span>** has a primary grudge against PIT.<br/> He spent 6 seasons with PIT (2018-2023).<br/>
-  - **<span style="color: red;">Brandin Echols (CB, PIT)</span>** has a primary grudge against NYJ.<br/> He spent 4 seasons with NYJ (2021-2024).<br/>
-- <ins>*NYG @ WAS - divisional matchup*</ins>
-  - 
-- *OTI @ DEN*
-- <ins>*SFO @ SEA - divisional matchup*</ins>
-- <ins>*DET @ GNB - divisional matchup*</ins>
-- *HTX @ RAM*
-- *RAV @ BUF*
+- *PIT @ NYJ*<br/><br/>
+  - **Aaron Rodgers (QB, PIT)** has a grudge against NYJ.<br/> He spent 2 seasons with NYJ (2023-2024).<br/> His position rank in fantasy this season is 15.<br/><br/>
+  - **Justin Fields (QB, NYJ)** has a grudge against PIT.<br/> He spent 1 season with PIT (2024).<br/> His position rank in fantasy this season is 31.<br/><br/>
+  - **<span style="color: red;">Chukwuma Okorafor (T, NYJ)</span>** has a primary grudge against PIT.<br/> He spent 6 seasons with PIT (2018-2023).<br/><br/>
+  - **<span style="color: red;">Brandin Echols (CB, PIT)</span>** has a primary grudge against NYJ.<br/> He spent 4 seasons with NYJ (2021-2024).<br/><br/>
+- <ins>*NYG @ WAS - divisional matchup*</ins><br/><br/>
+  - **Tyre Phillips (OL, WAS)** has a grudge against NYG.<br/> He spent 3 seasons with NYG (2022-2024).<br/><br/>
+- *OTI @ DEN*<br/><br/>
+  - **<span style="color: red;">Brandon Allen (QB, OTI)</span>** has a primary grudge against DEN.<br/> He spent 1 season with DEN (2019).<br/> His position rank in fantasy this season is 64.<br/><br/>
+  - **<span style="color: red;">Dre'Mont Jones (DL, OTI)</span>** has a primary grudge against DEN.<br/> He spent 4 seasons with DEN (2019-2022).<br/><br/>
+  - **Cody Barton (LB, OTI)** has a grudge against DEN.<br/> He spent 1 season with DEN (2024).<br/><br/>
+  - **<span style="color: red;">Lloyd Cushenberry III (OL, OTI)</span>** has a primary grudge against DEN.<br/> He spent 4 seasons with DEN (2020-2023).<br/><br/>
+- <ins>*SFO @ SEA - divisional matchup*</ins><br/><br/>
+  - **Sam Darnold (QB, SEA)** has a grudge against SFO.<br/> He spent 1 season with SFO (2023).<br/> His position rank in fantasy this year is 9.
+  - **Eric Saubert (TE, SEA)** has a grudge against SFO.<br/> He spent 2 seasons with SFO (2023-2024).<br/> His position rank in fantasy this year is 63.<br/><br/>
+  - **Shemar Jean-Charles (CB, SEA)** has a grudge against SFO.</br> He spent 1 season with SFO (2023).<br/></br>
+  - **<span style="color: red;">Tre Brown (CB, SFO)</span>** has a primary grudge against SEA.<br/> He spent 4 seasons with SEA (2021-2024).<br/><br/>
+- <ins>*DET @ GNB - divisional matchup*</ins><br/><br/>
+  - **None**<br/><br/>
+- *HTX @ RAM*<br/><br/>
+  - **<span style="color: red;">Zachary Thomas (OL, HTX)</span>** has a primary grudge against RAM.<br/> He spent 2 seasons with RAM (2022-2023).<br/><br/>
+  - **<span style="color: red;">Russ Yeast (DB, HTX)</span>** has a primary grudge against RAM.<br/> He spent 3 seasons with RAM (2022-2024).<br/><br/>
+- *RAV @ BUF*<br/><br/>
+  - **None**<br/><br/>
   
 ### Week 2
 ### Week 3
