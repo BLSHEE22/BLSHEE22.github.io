@@ -27,6 +27,7 @@ Summary
 ### Week 1
 Thursday, September 4th  
 - <ins>*DAL @ PHI - divisional matchup*</ins><br/><br/>
+  - ![test](https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg)
   - **<span style="color: red;">Miles Sanders (RB, DAL)</span>** has a primary grudge against PHI.<br/> He spent 4 seasons with PHI (2019-2022).<br/> His position rank in fantasy this season is 59.<br/><br/>
   - **Parris Campbell (WR, DAL)** has a grudge against PHI.<br/> He spent 1 season with PHI (2024).<br/> His position rank in fantasy this season is 153.<br/><br/>
   - **K.J. Henry (DE, PHI)** has a grudge against DAL.<br/> He spent 1 season with DAL (2024).<br/>
