@@ -1,9 +1,9 @@
 # NFL Grudge Match Detector
 ## Are any NFL players squaring off against their ex-team?
-[Link Text](#week-1)
-[Link Text](#week-2)
-[Link Text](#week-3)
-[Link Text](#week-4)
+[Week 1](#week-1)<br/>
+[Week 2](#week-2)<br/>
+[Week 3](#week-3)<br/>
+[Week 4](#week-4)<br/>
 ### Week 1
 Thursday, September 4th  
 - DAL @ PHI (divisional)
