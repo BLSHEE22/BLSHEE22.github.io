@@ -27,39 +27,41 @@
 ### Week 1
 Thursday, September 4th  
 - <ins>*DAL @ PHI - divisional matchup*</ins>
-  - **<span style="color: red;">Miles Sanders, RB</span>** (DAL) has a primary grudge against PHI.<br/> He spent 4 seasons with PHI (2019-2022).<br/> His position rank in fantasy this season is 59.<br/>
-  - **Parris Campbell, WR** (DAL) has a grudge against PHI.<br/> He spent 1 season with PHI (2024).<br/> His position rank in fantasy this season is 153.<br/>
-  - **K.J. Henry, DE** (PHI) has a grudge against DAL.<br/> He spent 1 season with DAL (2024).<br/>
+  - **<span style="color: red;">Miles Sanders (RB, DAL)</span>** has a primary grudge against PHI.<br/> He spent 4 seasons with PHI (2019-2022).<br/> His position rank in fantasy this season is 59.<br/>
+  - **Parris Campbell (WR, DAL)** has a grudge against PHI.<br/> He spent 1 season with PHI (2024).<br/> His position rank in fantasy this season is 153.<br/>
+  - **K.J. Henry (DE, PHI)** has a grudge against DAL.<br/> He spent 1 season with DAL (2024).<br/>
 
 Friday, September 5th  
 - <ins>*KAN vs. SDG - divisional matchup*</ins>
-  - **<span style="color: red;">Jerry Tillery, DL</span>** (KAN) has a primary grudge against SDG.<br/> He spent 4 seasons with SDG (2019-2022).<br/>
-  - **<span style="color: red;">Drue Tranquill, LB/span>** (KAN) has a primary grudge against SDG.<br/> He spent 4 seasons with SDG (2019-2022).<br/>
-  - **<span style="color: red;">Cole Christiansen, LB</span>** (KAN) has a primary grudge against SDG.<br/> He spent 2 seasons with SDG (2020-2021).<br/>
-  - **Kristian Fulton, CB** (KAN) has a grudge against SDG.<br/> He spent one season with SDG (2024).<br/>
+  - **<span style="color: red;">Jerry Tillery (DL, KAN)</span>** has a primary grudge against SDG.<br/> He spent 4 seasons with SDG (2019-2022).<br/>
+  - **<span style="color: red;">Drue Tranquill (LB, KAN)</span>** has a primary grudge against SDG.<br/> He spent 4 seasons with SDG (2019-2022).<br/>
+  - **<span style="color: red;">Cole Christiansen (LB, KAN)</span>** has a primary grudge against SDG.<br/> He spent 2 seasons with SDG (2020-2021).<br/>
+  - **Kristian Fulton (CB, KAN)** has a grudge against SDG.<br/> He spent one season with SDG (2024).<br/>
 
 Sunday, September 7th  
 - <ins>*TAM @ ATL - divisional matchup*</ins>
-  - **Bradley Pinion, K** (ATL) has a grudge against TAM.<br/> He spent 3 seasons with TAM (2019-2021).<br/>
+  - **Bradley Pinion (K, ATL)** has a grudge against TAM.<br/> He spent 3 seasons with TAM (2019-2021).<br/>
 - <ins>*CIN @ CLE - divisional matchup*</ins>
-  - **Gary Brightwell, RB** (CIN) has a grudge against CLE.<br/> He spent 1 season with CLE (2024).<br/> His position rank in fantasy this season is 141.<br/>
-  - **Tony Brown, CB** (CLE) has a grudge against CIN.<br/> He spent 1 season with CIN (2020).<br/>
-  - **<span style="color: red;">Isaiah Thomas, DE</span>** (CIN) has a primary grudge against CLE.<br/> He spent 1 season with CLE (2022).<br/>
+  - **Gary Brightwell (RB, CIN)** has a grudge against CLE.<br/> He spent 1 season with CLE (2024).<br/> His position rank in fantasy this season is 141.<br/>
+  - **Tony Brown (CB, CLE)** has a grudge against CIN.<br/> He spent 1 season with CIN (2020).<br/>
+  - **<span style="color: red;">Isaiah Thomas (DE, CIN)</span>** has a primary grudge against CLE.<br/> He spent 1 season with CLE (2022).<br/>
 - *MIA @ CLT*
-  - No player grudges
+  - **None**
 - *CAR @ JAX*
-  - **Matthew Wright, K** (CAR) has a grudge against JAX.<br/> He spent one season with JAX (2021).<br/>
+  - **Matthew Wright (K, CAR)** has a grudge against JAX.<br/> He spent one season with JAX (2021).<br/>
 - *RAI @ NWE*
-  - **<span style="color: red;">Jakobi Meyers, WR</span>** (RAI) has a primary grudge against NWE.<br/> He spent 4 seasons with NWE (2019-2022).<br/> His position rank in fantasy this season is 29.<br/>
-  - **Mack Hollins, WR** (NWE) has a grudge against RAI.<br/> He spent 1 season with RAI (2022).<br/> His position rank in fantasy this season is 76.<br/>
-  -  **Austin Hooper, TE** (NWE) has a grudge against RAI.<br/> He spent 1 season with RAI (2023).<br/> His position rank in fantasy this season is 24.<br/>
-  - **<span style="color: red;">Adam Butler, DT</span>** (RAI) has a primary grudge against NWE.<br/> He spent 4 seasons with NWE (2017-2020).<br/>
-  - **<span style="color: red;">Elandon Roberts, LB</span>** (RAI) has a primary grudge against NWE.<br/> He spent 4 seasons with NWE (2016-2019).<br/>
+  - **<span style="color: red;">Jakobi Meyers (WR, RAI)</span>** has a primary grudge against NWE.<br/> He spent 4 seasons with NWE (2019-2022).<br/> His position rank in fantasy this season is 29.<br/>
+  - **Mack Hollins (WR, NWE)** has a grudge against RAI.<br/> He spent 1 season with RAI (2022).<br/> His position rank in fantasy this season is 76.<br/>
+  -  **Austin Hooper (TE, NWE)** has a grudge against RAI.<br/> He spent 1 season with RAI (2023).<br/> His position rank in fantasy this season is 24.<br/>
+  - **<span style="color: red;">Adam Butler (DT, RAI)</span>** has a primary grudge against NWE.<br/> He spent 4 seasons with NWE (2017-2020).<br/>
+  - **<span style="color: red;">Elandon Roberts (LB, RAI)</span>** has a primary grudge against NWE.<br/> He spent 4 seasons with NWE (2016-2019).<br/>
   - **Robert Spillane, LB** (NWE) has a grudge against RAI.<br/> He spent 2 seasons with RAI (2023-2024).<br/>
   - **K'Lavon Chaisson, LB** (NWE) has a grudge against RAI.<br/> He spent 1 season with RAI (2024).<br/>
   - **Marcus Epps, S** (NWE) has a grudge against RAI.<br/> He spent 2 seasons with RAI (2023-2024).<br/>
 - *CRD @ NOR*
+  - **<span style="color: red;">Blake Gillikin (P, CRD)</span>** has a primary grudge against NOR.<br/> He spent 2 seasons with NOR (2021-2022).<br/>
 - *PIT @ NYJ*
+  - **Aaron Rodgers (QB, PIT)** has a grudge against NYJ.<br/> He spent
 - <ins>*NYG @ WAS - divisional matchup*</ins>
 - *OTI @ DEN*
 - <ins>*SFO @ SEA - divisional matchup*</ins>
