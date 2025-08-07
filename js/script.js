@@ -71,9 +71,9 @@ const day = 'thursday';
 const parentElement = document.getElementById(day);
 // rename header according to date/time clock
 const dayHeader = document.getElementById(day+'Header');
-dayHeader.innerHTML = day;
+dayHeader.innerHTML = day.charAt(0);
 dayHeader.addEventListener('click', () => {
-        alert('Paragraph clicked!');
+        alert(`${day} header clicked!`);
     });
 
 const games = [1, 2, 3, 4, 5];
