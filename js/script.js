@@ -76,10 +76,10 @@ dayHeader.addEventListener('click', () => {
     });
 
 const games = [1, 2, 3, 4, 5];
-for (let i in games) {
+for (let game of games) {
         // create matchup header
         const matchupHeader = document.createElement('p');
-        matchupHeader.textContent = 'game ' + games[i] + ' title';
+        matchupHeader.textContent = 'game ' + game + ' title';
         matchupHeader.style.textAlign = 'center';
         // append matchup header to parent
         parentElement.appendChild(matchupHeader);
