@@ -10,7 +10,7 @@
 //                                                                     'grudgeType':'Grudge',
 //                                                                     'seasons':'2024',
 //                                                                     'positionRk':'153'}]',
-//                                                     'awayGrudges':'None',
+//                                                     'awayGrudges':['None'],
 //                                                    }]
 //                                       }
 //                           }
