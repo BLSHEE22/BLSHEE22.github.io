@@ -68,10 +68,10 @@
 // }
         // THURSDAY
 
-        const day = 'thursday';
-        const parentElement = document.getElementById(day);
+        var day = 'thursday';
+        var parentElement = document.getElementById(day);
         // rename header according to date/time clock
-        const dayHeader = document.getElementById(day+'Header');
+        var dayHeader = document.getElementById(day+'Header');
         dayHeader.innerHTML = day;
         dayHeader.addEventListener('click', () => {
                 alert('Paragraph clicked!');
@@ -116,15 +116,15 @@
         }
 
         // FRIDAY
-        const day = 'friday';
-        const parentElement = document.getElementById(day);
+        day = 'friday';
+        parentElement = document.getElementById(day);
         // rename header according to date/time clock
-        const dayHeader = document.getElementById(day+'Header');
+        dayHeader = document.getElementById(day+'Header');
         dayHeader.innerHTML = day;
         dayHeader.addEventListener('click', () => {
                 alert('Paragraph clicked!');
             });
-        
+
         for (let game of games) {
                 // create matchup header
                 const matchupHeader = document.createElement('p');
