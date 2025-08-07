@@ -79,7 +79,7 @@ const games = [1, 2, 3, 4, 5];
 for (let game in games) {
         // create matchup header
         const matchupHeader = document.createElement('p');
-        matchupHeader.textContent = 'game ' + gameNo + ' title';
+        matchupHeader.textContent = 'game ' + game + ' title';
         matchupHeader.style.textAlign = 'center';
         // append matchup header to parent
         parentElement.appendChild(matchupHeader);
