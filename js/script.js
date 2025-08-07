@@ -5,5 +5,5 @@ thursdayHeader.addEventListener('click', () => {
     });
 newP = document.createElement('p');
 newP.style.color = 'tomato';
-newP.textContext = 'THIS IS A JS TEST';
-document.getElementById("centered-div").append(newP);
+newP.innerHTML = 'THIS IS A JS TEST';
+document.getElementById('thursdayHeader').append(newP);
