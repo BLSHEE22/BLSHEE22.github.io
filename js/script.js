@@ -1,3 +1,4 @@
-const newH1 = document.createElement("h1");
-newH1.textContext = "JS Test";
-document.body.prepend(newH1);
+const newP = document.createElement("p");
+newP.textContext = "JS Test";
+newP.style.color = "tomato";
+document.getElementById("centered-div").append(newP);
