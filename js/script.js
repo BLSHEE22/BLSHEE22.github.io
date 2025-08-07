@@ -1,5 +1,5 @@
 const thursdayHeader = document.getElementById('thursdayHeader');
-thursdayHeader.textContext = 'Thursday, September 4th - BOOYAH';
+thursdayHeader.innerHTML = "BOOYAHHHH";
 thursdayHeader.addEventListener('click', () => {
         alert('Paragraph clicked!');
     });
