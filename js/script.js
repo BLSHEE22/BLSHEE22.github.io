@@ -1,47 +1,52 @@
-const day = 'thursday';
-const games = [1, 2];
+const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday']; // Add or remove days as needed
+const games = [1, 2, 3]; // You can customize this per day too if needed
 
-const parentElement = document.getElementById('thursday');
-// rename header according to date/time clock
-const dayHeader = document.getElementById('thursdayHeader');
-dayHeader.innerHTML = day.charAt(0).toUpperCase() + day.slice(1);
-dayHeader.addEventListener('click', () => {
-        alert(`${day} header clicked!`);
+for (let day of days) {
+    const parentElement = document.getElementById(day);
+    if (!parentElement) continue; // Skip if the element is not found
+
+    // Update day header
+    const dayHeader = document.getElementById(day + 'Header');
+    if (dayHeader) {
+        dayHeader.innerHTML = day.charAt(0).toUpperCase() + day.slice(1); // Capitalize day name
+        dayHeader.addEventListener('click', () => {
+            alert(`${day} header clicked!`);
         });
-        
-for (let game of games) {
-        // create matchup header
+    }
+
+    for (let game of games) {
+        // Create matchup header
         const matchupHeader = document.createElement('p');
         matchupHeader.textContent = `Game ${game} Title`;
         matchupHeader.style.textAlign = 'center';
-        // append matchup header to parent
         parentElement.appendChild(matchupHeader);
-                                
-        // create table
+
+        // Create table
         const matchupTable = document.createElement('table');
+
+        // Header row
         const thead = document.createElement('thead');
-        const tbody = document.createElement('tbody');
-        // add header row
         const headerRow = document.createElement('tr');
-        const header1 = document.createElement('th');
-        header1.textContent = 'Column 1';
-        const header2 = document.createElement('th');
-        header2.textContent = 'Column 2';
-        headerRow.appendChild(header1);
-        headerRow.appendChild(header2);
+        ['Column 1', 'Column 2'].forEach(text => {
+            const th = document.createElement('th');
+            th.textContent = text;
+            headerRow.appendChild(th);
+        });
         thead.appendChild(headerRow);
-        // add data rows
-        const dataRow1 = document.createElement('tr');
-        const cell1_1 = document.createElement('td');
-        cell1_1.textContent = 'Data A';
-        const cell1_2 = document.createElement('td');
-        cell1_2.textContent = 'Data B';
-        dataRow1.appendChild(cell1_1);
-        dataRow1.appendChild(cell1_2);
-        tbody.appendChild(dataRow1);
-        // append header and data rows to table
+
+        // Body row
+        const tbody = document.createElement('tbody');
+        const dataRow = document.createElement('tr');
+        ['Data A', 'Data B'].forEach(text => {
+            const td = document.createElement('td');
+            td.textContent = text;
+            dataRow.appendChild(td);
+        });
+        tbody.appendChild(dataRow);
+
+        // Assemble table
         matchupTable.appendChild(thead);
         matchupTable.appendChild(tbody);
-        // append table to parent
         parentElement.appendChild(matchupTable);
+    }
 }
