@@ -2,7 +2,7 @@ const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 const games = [1, 2];
 
 // THURSDAY
-const day = 'thursday'
+const day = 'thursday';
 const parentElement = document.getElementById(day);
 if !(parentElement) continue;
 // rename header according to date/time clock
@@ -50,7 +50,7 @@ for (let game of games) {
 }
 
 // FRIDAY
-const day = 'friday'
+const day = 'friday';
 const parentElement = document.getElementById(day);
 if !(parentElement) continue;
 // rename header according to date/time clock
