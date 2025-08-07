@@ -66,7 +66,8 @@
 //                 parentElement.appendChild(matchupTable);
 //         }
 // }
-        const day = 'friday';
+const days = ['thursday', 'friday'];
+for (let day of days) {
         const parentElement = document.getElementById(day);
         // rename header according to date/time clock
         const dayHeader = document.getElementById(day+'Header');
@@ -112,3 +113,4 @@
                 // append table to parent
                 parentElement.appendChild(matchupTable);
         }
+}
