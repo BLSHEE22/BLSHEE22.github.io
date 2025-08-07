@@ -1,10 +1,38 @@
+// REPEAT PER DAY
+const parentElement = document.getElementById('thursday'); //myDiv
+// rename thursday header according to date/time clock
 const thursdayHeader = document.getElementById('thursdayHeader');
 thursdayHeader.innerHTML = "BOOYAHHHH";
 thursdayHeader.addEventListener('click', () => {
         alert('Paragraph clicked!');
     });
-
-const parentElement = document.getElementById('myDiv');
-const newParagraph = document.createElement('p');
-newParagraph.textContent = 'This is new content.';
-parentElement.appendChild(newParagraph);
+// create matchup header
+const matchupHeader = document.createElement('p')
+matchupHeader.textContent = 'Dallas Cowboys @ Philadelphia Eagles';
+// create table
+const matchupTable = document.createElement('table');
+const thead = document.createElement('thead');
+const tbody = document.createElement('tbody');
+// add header row
+const headerRow = document.createElement('tr');
+const header1 = document.createElement('th');
+header1.textContent = 'Column 1';
+const header2 = document.createElement('th');
+header2.textContent = 'Column 2';
+headerRow.appendChild(header1);
+headerRow.appendChild(header2);
+thead.appendChild(headerRow);
+// add data rows
+const dataRow1 = document.createElement('tr');
+const cell1_1 = document.createElement('td');
+cell1_1.textContent = 'Data A';
+const cell1_2 = document.createElement('td');
+cell1_2.textContent = 'Data B';
+dataRow1.appendChild(cell1_1);
+dataRow1.appendChild(cell1_2);
+tbody.appendChild(dataRow1);
+// append header and data rows to table
+matchupTable.appendChild(thead);
+matchupTable.appendChild(tbody);
+// append table to parent
+parentElement.appendChild(matchupTable);
