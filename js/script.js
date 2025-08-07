@@ -75,9 +75,11 @@ dayHeader.addEventListener('click', () => {
         alert('Paragraph clicked!');
     });
 
+const games = [1, 2, 3, 4, 5]
+for (let game in games) {
 // create matchup header
 const matchupHeader = document.createElement('p');
-matchupHeader.textContent = 'game title';
+matchupHeader.textContent = 'game ' + gameNo + ' title';
 matchupHeader.style.textAlign = 'center';
 // append matchup header to parent
 parentElement.appendChild(matchupHeader);
@@ -109,3 +111,4 @@ const tbody = document.createElement('tbody');
                 matchupTable.appendChild(tbody);
                 // append table to parent
                 parentElement.appendChild(matchupTable);
+}
