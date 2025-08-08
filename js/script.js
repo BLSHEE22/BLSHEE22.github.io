@@ -1,3 +1,23 @@
+function updateClock() {
+    const now = new Date(); // Get current date and time
+
+    // Format the date
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const dateString = now.toLocaleDateString('en-US', options);
+
+    // Format the time
+    const timeString = now.toLocaleTimeString('en-US');
+
+    // Combine and update the HTML element
+    document.getElementById('clock').innerHTML = `${dateString} - ${timeString}`;
+}
+
+// Call updateClock initially to display the time immediately
+updateClock();
+
+// Update the clock every second
+setInterval(updateClock, 1000);
+
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday']; // Add or remove days as needed
 const games = [1, 2, 3]; // You can customize this per day too if needed
 
