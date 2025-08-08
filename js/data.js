@@ -11,5 +11,5 @@ export const weekByWeekInfo = {1:{'thursday':{'date':'Thursday, September 4th',
                                                              'awayGrudges':['None'],
                                                            }]
                                               }
-                                   }
-                                };
+                                }
+                              };
