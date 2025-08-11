@@ -19,14 +19,17 @@
 //setInterval(updateClock, 1000);
 
 const week1StartDate = new Date('2025-09-04');
-const week1EndDate = new Date('2025-09-08')
+const week1EndDate = new Date('2025-09-08');
 const now = new Date();
 if (isDateWithinRange(now, week1StartDate, week1EndDate) {
-    document.getElementById('what-week-is-it').innerHTML= `Yes, there are X grudge matches taking place in <a href=#upcoming-week>week 1</a>IT WORKED`;
+    document.getElementById('what-week-is-it').innerHTML = `Yes, there are X grudge matches taking place in <a href=#upcoming-week>week 1</a>IT WORKED`;
+}
+else {
+    document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
 }
 
-const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday']; // Add or remove days as needed
-const games = [1, 2, 3]; // You can customize this per day too if needed
+const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
+const games = [1, 2, 3];
 
 for (let day of days) {
     const parentElement = document.getElementById(day);
