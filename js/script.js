@@ -20,15 +20,15 @@
 
 document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
 
-function isDateInRange(startDate, endDate) {
-  // Ensure all inputs are Date objects
-  const dateToCheck = new Date();
-  const start = new Date(startDate);
-  const end = new Date(endDate);
+// function isDateInRange(startDate, endDate) {
+//   // Ensure all inputs are Date objects
+//   const dateToCheck = new Date();
+//   const start = new Date(startDate);
+//   const end = new Date(endDate);
 
-  // Compare the dates
-  return dateToCheck >= start && checkDate <= end;
-}
+//   // Compare the dates
+//   return dateToCheck >= start && checkDate <= end;
+// }
 
 // const weeks = [{'number': 1,
 //                 'start': '2025-09-02',
