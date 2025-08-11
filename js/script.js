@@ -18,6 +18,8 @@
 // Update the clock every second
 //setInterval(updateClock, 1000);
 
+document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
+
 function isDateInRange(startDate, endDate) {
   // Ensure all inputs are Date objects
   const dateToCheck = new Date();
@@ -28,25 +30,25 @@ function isDateInRange(startDate, endDate) {
   return dateToCheck >= start && checkDate <= end;
 }
 
-const weeks = [{'number': 1,
-                'start': '2025-09-02',
-                'end': '2025-09-08'},
-               {'number': 2,
-                'start': '2025-09-09',
-                'end': '2025-09-15'}];
-const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
-const games = [1, 2, 3];
-const now = new Date();
+// const weeks = [{'number': 1,
+//                 'start': '2025-09-02',
+//                 'end': '2025-09-08'},
+//                {'number': 2,
+//                 'start': '2025-09-09',
+//                 'end': '2025-09-15'}];
+// const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
+// const games = [1, 2, 3];
+// const now = new Date();
 
-for (let week of weeks) {
-  if (isDateWithinRange(week['start'], week['end']) {
-      document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week ${week['number']}</a></p>`;
-      break;
-  }
-  else {
-      document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
-  }
-}
+// for (let week of weeks) {
+//   if (isDateWithinRange(week['start'], week['end']) {
+//       document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week ${week['number']}</a></p>`;
+//       break;
+//   }
+//   else {
+//       document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
+//   }
+// }
 
 for (let day of days) {
     const parentElement = document.getElementById(day);
