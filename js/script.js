@@ -22,7 +22,7 @@ const week1StartDate = new Date('2025-09-04');
 const week1EndDate = new Date('2025-09-08');
 const now = new Date();
 if (isDateWithinRange(now, week1StartDate, week1EndDate) {
-    document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week 1</a>IT WORKED</p>`;
+    document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week 1</a></p>`;
 }
 else {
     document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
