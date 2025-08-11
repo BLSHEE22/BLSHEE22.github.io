@@ -18,9 +18,20 @@
 // Update the clock every second
 //setInterval(updateClock, 1000);
 
+function isDateInRange(dateToCheck, startDate, endDate) {
+  // Ensure all inputs are Date objects
+  const checkDate = new Date(dateToCheck);
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  // Compare the dates
+  return checkDate >= start && checkDate <= end;
+}
+
 const week1StartDate = new Date('2025-09-04');
 const week1EndDate = new Date('2025-09-08');
 const now = new Date();
+
 if (isDateWithinRange(now, week1StartDate, week1EndDate) {
     document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week 1</a></p>`;
 }
