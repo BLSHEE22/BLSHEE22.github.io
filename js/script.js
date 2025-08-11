@@ -1,22 +1,29 @@
-function updateClock() {
-    const now = new Date(); // Get current date and time
+// function updateClock() {
+//     const now = new Date(); // Get current date and time
 
-    // Format the date
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const dateString = now.toLocaleDateString('en-US', options);
+//     // Format the date
+//     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+//     const dateString = now.toLocaleDateString('en-US', options);
 
-    // Format the time
-    const timeString = now.toLocaleTimeString('en-US');
+//     // Format the time
+//     const timeString = now.toLocaleTimeString('en-US');
 
-    // Combine and update the HTML element
-    document.getElementById('clock').innerHTML = `${dateString} - ${timeString}`;
-}
+//     // Combine and update the HTML element
+//     document.getElementById('clock').innerHTML = `${dateString} - ${timeString}`;
+// }
 
 // Call updateClock initially to display the time immediately
-updateClock();
+//updateClock();
 
 // Update the clock every second
-setInterval(updateClock, 1000);
+//setInterval(updateClock, 1000);
+
+const week1StartDate = new Date('2025-09-04');
+const week1EndDate = new Date('2025-09-08')
+const now = new Date();
+if (isDateWithinRange(now, week1StartDate, week1EndDate) {
+    document.getElementById('what-week-is-it').innerHTML= `Yes, there are X grudge matches taking place in <a href=#upcoming-week>week 1</a>IT WORKED`;
+}
 
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday']; // Add or remove days as needed
 const games = [1, 2, 3]; // You can customize this per day too if needed
