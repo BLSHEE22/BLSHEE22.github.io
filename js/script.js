@@ -2,20 +2,20 @@ const teams = {'DAL':{'name': 'Dallas Cowboys',
                       'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
                       'division': 'NFC East'},
               'PHI':{'name': 'Dallas Cowboys',
-                     'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
+                     'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/phi-2025.png',
                      'division': 'NFC East'},
               'KAN':{'name': 'Dallas Cowboys',
-                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
-                      'division': 'NFC East'},
+                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/kan-2025.png',
+                      'division': 'AFC West'},
               'LAC':{'name': 'Dallas Cowboys',
-                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
-                      'division': 'NFC East'},
+                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/sdg-2025.png',
+                      'division': 'AFC West'},
               'TAM':{'name': 'Dallas Cowboys',
-                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
-                      'division': 'NFC East'},
+                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/tam-2025.png',
+                      'division': 'NFC South'},
               'ATL':{'name': 'Dallas Cowboys',
-                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
-                      'division': 'NFC East'}};
+                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/atl-2025.png',
+                      'division': 'NFC South'}};
 
 // import { weekByWeekInfo } from './data.js';
 
@@ -70,8 +70,8 @@ let week = 1;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 const matchups = [{'awayTeam': 'DAL',
                    'homeTeam': 'PHI',
-                   'awayGrudges': [],
-                   'homeGrudges': []}, 
+                   'awayGrudges': ['away1', 'away2', 'away3'],
+                   'homeGrudges': ['home1', 'home2']}, 
                   {'awayTeam': 'KAN',
                    'homeTeam': 'LAC',
                    'awayGrudges': [],
@@ -139,16 +139,14 @@ for (let day of days) {
         const homeTeam = matchup['homeTeam'];
         // Create matchup header
         const matchupHeader = document.createElement('p');
-        matchupHeader.textContent = `${teams[awayTeam]['name']} @ ${teams[homeTeam]['name']}`;
-        matchupHeader.style.textAlign = 'center';
-        matchupHeader.style.fontWeight = 'bold';
-        parentElement.appendChild(matchupHeader);
+        let htmlString = `<center><strong>${teams[awayTeam]['name']} @ ${teams[homeTeam]['name']}</strong>`;
         if (teams[awayTeam]['division'] == teams[homeTeam]['division']) {
-            const divisionalHeader = document.createElement('p');
-            divisionalHeader.textContent = 'Divisional Matchup';
-            divisionalHeader.style.textAlign = 'center';
-            parentElement.appendChild(divisionalHeader);
+            htmlString += '<br>Divisional Matchup';
         }
+        // Add inner html to header object
+        matchupHeader.innerHTML = htmlString + '<br>';
+        // Add header object to DOM
+        parentElement.appendChild(matchupHeader);
           
         // Create table
         const matchupTable = document.createElement('table');
@@ -156,9 +154,10 @@ for (let day of days) {
         // Header row
         const thead = document.createElement('thead');
         const headerRow = document.createElement('tr');
-        [teams[awayTeam]['logo'], teams[homeTeam]['logo']].forEach(text => {
+        [`<img src="${teams[awayTeam]['logo']}", width="50", height="50", alt=" ">`,
+         `<img src="${teams[homeTeam]['logo']}", width="50", height="50", alt=" ">`].forEach(html => {
             const th = document.createElement('th');
-            th.textContent = text;
+            th.innerHTML = html;
             headerRow.appendChild(th);
         });
         thead.appendChild(headerRow);
