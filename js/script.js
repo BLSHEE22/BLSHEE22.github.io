@@ -67,7 +67,7 @@ const teams = {'DAL':{'name': 'Dallas Cowboys',
 //                               }
 //                            };
 let week = 1;
-const days = ['Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday'];
+const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 const matchups = [{'awayTeam': 'DAL',
                    'homeTeam': 'PHI',
                    'awayGrudges': ['away1', 'away2', 'away3'],
@@ -127,7 +127,7 @@ for (let day of days) {
     // Update day header
     const dayHeader = document.getElementById(day + 'Header');
     if (dayHeader) {
-        dayHeader.innerHTML = day //.charAt(0).toUpperCase() + day.slice(1); // Capitalize day name
+        dayHeader.innerHTML = day.charAt(0).toUpperCase() + day.slice(1); // Capitalize day name
         dayHeader.addEventListener('click', () => {
             alert(`${day} header clicked!`);
         });
