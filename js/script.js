@@ -30,15 +30,19 @@ document.getElementById('what-week-is-it').innerHTML = `No, the regular season h
 //   return dateToCheck >= start && checkDate <= end;
 // }
 
-// const weeks = [{'number': 1,
-//                 'start': '2025-09-02',
-//                 'end': '2025-09-08'},
-//                {'number': 2,
-//                 'start': '2025-09-09',
-//                 'end': '2025-09-15'}];
-// const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
-// const games = [1, 2, 3];
-// const now = new Date();
+const weeks = [{'number': 1,
+                'start': '2025-09-02',
+                'end': '2025-09-08'},
+               {'number': 2,
+                'start': '2025-09-09',
+                'end': '2025-09-15'}];
+const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
+const games = [1, 2, 3];
+const now = new Date();
+
+if (now >= Date('2025-08-01') && now <= Date('2025-09-02') {
+    document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week ${week['number']}</a></p>`;
+}
 
 // for (let week of weeks) {
 //   if (isDateWithinRange(week['start'], week['end']) {
