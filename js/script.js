@@ -38,11 +38,12 @@ const games = [1, 2, 3];
 const awayGrudges = ['a', 'b'];
 const homeGrudges = [];
 const startDate = new Date('2025-08-01');
-const endDate = new Date('2025-08-10');
+const endDate = new Date('2025-09-02');
 const now = new Date();
 
 if (now >= startDate && now <= endDate) {
-    document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${awayGrudges.length + homeGrudges.length}</strong> grudge matches taking place in <a href=#upcoming-week>${week}</a>.</p>`;
+    document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are several taking place in week ${week}.</p>`;
+    // document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${awayGrudges.length + homeGrudges.length}</strong> grudge matches taking place in <a href=#upcoming-week>${week}</a>.</p>`;
 }
 else {
     document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
