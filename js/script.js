@@ -1,4 +1,6 @@
-import { weekByWeekInfo } from './data.js';
+
+
+// import { weekByWeekInfo } from './data.js';
 
 // function updateClock() {
 //     const now = new Date(); // Get current date and time
@@ -30,6 +32,7 @@ import { weekByWeekInfo } from './data.js';
 //   return dateToCheck >= start && checkDate <= end;
 // }
 
+const weekByWeekInfo = {1:"f", 2:"g", 3:"h"};
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 const games = [1, 2, 3];
 const startDate = new Date('2025-08-01');
