@@ -38,8 +38,8 @@ const now = new Date();
 
 for (let week of weekByWeekInfo.keys()) {
     if (now >= startDate && now <= endDate) {
-        // document.getElementById('what-week-is-it').innerHTML = `PASS`;
-        document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>${week}</a>.</p>`;
+        document.getElementById('what-week-is-it').innerHTML = `${week}`;
+        //document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>${week}</a>.</p>`;
         break;
     }
     else {
