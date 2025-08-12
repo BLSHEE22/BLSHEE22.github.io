@@ -32,23 +32,27 @@
 //   return dateToCheck >= start && checkDate <= end;
 // }
 
-const weekByWeekInfo = {1:"f", 2:"g", 3:"h"};
+const week = 1;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 const games = [1, 2, 3];
 const startDate = new Date('2025-08-01');
 const endDate = new Date('2025-09-02');
 const now = new Date();
 
-for (let week of weekByWeekInfo.keys()) {
-    if (now >= startDate && now <= endDate) {
-        document.getElementById('what-week-is-it').innerHTML = `${week}`;
-        //document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>${week}</a>.</p>`;
-        break;
-    }
-    else {
-        document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
-    }
+if (now >= startDate && now <= endDate) {
+    document.getElementById('what-week-is-it').innerHTML = `${week}`;
 }
+
+// for (let week of weekByWeekInfo.keys()) {
+//     if (now >= startDate && now <= endDate) {
+//         document.getElementById('what-week-is-it').innerHTML = `${week}`;
+//         //document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>${week}</a>.</p>`;
+//         break;
+//     }
+//     else {
+//         document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
+//     }
+// }
 
 // for (let week of weeks) {
 //   if (isDateWithinRange(week['start'], week['end']) {
