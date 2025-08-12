@@ -168,13 +168,15 @@ for (let day of days) {
 
         // Body row
         const tbody = document.createElement('tbody');
-        const dataRow = document.createElement('tr');
-        ['Data A', 'Data B'].forEach(text => {
-            const td = document.createElement('td');
-            td.textContent = text;
-            dataRow.appendChild(td);
-        });
-        tbody.appendChild(dataRow);
+        for (let a of awayGrudges) {
+          const dataRow = document.createElement('tr');
+          [a, '1'].forEach(text => {
+              const td = document.createElement('td');
+              td.textContent = text;
+              dataRow.appendChild(td);
+          });
+          tbody.appendChild(dataRow);
+        }
 
         // Assemble table
         matchupTable.appendChild(thead);
