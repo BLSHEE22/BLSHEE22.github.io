@@ -32,10 +32,31 @@
 //   return dateToCheck >= start && checkDate <= end;
 // }
 
-
+// export const weekByWeekInfo = {1:{'thursday':{'date':'Thursday, September 4th',
+//                                           'matchups':[{'header':'Dallas Cowboys @ Philadelphia Eagles',
+//                                                        'divisional': true,
+//                                                        'awayGrudges':[{'name':'Miles Sanders',
+//                                                                        'position':'RB',
+//                                                                        'grudgeType':'Primary Grudge',                                                  
+//                                                                        'seasons':'2019-2022',
+//                                                                        'positionRk':'59'},
+//                                                                       {'name':'Parris Campbell',
+//                                                                        'grudgeType':'Grudge',   
+//                                                                        'seasons': '2024',                                                                
+//                                                                        'positionRk':'153'}]',
+//                                                        'homeGrudges':['None'],
+//                                                      }]
+//                                           }
+//                               }
+//                            };
 let week = 1;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
-const games = [1, 2, 3];
+const matchups = [{'header':'Dallas Cowboys @ Philadelphia Eagles',
+                   'divisional': true }, 
+                  {'header':'Kansas City Chiefs vs. Los Angeles Chargers',
+                   'divisional': true }, 
+                  {'header':'Tampa Bay Buccaneers @ Atlanta Falcons',
+                   'divisional': true } ];
 const awayGrudges = ['a', 'b', 'c', 'd', 'e'];
 const homeGrudges = [];
 const startDate = new Date('2025-08-01');
@@ -89,13 +110,20 @@ for (let day of days) {
         });
     }
 
-    for (let game of games) {
+    for (let matchup of matchups) {
         // Create matchup header
         const matchupHeader = document.createElement('p');
-        matchupHeader.textContent = `Game ${game} Title`;
+        matchupHeader.textContent = matchup['header'];
         matchupHeader.style.textAlign = 'center';
+        matchupHeader.style.fontWeight = 'bold';
         parentElement.appendChild(matchupHeader);
-
+        if (matchup['divisional']) {
+            const divisionalHeader = document.createElement('p');
+            divisionalHeader.textContext = 'Divisional Matchup';
+            divisionalHeader.style.textAlign = 'center';
+            parentElement.appendChild(divisionalHeader);
+        }
+        
         // Create table
         const matchupTable = document.createElement('table');
 
