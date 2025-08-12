@@ -147,12 +147,12 @@ for (let day of days) {
         matchupHeader.innerHTML = htmlString + '<br>';
         // Add header object to DOM
         parentElement.appendChild(matchupHeader);
-          
+
+        // Create matchupDiv
+        const matchupDiv = document.createElement('div');
+        matchupDiv.className = 'collapsible-table';
         // Create table
         const matchupTable = document.createElement('table');
-        matchupTable.className = 'table-container';
-        const tableId = day + awayTeam + homeTeam;
-        matchupTable.id = tableId;
 
         // Header row
         const thead = document.createElement('thead');
@@ -172,7 +172,7 @@ for (let day of days) {
         // Body row
         const tbody = document.createElement('tbody');
         const dataRow = document.createElement('tr');
-        [['Data A', 'Data B'], ['Data C', 'Data D']].forEach(text => {
+        ['Data A', 'Data B'].forEach(text => {
             const td = document.createElement('td');
             td.textContent = text;
             dataRow.appendChild(td);
@@ -182,12 +182,15 @@ for (let day of days) {
         // Assemble table
         matchupTable.appendChild(thead);
         matchupTable.appendChild(tbody);
-        parentElement.appendChild(matchupTable);
+        matchupDiv.appendChil(matchupTable);
+        parentElement.appendChild(matchupDiv);
 
         // Add event listener for table
-        document.getElementById(tableId).addEventListener('click', function () {
-          const container = document.getElementById(tableId);
-          container.classList.toggle('open');
+        document.querySelectorAll('.collapsible-table table').forEach(table => {
+          table.addEventListener('click', () => {
+            const tbody = table.querySelector('tbody');
+            tbody.classList.toggle('open');
+          });
         });
 
     }
