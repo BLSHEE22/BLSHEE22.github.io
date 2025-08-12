@@ -36,8 +36,11 @@ const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 const games = [1, 2, 3];
 const now = new Date();
 
+document.getElementById('what-week-is-it').innerHTML = `${now}`;
+
 if (now >= Date('2025-08-01') && now <= Date('2025-09-02')) {
-    document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week ${week['number']}</a></p>`;
+    document.getElementById('what-week-is-it').innerHTML = `PASS`;
+    // document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week ${week['number']}</a></p>`;
 }
 
 // for (let week of weeks) {
