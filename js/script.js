@@ -1,4 +1,21 @@
-
+const teams = {'DAL':{'name': 'Dallas Cowboys',
+                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
+                      'division': 'NFC East'},
+              'PHI':{'name': 'Dallas Cowboys',
+                     'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
+                     'division': 'NFC East'},
+              'KAN':{'name': 'Dallas Cowboys',
+                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
+                      'division': 'NFC East'},
+              'LAC':{'name': 'Dallas Cowboys',
+                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
+                      'division': 'NFC East'},
+              'TAM':{'name': 'Dallas Cowboys',
+                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
+                      'division': 'NFC East'},
+              'ATL':{'name': 'Dallas Cowboys',
+                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
+                      'division': 'NFC East'}};
 
 // import { weekByWeekInfo } from './data.js';
 
@@ -51,12 +68,18 @@
 //                            };
 let week = 1;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
-const matchups = [{'header':'Dallas Cowboys @ Philadelphia Eagles',
-                   'divisional': true }, 
-                  {'header':'Kansas City Chiefs vs. Los Angeles Chargers',
-                   'divisional': true }, 
-                  {'header':'Tampa Bay Buccaneers @ Atlanta Falcons',
-                   'divisional': true } ];
+const matchups = [{'awayTeam': 'DAL',
+                   'homeTeam': 'PHI',
+                   'awayGrudges': [],
+                   'homeGrudges': []}, 
+                  {'awayTeam': 'KAN',
+                   'homeTeam': 'LAC',
+                   'awayGrudges': [],
+                   'homeGrudges': []}, 
+                  {'awayTeam': 'TAM',
+                   'homeTeam': 'ATL',
+                   'awayGrudges': [],
+                   'homeGrudges': []}];
 const awayGrudges = ['a', 'b', 'c', 'd', 'e'];
 const homeGrudges = [];
 const startDate = new Date('2025-08-01');
@@ -104,38 +127,45 @@ for (let day of days) {
     // Update day header
     const dayHeader = document.getElementById(day + 'Header');
     if (dayHeader) {
-        dayHeader.innerHTML = day.charAt(0).toUpperCase() + day.slice(1); // Capitalize day name
+        dayHeader.innerHTML = day //.charAt(0).toUpperCase() + day.slice(1); // Capitalize day name
         dayHeader.addEventListener('click', () => {
             alert(`${day} header clicked!`);
         });
     }
 
     for (let matchup of matchups) {
+        // Store matchup variables
+        const awayTeam = matchup['awayTeam'];
+        const homeTeam = matchup['homeTeam'];
         // Create matchup header
         const matchupHeader = document.createElement('p');
-        matchupHeader.textContent = matchup['header'];
+        matchupHeader.textContent = `${teams[awayTeam]['name']} @ ${teams[homeTeam]['name']}`;
         matchupHeader.style.textAlign = 'center';
         matchupHeader.style.fontWeight = 'bold';
         parentElement.appendChild(matchupHeader);
-        if (matchup['divisional']) {
+        if (teams[awayTeam]['division'] == teams[homeTeam]['division']) {
             const divisionalHeader = document.createElement('p');
-            divisionalHeader.textContext = 'Divisional Matchup';
+            divisionalHeader.textContent = 'Divisional Matchup';
             divisionalHeader.style.textAlign = 'center';
             parentElement.appendChild(divisionalHeader);
         }
-        
+          
         // Create table
         const matchupTable = document.createElement('table');
 
         // Header row
         const thead = document.createElement('thead');
         const headerRow = document.createElement('tr');
-        ['Column 1', 'Column 2'].forEach(text => {
+        [teams[awayTeam]['logo'], teams[homeTeam]['logo']].forEach(text => {
             const th = document.createElement('th');
             th.textContent = text;
             headerRow.appendChild(th);
         });
         thead.appendChild(headerRow);
+
+        //INTERLEAVE AWAYGRUDGES AND HOMEGRUDGES
+        //
+        //
 
         // Body row
         const tbody = document.createElement('tbody');
