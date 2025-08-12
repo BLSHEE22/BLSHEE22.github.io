@@ -20,8 +20,6 @@
 // Update the clock every second
 //setInterval(updateClock, 1000);
 
-// document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
-
 // function isDateInRange(startDate, endDate) {
 //   // Ensure all inputs are Date objects
 //   const dateToCheck = new Date();
@@ -34,13 +32,16 @@
 
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 const games = [1, 2, 3];
+const startDate = new Date('2025-08-01');
+const endDate = new Date('2025-09-02');
 const now = new Date();
 
-document.getElementById('what-week-is-it').innerHTML = `${now}`;
-
-if (now >= Date('2025-08-01') && now <= Date('2025-09-02')) {
+if (now >= startDate && now <= endDate) {
     document.getElementById('what-week-is-it').innerHTML = `PASS`;
     // document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week ${week['number']}</a></p>`;
+}
+else {
+    document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
 }
 
 // for (let week of weeks) {
