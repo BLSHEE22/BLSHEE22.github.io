@@ -37,8 +37,8 @@ const endDate = new Date('2025-09-02');
 const now = new Date();
 
 if (now >= startDate && now <= endDate) {
-    document.getElementById('what-week-is-it').innerHTML = `PASS`;
-    // document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week ${week['number']}</a></p>`;
+    // document.getElementById('what-week-is-it').innerHTML = `PASS`;
+    document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week ${week['number']}</a></p>`;
 }
 else {
     document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
