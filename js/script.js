@@ -46,8 +46,7 @@ let weekObj = document.getElementById('what-week-is-it');
 
 if (now >= startDate && now <= endDate) {
     weekObj.innerHTML = `
-      <p>Yes, there are ${awayGrudges.length + homeGrudges.length} grudge matches taking place.</p>
-      <button>Buy Now</button>
+      <p>Grudge matches: ${awayGrudges.length}</p>
     `;
     // document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${awayGrudges.length + homeGrudges.length}</strong> grudge matches taking place in <a href=#upcoming-week>${week}</a>.</p>`;
 }
