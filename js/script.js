@@ -1,19 +1,19 @@
 const teams = {'DAL':{'name': 'Dallas Cowboys',
                       'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
                       'division': 'NFC East'},
-              'PHI':{'name': 'Dallas Cowboys',
+              'PHI':{'name': 'Philadelphia Eagles',
                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/phi-2025.png',
                      'division': 'NFC East'},
-              'KAN':{'name': 'Dallas Cowboys',
+              'KAN':{'name': 'Kansas City Chiefs',
                       'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/kan-2025.png',
                       'division': 'AFC West'},
-              'LAC':{'name': 'Dallas Cowboys',
+              'LAC':{'name': 'Los Angeles Chargers',
                       'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/sdg-2025.png',
                       'division': 'AFC West'},
-              'TAM':{'name': 'Dallas Cowboys',
+              'TAM':{'name': 'Tampa Bay Buccaneers',
                       'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/tam-2025.png',
                       'division': 'NFC South'},
-              'ATL':{'name': 'Dallas Cowboys',
+              'ATL':{'name': 'Atlanta Falcons',
                       'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/atl-2025.png',
                       'division': 'NFC South'}};
 
@@ -150,6 +150,8 @@ for (let day of days) {
           
         // Create table
         const matchupTable = document.createElement('table');
+        const tableId = day + awayTeam + homeTeam;
+        matchupTable.id = tableId;
 
         // Header row
         const thead = document.createElement('thead');
@@ -169,7 +171,7 @@ for (let day of days) {
         // Body row
         const tbody = document.createElement('tbody');
         const dataRow = document.createElement('tr');
-        ['Data A', 'Data B'].forEach(text => {
+        ['Data A', 'Data B', 'Data C', 'Data D'].forEach(text => {
             const td = document.createElement('td');
             td.textContent = text;
             dataRow.appendChild(td);
@@ -180,5 +182,12 @@ for (let day of days) {
         matchupTable.appendChild(thead);
         matchupTable.appendChild(tbody);
         parentElement.appendChild(matchupTable);
+
+        // Add event listener for table
+        document.getElementById(tableId).addEventListener('click', function () {
+          const container = document.getElementById(tableId);
+          container.classList.toggle('open');
+        });
+
     }
 }
