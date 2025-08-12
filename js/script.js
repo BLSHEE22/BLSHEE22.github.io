@@ -150,6 +150,7 @@ for (let day of days) {
           
         // Create table
         const matchupTable = document.createElement('table');
+        matchupTable.className = 'table-container';
         const tableId = day + awayTeam + homeTeam;
         matchupTable.id = tableId;
 
