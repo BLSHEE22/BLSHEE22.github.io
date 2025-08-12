@@ -20,7 +20,7 @@
 // Update the clock every second
 //setInterval(updateClock, 1000);
 
-document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
+// document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
 
 // function isDateInRange(startDate, endDate) {
 //   // Ensure all inputs are Date objects
