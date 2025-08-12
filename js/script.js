@@ -148,9 +148,6 @@ for (let day of days) {
         // Add header object to DOM
         parentElement.appendChild(matchupHeader);
 
-        // Create matchupDiv
-        const matchupDiv = document.createElement('div');
-        matchupDiv.className = 'collapsible-table';
         // Create table
         const matchupTable = document.createElement('table');
 
@@ -182,11 +179,10 @@ for (let day of days) {
         // Assemble table
         matchupTable.appendChild(thead);
         matchupTable.appendChild(tbody);
-        matchupDiv.appendChild(matchupTable);
-        parentElement.appendChild(matchupDiv);
+        parentElement.appendChild(matchupTable);
 
         // Add event listener for table
-        document.querySelectorAll('.collapsible-table table').forEach(table => {
+        document.querySelectorAll('table').forEach(table => {
           table.addEventListener('click', () => {
             const tbody = table.querySelector('tbody');
             tbody.classList.toggle('open');
