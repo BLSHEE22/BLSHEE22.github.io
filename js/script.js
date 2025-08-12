@@ -172,7 +172,7 @@ for (let day of days) {
         // Body row
         const tbody = document.createElement('tbody');
         const dataRow = document.createElement('tr');
-        ['Data A', 'Data B', 'Data C', 'Data D'].forEach(text => {
+        [['Data A', 'Data B'], ['Data C', 'Data D']].forEach(text => {
             const td = document.createElement('td');
             td.textContent = text;
             dataRow.appendChild(td);
