@@ -182,7 +182,7 @@ for (let day of days) {
         // Assemble table
         matchupTable.appendChild(thead);
         matchupTable.appendChild(tbody);
-        matchupDiv.appendChil(matchupTable);
+        matchupDiv.appendChild(matchupTable);
         parentElement.appendChild(matchupDiv);
 
         // Add event listener for table
