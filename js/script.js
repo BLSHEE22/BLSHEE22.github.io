@@ -162,7 +162,7 @@ for (let day of days) {
         });
         thead.appendChild(headerRow);
 
-        //INTERLEAVE AWAYGRUDGES AND HOMEGRUDGES
+        // Create htmlAwayGrudges and htmlHomeGrudges, making sure to equate the length
         //
         //
 
@@ -170,9 +170,11 @@ for (let day of days) {
         const tbody = document.createElement('tbody');
         for (let a of awayGrudges) {
           const dataRow = document.createElement('tr');
-          [a, '1'].forEach(text => {
+          [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`, 
+           `<p style="font-size: 18px;">None</p>`].forEach(html => {
               const td = document.createElement('td');
-              td.textContent = text;
+              td.innerHTML = html;
+              td.style.fontSize = '12px';
               dataRow.appendChild(td);
           });
           tbody.appendChild(dataRow);
