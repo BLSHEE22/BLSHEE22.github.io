@@ -36,7 +36,7 @@
 let week = 1;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 const games = [1, 2, 3];
-const awayGrudges = ['a', 'b'];
+const awayGrudges = ['a', 'b', 'c', 'd', 'e'];
 const homeGrudges = [];
 const startDate = new Date('2025-08-01');
 const endDate = new Date('2025-09-02');
@@ -46,11 +46,10 @@ let weekObj = document.getElementById('what-week-is-it');
 
 if (now >= startDate && now <= endDate) {
     weekObj.innerHTML = `
-      <p>Yes, there are ${awayGrudges.length} grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
+      <p>Yes, there are <strong>${awayGrudges.length}</strong> grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
       <br><br><br><br><hr style="background-color: solidgray;">
       <h2 id="upcoming-week">Week 1</h2>
     `;
-    // document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${awayGrudges.length + homeGrudges.length}</strong> grudge matches taking place in <a href=#upcoming-week>${week}</a>.</p>`;
 }
 else {
     weekObj.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
