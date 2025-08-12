@@ -1,8 +1,14 @@
 /* style.css */
-#clock {
-    font-family: Arial, sans-serif;
-    font-size: 2em;
-    color: #333;
-    text-align: center;
-    margin-top: 50px;
+
+.table-container {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s ease-out;
+  opacity: 0;
+  transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.table-container.open {
+  max-height: 500px; /* adjust based on content */
+  opacity: 1;
 }
