@@ -67,7 +67,7 @@ const teams = {'DAL':{'name': 'Dallas Cowboys',
 //                               }
 //                            };
 let week = 1;
-const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
+const days = ['Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday'];
 const matchups = [{'awayTeam': 'DAL',
                    'homeTeam': 'PHI',
                    'awayGrudges': ['away1', 'away2', 'away3'],
