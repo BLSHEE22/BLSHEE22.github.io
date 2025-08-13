@@ -243,12 +243,12 @@ for (let day of days) {
         });
         thead.appendChild(headerRow);
 
-        // ADD GRUDGE DATA UNPACK HERE
+        // ADD GRUDGE DATA INJECT FUNCTION HERE
         let htmlAwayGrudges = [];
-        const awayGrudges = matchup['awayGrudges'];
+        const grudges = matchup['awayGrudges'];
         const currTeam = awayTeam;
         const grudgeTeam = homeTeam;
-        for (let grudge of awayGrudges) {
+        for (let grudge of grudges) {
           const urlName = grudge['urlName'];
           const name = grudge['name'];
           const position = grudge['position'];
@@ -261,9 +261,26 @@ for (let day of days) {
         }
 
         let htmlHomeGrudges = [];
-        const homeGrudges = matchup['homeGrudges'];
+        const grudges = matchup['homeGrudges'];
+        const currTeam = homeTeam;
+        const grudgeTeam = awayTeam;
+        for (let grudge of grudges) {
+          const urlName = grudge['urlName'];
+          const name = grudge['name'];
+          const position = grudge['position'];
+          const grudgeType = grudge['grudgeType'];
+          const seasons = grudge['seasons'];
+          const positionRk = grudge['positionRk'];
+          htmlHomeGrudges.push(`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${urlName}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>${grudgeType}<br/>Seasons with ${grudgeTeam}: ${seasons}<br/>Fantasy Position Rank: ${positionRk}<br/><br/>`);
+          console.log(`Pushed item onto HTML list.`);
+          totalGrudges++;
+        }
+
+        // inject grudge data into HTML
+        // let htmlAwayGrudges = injectGrudgeData(matchup['awayGrudges']);
+        // let htmlHomeGrudges = injectGrudgeData(matchup['homeGrudges']);
       
-        // if no grudges, append 'none' text
+        // if no grudge data, append 'none' text
         if (htmlAwayGrudges.length === 0) {
           htmlAwayGrudges.push(`<p style="font-size: 18px;">None</p>`);
         }
