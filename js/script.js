@@ -176,7 +176,7 @@ for (let day of days) {
         const homeTeam = matchup['homeTeam'];
         // Create matchup header
         const matchupHeader = document.createElement('p');
-        let htmlString = `<center><strong>${teams[awayTeam]['name']} @ ${teams[homeTeam]['name']}</strong>`;
+        let htmlString = `<center><strong>${matchup['time']} - ${teams[awayTeam]['name']} @ ${teams[homeTeam]['name']}</strong>`;
         if (teams[awayTeam]['division'] == teams[homeTeam]['division']) {
             htmlString += '<br>Divisional Matchup';
         }
