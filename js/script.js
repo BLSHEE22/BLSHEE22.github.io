@@ -91,7 +91,7 @@ let weekObj = document.getElementById('what-week-is-it');
 if (now >= startDate && now <= endDate) {
     weekObj.innerHTML = `
       <p>Yes, there are <strong>${awayGrudges.length}</strong> grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
-      <br><hr style="height: 10px; background-color: solidgray;">
+      <br><hr style="height: 20px; background-color: solidgray;">
       <h2 id="upcoming-week">Week 1</h2>
     `;
 }
@@ -173,14 +173,7 @@ for (let day of days) {
         const tbody = document.createElement('tbody');
         for (let i = 0; i < htmlAwayGrudges.length; i++) {
           const dataRow = document.createElement('tr');
-          // [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`, 
-          //  `<p style="font-size: 18px;">None</p>`].forEach(html => {
-          //     const td = document.createElement('td');
-          //     td.innerHTML = html;
-          //     td.style.fontSize = '12px';
-          //     dataRow.appendChild(td);
-          // });
-          
+
           // Add away team data to left column
           const td1 = document.createElement('td');
           td1.innerHTML = htmlAwayGrudges[i];
