@@ -73,13 +73,27 @@ const teams = {'DAL':{'name': 'Dallas Cowboys',
 //                               }
 //                            };
 let week = 1;
+let totalGrudges = 0;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 // TEMP DB vvvv
 const db = {
     'thursday': [{
         'awayTeam': 'DAL',
         'homeTeam': 'PHI',
-        'awayGrudges': [{'urlName': 'SandMi01_2025'}, {'urlName': 'CampPa00_2024'}],
+        'awayGrudges': [{'urlName': 'SandMi01_2025',
+                         'name': 'Miles Sanders',
+                         'position': 'RB',
+                         'grudgeType': 'Primary Grudge',
+                         'seasons': '2019-2022',
+                         'positionRk': '59'
+                        }, 
+                        {'urlName': 'CampPa00_2024',
+                         'name': 'Parris Campbell',
+                         'position': 'WR',
+                         'grudgeType': 'Grudge',
+                         'seasons': '2024',
+                         'positionRk': '153'
+                        }],
         'homeGrudges': []
     }],
     'friday': [{
@@ -198,13 +212,21 @@ for (let day of days) {
         // ADD GRUDGE DATA UNPACK HERE
         let htmlAwayGrudges = [];
         const awayGrudges = matchup['awayGrudges'];
+        const currTeam = awayTeam;
+        const grudgeTeam = homeTeam;
         for (let grudge of awayGrudges) {
           const urlName = grudge['urlName'];
-          htmlAwayGrudges.push(`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${urlName}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`);
+          const name = grudge['name'];
+          const position = grudge['position'];
+          const grudgeType = grudge['grudgeType'];
+          const seasons = grudge['seasons'];
+          const positionRk = grudge['positionRk'];
+          htmlAwayGrudges.push(`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${urlName}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>${grudgeType}<br/>Seasons with ${grudgeTeam}: ${seasons}<br/>Fantasy Position Rank: ${positionRk}<br/><br/>`);
           console.log(`Pushed item onto HTML list.`);
+          totalGrudges++;
         }
       
-        // equal length lists
+        // EQUALIZE LENGTH OF LISTS (add '' to smaller list however many times necessary)
         // let htmlAwayGrudges = [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${injectTest}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`,
         //                        `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Parris Campbell (WR, DAL)</strong><br/>Grudge<br/>Seasons with PHI: 2024<br/>Fantasy Position Rank: 153<br/><br/>`];
         if (htmlAwayGrudges.length === 0) {
@@ -242,6 +264,9 @@ for (let day of days) {
     }
 }
 
+// Log total number of grudges
+console.log(`Total number of grudges in week ${week}: ${totalGrudges}`);
+
 // Add event listeners for all tables
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('table').forEach(table => {
@@ -251,3 +276,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
