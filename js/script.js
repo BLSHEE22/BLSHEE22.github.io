@@ -119,6 +119,13 @@ const db = {
                          'grudgeType': 'Primary Grudge',
                          'seasons': '2019-2022',
                          'positionRk': 'N/A'
+                        },
+                        {'urlName': 'FultKr00_2025',
+                         'name': 'Kristian Fulton',
+                         'position': 'CB',
+                         'grudgeType': 'Grudge',
+                         'seasons': '2024',
+                         'positionRk': 'N/A'
                         }],
         'homeGrudges': []
     }],
