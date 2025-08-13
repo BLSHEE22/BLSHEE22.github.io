@@ -70,8 +70,11 @@ let week = 1;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 const matchups = [{'awayTeam': 'DAL',
                    'homeTeam': 'PHI',
-                   'awayGrudges': ['away1', 'away2', 'away3'],
-                   'homeGrudges': ['home1', 'home2']}, 
+                   'awayGrudges': [{'name': 'Miles Sanders',
+                                    'urlName': 'SandMi01_2025'},
+                                  {'name': 'Parris Campbell',
+                                    'urlName': 'SandMi01_2025'}],
+                   'homeGrudges': []}, 
                   {'awayTeam': 'KAN',
                    'homeTeam': 'LAC',
                    'awayGrudges': [],
@@ -80,8 +83,8 @@ const matchups = [{'awayTeam': 'DAL',
                    'homeTeam': 'ATL',
                    'awayGrudges': [],
                    'homeGrudges': []}];
-const awayGrudges = ['a', 'b', 'c', 'd', 'e'];
-const homeGrudges = [];
+// const awayGrudges = ['a', 'b', 'c', 'd', 'e'];
+// const homeGrudges = [];
 const startDate = new Date('2025-08-01');
 const endDate = new Date('2025-09-02');
 const now = new Date();
@@ -162,14 +165,25 @@ for (let day of days) {
         });
         thead.appendChild(headerRow);
 
-        // ADD LOOP LOGIC HERE
+        // TEST
+        // const awayGrudges = matchup['awayGrudges'];
+        // const homeGrudges = matchup['homeGrudges'];
+      
+        let htmlAwayGrudges = [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`,
+                               `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Parris Campbell (WR, DAL)</strong><br/>Grudge<br/>Seasons with PHI: 2024<br/>Fantasy Position Rank: 153<br/><br/>`];
+        let htmlHomeGrudges = [`<p style="font-size: 18px;">None</p>`, ``];
 
-        // Body row
+        // Interleave lists
+        const grudgeRows = htmlAwayGrudges.map((item1, index) => {
+          const item2 = htmlHomeGrudges[index];
+          return [item1, item2]; // Returns an array of arrays: [['away1', 'home1'], ['away2', 'home2'], ['away3', 'home3']]
+        });
+
+        // Form body rows
         const tbody = document.createElement('tbody');
-        for (let a of awayGrudges) {
+        for (let row of grudgeRows) {
           const dataRow = document.createElement('tr');
-          [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`, 
-           `<p style="font-size: 18px;">None</p>`].forEach(html => {
+          row.forEach(html => {
               const td = document.createElement('td');
               td.innerHTML = html;
               td.style.fontSize = '12px';
@@ -177,6 +191,23 @@ for (let day of days) {
           });
           tbody.appendChild(dataRow);
         }
+
+        // // ADD LOOP LOGIC HERE
+        // const awayGrudges = matchup['awayGrudges'];
+
+        // // Body row
+        // const tbody = document.createElement('tbody');
+        // for (let a of awayGrudges) {
+        //   const dataRow = document.createElement('tr');
+        //   [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`, 
+        //    `<p style="font-size: 18px;">None</p>`].forEach(html => {
+        //       const td = document.createElement('td');
+        //       td.innerHTML = html;
+        //       td.style.fontSize = '12px';
+        //       dataRow.appendChild(td);
+        //   });
+        //   tbody.appendChild(dataRow);
+        // }
 
         // Assemble table
         matchupTable.appendChild(thead);
