@@ -80,7 +80,7 @@ const matchups = [{'awayTeam': 'DAL',
                    'homeTeam': 'ATL',
                    'awayGrudges': [],
                    'homeGrudges': []}];
-const awayGrudges = ['a', 'b', 'c', 'd', 'e'];
+const awayGrudges = ['a', 'b'];
 const homeGrudges = [];
 const startDate = new Date('2025-08-01');
 const endDate = new Date('2025-09-02');
@@ -91,8 +91,8 @@ let weekObj = document.getElementById('what-week-is-it');
 if (now >= startDate && now <= endDate) {
     weekObj.innerHTML = `
       <p>Yes, there are <strong>${awayGrudges.length}</strong> grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
-      <br><hr style="height: 5ps; background-color: solidgray;">
-      <h1 id="upcoming-week">Week 1</h1>
+      <br><hr style="height: 10px; background-color: solidgray;">
+      <h2 id="upcoming-week">Week 1</h2>
     `;
 }
 else {
@@ -164,17 +164,36 @@ for (let day of days) {
 
         // ADD LOOP LOGIC HERE
 
-        // Body row
+        // equal length lists
+        let htmlAwayGrudges = [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`,
+                               `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Parris Campbell (WR, DAL)</strong><br/>Grudge<br/>Seasons with PHI: 2024<br/>Fantasy Position Rank: 153<br/><br/>`];
+        let htmlHomeGrudges = [`<p style="font-size: 18px;">None</p>`, ''];
+
+        // Body row(s)
         const tbody = document.createElement('tbody');
-        for (let a of awayGrudges) {
+        for (let i = 0; i < htmlAwayGrudges.length; i++) {
           const dataRow = document.createElement('tr');
-          [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`, 
-           `<p style="font-size: 18px;">None</p>`].forEach(html => {
-              const td = document.createElement('td');
-              td.innerHTML = html;
-              td.style.fontSize = '12px';
-              dataRow.appendChild(td);
-          });
+          // [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`, 
+          //  `<p style="font-size: 18px;">None</p>`].forEach(html => {
+          //     const td = document.createElement('td');
+          //     td.innerHTML = html;
+          //     td.style.fontSize = '12px';
+          //     dataRow.appendChild(td);
+          // });
+          
+          // Add away team data to left column
+          const td1 = document.createElement('td');
+          td1.innerHTML = htmlAwayGrudges[i];
+          td1.style.fontSize = '12px'
+          dataRow.appendChild(td1);
+
+          // Add home team data to right column
+          const td2 = document.createElement('td');
+          td2.innerHTML = htmlHomeGrudges[i];
+          td2.style.fontSize = '12px'
+          dataRow.appendChild(td2);
+          
+          // Append row to body
           tbody.appendChild(dataRow);
         }
 
