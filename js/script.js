@@ -105,6 +105,13 @@ const db = {
                          'grudgeType': 'Primary Grudge',
                          'seasons': '2019-2022',
                          'positionRk': 'N/A'
+                        },
+                        {'urlName': 'ChriCo00_2025',
+                         'name': 'Cole Christiansen',
+                         'position': 'LB',
+                         'grudgeType': 'Primary Grudge',
+                         'seasons': '2020-2021',
+                         'positionRk:' 'N/A'
                         }],
         'homeGrudges': []
     }],
