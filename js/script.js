@@ -99,7 +99,13 @@ const db = {
     'friday': [{
         'awayTeam': 'KAN',
         'homeTeam': 'LAC',
-        'awayGrudges': [],
+        'awayGrudges': [{'urlName': 'TillJe00_2025',
+                         'name': 'Jerry Tillery',
+                         'position': 'DL',
+                         'grudgeType': 'Primary Grudge',
+                         'seasons': '2019-2022',
+                         'positionRk': 'N/A'
+                        }],
         'homeGrudges': []
     }],
     'saturday': [],
