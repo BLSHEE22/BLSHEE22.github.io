@@ -68,20 +68,24 @@ const teams = {'DAL':{'name': 'Dallas Cowboys',
 //                            };
 let week = 1;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
-const matchups = [{'awayTeam': 'DAL',
-                   'homeTeam': 'PHI',
-                   'awayGrudges': ['away1', 'away2', 'away3'],
-                   'homeGrudges': ['home1', 'home2']}, 
-                  {'awayTeam': 'KAN',
-                   'homeTeam': 'LAC',
-                   'awayGrudges': [],
-                   'homeGrudges': []}, 
-                  {'awayTeam': 'TAM',
-                   'homeTeam': 'ATL',
-                   'awayGrudges': [],
-                   'homeGrudges': []}];
-const awayGrudges = ['a', 'b'];
-const homeGrudges = [];
+const fullGrudgeDatabase = [{1:{'thursday': [{'awayTeam': 'DAL',
+                                              'homeTeam': 'PHI',
+                                              'awayGrudges': ['away1', 'away2'],
+                                              'homeGrudges': []}],
+                                'friday': [{'awayTeam': 'KAN',
+                                             'homeTeam': 'LAC',
+                                             'awayGrudges': [],
+                                             'homeGrudges': []}],
+                                'saturday': [],
+                                'sunday': [{'awayTeam': 'TAM',
+                                             'homeTeam': 'ATL',
+                                             'awayGrudges': [],
+                                             'homeGrudges': []}],
+                                'monday': [{'awayTeam': 'MIN',
+                                             'homeTeam': 'CHI',
+                                             'awayGrudges': [],
+                                             'homeGrudges': []}]}
+                            }];
 const startDate = new Date('2025-08-01');
 const endDate = new Date('2025-09-02');
 const now = new Date();
@@ -91,7 +95,7 @@ let weekObj = document.getElementById('what-week-is-it');
 if (now >= startDate && now <= endDate) {
     weekObj.innerHTML = `
       <p>Yes, there are <strong>${awayGrudges.length}</strong> grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
-      <br><hr style="height: 20px; background-color: solidgray;">
+      <br><hr style="height: 40px; background-color: solidgray;">
       <h2 id="upcoming-week">Week 1</h2>
     `;
 }
@@ -123,7 +127,6 @@ else {
 for (let day of days) {
     const parentElement = document.getElementById(day);
     if (!parentElement) continue; // Skip if the element is not found
-
     // Update day header
     const dayHeader = document.getElementById(day + 'Header');
     if (dayHeader) {
@@ -133,6 +136,16 @@ for (let day of days) {
         });
     }
 
+    // Store day's matchups locally
+    const matchups = fullGrudgeDatabase[week][day];
+
+    // If no matchups on day, print 'No Games'
+    if (matchups.length === 0) {
+      const matchupHeader = document.createElement('p');
+      matchupHeader.innerHTML = `<center>No Games</center><br>`;
+      parentElement.appendChild(matchupHeader);
+    }
+  
     for (let matchup of matchups) {
         // Store matchup variables
         const awayTeam = matchup['awayTeam'];
@@ -162,7 +175,7 @@ for (let day of days) {
         });
         thead.appendChild(headerRow);
 
-        // ADD LOOP LOGIC HERE
+        // ADD DATA INJECTION CODE HERE
 
         // equal length lists
         let htmlAwayGrudges = [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`,
