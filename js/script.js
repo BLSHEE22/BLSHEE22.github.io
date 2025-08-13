@@ -144,6 +144,10 @@ for (let day of days) {
     }
 
     const matchups = db[day];
+    console.log("---");
+    console.log(day)
+    console.log(matchups);
+    console.log('---');
 
     for (let matchup of matchups) {
         // Store matchup variables
