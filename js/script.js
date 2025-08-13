@@ -261,8 +261,8 @@ for (let day of days) {
         }
 
         // form HTML
-        let htmlAwayGrudges = injectGrudgeData(matchup['awayGrudges']);
-        let htmlHomeGrudges = injectGrudgeData(matchup['homeGrudges']);
+        let htmlAwayGrudges = injectGrudgeData(matchup['awayGrudges'], awayTeam, homeTeam);
+        let htmlHomeGrudges = injectGrudgeData(matchup['homeGrudges'], homeTeam, awayTeam);
       
         // if no grudge data, append 'none' text
         if (htmlAwayGrudges.length === 0) {
