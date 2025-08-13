@@ -1,20 +1,20 @@
 const teams = {'DAL':{'name': 'Dallas Cowboys',
-                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png',
+                      'logo': 'dal-2025',
                       'division': 'NFC East'},
               'PHI':{'name': 'Philadelphia Eagles',
-                     'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/phi-2025.png',
+                     'logo': 'phi-2025',
                      'division': 'NFC East'},
               'KAN':{'name': 'Kansas City Chiefs',
-                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/kan-2025.png',
+                      'logo': 'kan-2025',
                       'division': 'AFC West'},
               'LAC':{'name': 'Los Angeles Chargers',
-                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/sdg-2025.png',
+                      'logo': 'sdg-2025',
                       'division': 'AFC West'},
               'TAM':{'name': 'Tampa Bay Buccaneers',
-                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/tam-2025.png',
+                      'logo': 'tam-2025',
                       'division': 'NFC South'},
               'ATL':{'name': 'Atlanta Falcons',
-                      'logo': 'https://cdn.ssref.net/req/202508011/tlogo/pfr/atl-2025.png',
+                      'logo': 'atl-2025',
                       'division': 'NFC South'}};
 
 // import { weekByWeekInfo } from './data.js';
@@ -154,7 +154,7 @@ for (let day of days) {
         // Header row
         const thead = document.createElement('thead');
         const headerRow = document.createElement('tr');
-        [`<img src="${teams[awayTeam]['logo']}", width="50", height="50", alt=" ">`,
+        [`<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[awayTeam]['logo']}.png", width="50", height="50", alt=" ">`,
          `<img src="${teams[homeTeam]['logo']}", width="50", height="50", alt=" ">`].forEach(html => {
             const th = document.createElement('th');
             th.innerHTML = html;
@@ -162,9 +162,7 @@ for (let day of days) {
         });
         thead.appendChild(headerRow);
 
-        // Create htmlAwayGrudges and htmlHomeGrudges, making sure to equate the length
-        //
-        //
+        // ADD LOOP LOGIC HERE
 
         // Body row
         const tbody = document.createElement('tbody');
