@@ -155,7 +155,7 @@ for (let day of days) {
         const thead = document.createElement('thead');
         const headerRow = document.createElement('tr');
         [`<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[awayTeam]['logo']}.png", width="50", height="50", alt=" ">`,
-         `<img src="${teams[homeTeam]['logo']}", width="50", height="50", alt=" ">`].forEach(html => {
+         `<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[homeTeam]['logo']}.png", width="50", height="50", alt=" ">`].forEach(html => {
             const th = document.createElement('th');
             th.innerHTML = html;
             headerRow.appendChild(th);
@@ -168,7 +168,7 @@ for (let day of days) {
         const tbody = document.createElement('tbody');
         for (let a of awayGrudges) {
           const dataRow = document.createElement('tr');
-          [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`, 
+          [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`, 
            `<p style="font-size: 18px;">None</p>`].forEach(html => {
               const td = document.createElement('td');
               td.innerHTML = html;
