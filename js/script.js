@@ -210,41 +210,30 @@ for (let day of days) {
         thead.appendChild(headerRow);
 
         // ADD GRUDGE DATA UNPACK HERE
-        function unpackGrudgeData(grudges, currTeam, grudgeTeam) {
-          let htmlGrudges = [];
-          for (let grudge of grudges) {
-            const urlName = grudge['urlName'];
-            const name = grudge['name'];
-            const position = grudge['position'];
-            const grudgeType = grudge['grudgeType'];
-            const seasons = grudge['seasons'];
-            const positionRk = grudge['positionRk'];
-            htmlGrudges.push(`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${urlName}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>${grudgeType}<br/>Seasons with ${grudgeTeam}: ${seasons}<br/>Fantasy Position Rank: ${positionRk}<br/><br/>`);
-            console.log(`Pushed item onto HTML list.`);
-            totalGrudges++;
-          }
-          return htmlGrudges;
+        let htmlAwayGrudges = [];
+        const awayGrudges = matchup['awayGrudges'];
+        const currTeam = awayTeam;
+        const grudgeTeam = homeTeam;
+        for (let grudge of awayGrudges) {
+          const urlName = grudge['urlName'];
+          const name = grudge['name'];
+          const position = grudge['position'];
+          const grudgeType = grudge['grudgeType'];
+          const seasons = grudge['seasons'];
+          const positionRk = grudge['positionRk'];
+          htmlAwayGrudges.push(`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${urlName}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>${grudgeType}<br/>Seasons with ${grudgeTeam}: ${seasons}<br/>Fantasy Position Rank: ${positionRk}<br/><br/>`);
+          console.log(`Pushed item onto HTML list.`);
+          totalGrudges++;
         }
       
         // EQUALIZE LENGTH OF LISTS (add '' to smaller list however many times necessary)
         // let htmlAwayGrudges = [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${injectTest}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`,
         //                        `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Parris Campbell (WR, DAL)</strong><br/>Grudge<br/>Seasons with PHI: 2024<br/>Fantasy Position Rank: 153<br/><br/>`];
-        let htmlAwayGrudges = unpackGrudgeData(matchup['awayGrudges'], awayTeam, homeTeam);
-        let htmlHomeGrudges = unpackGrudgeData(matchup['homeGrudges'], homeTeam, awayTeam);
         if (htmlAwayGrudges.length === 0) {
           htmlAwayGrudges.push(`<p style="font-size: 18px;">None</p>`);
         }
-        if (htmlHomeGrudges.length === 0) {
-          htmlHomeGrudges.push(`<p style="font-size: 18px;">None</p>`);
-        }
-        while (htmlAwayGrudges.length < htmlHomeGrudges.length) {
-          htmlAwayGrudges.push('');
-        }
-        while (htmlHomeGrudges.length < htmlAwayGrudges.length) {
-          htmlAwayGrudges.push('');
-        }
-        console.log(`Finished HTML for away grudges (length of ${htmlAwayGrudges.length}): ${htmlAwayGrudges}`);
-        console.log(`Finished HTML for home grudges (length of ${htmlHomeGrudges.length}): ${htmlHomeGrudges}`);
+        console.log(`Finished HTML: ${htmlAwayGrudges}`);
+        let htmlHomeGrudges = [`<p style="font-size: 18px;">None</p>`, ''];
 
         // Body row(s)
         const tbody = document.createElement('tbody');
@@ -287,4 +276,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
-
