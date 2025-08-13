@@ -103,8 +103,8 @@ const db = {
     }]
 };
 // TEMP DB ^^^
-// const awayGrudges = ['a', 'b'];
-// const homeGrudges = [];
+const awayGrudges = ['a', 'b'];
+const homeGrudges = [];
 const startDate = new Date('2025-08-01');
 const endDate = new Date('2025-09-02');
 const now = new Date();
@@ -195,16 +195,12 @@ for (let day of days) {
         });
         thead.appendChild(headerRow);
 
-        // ADD GRUDGE UNPACK LOGIC HERE
-        let htmlAwayGrudges = [];
-        const awayGrudges = matchup['awayGrudges'];
-        for (let grudge of awayGrudges) {
-          htmlAwayGrudges.push(`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${grudge['urlName']}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`);
-        }
+        // ADD GRUDGE DATA UNPACK HERE
+        // awayGrudges = matchup['awayGrudges'];
 
         // equal length lists
-        // let htmlAwayGrudges = [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`,
-        //                        `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Parris Campbell (WR, DAL)</strong><br/>Grudge<br/>Seasons with PHI: 2024<br/>Fantasy Position Rank: 153<br/><br/>`];
+        let htmlAwayGrudges = [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`,
+                               `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Parris Campbell (WR, DAL)</strong><br/>Grudge<br/>Seasons with PHI: 2024<br/>Fantasy Position Rank: 153<br/><br/>`];
         let htmlHomeGrudges = [`<p style="font-size: 18px;">None</p>`, ''];
 
         // Body row(s)
@@ -215,13 +211,13 @@ for (let day of days) {
           // Add away team data to left column
           const td1 = document.createElement('td');
           td1.innerHTML = htmlAwayGrudges[i];
-          td1.style.fontSize = '12px';
+          td1.style.fontSize = '12px'
           dataRow.appendChild(td1);
 
           // Add home team data to right column
           const td2 = document.createElement('td');
           td2.innerHTML = htmlHomeGrudges[i];
-          td2.style.fontSize = '12px';
+          td2.style.fontSize = '12px'
           dataRow.appendChild(td2);
           
           // Append row to body
