@@ -225,30 +225,40 @@ for (let day of days) {
           console.log(`Pushed item onto HTML list.`);
           totalGrudges++;
         }
+
+        let htmlHomeGrudges = [];
+        const homeGrudges = matchup['homeGrudges'];
       
-        // EQUALIZE LENGTH OF LISTS (add '' to smaller list however many times necessary)
-        // let htmlAwayGrudges = [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${injectTest}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`,
-        //                        `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Parris Campbell (WR, DAL)</strong><br/>Grudge<br/>Seasons with PHI: 2024<br/>Fantasy Position Rank: 153<br/><br/>`];
+        // if no grudges, append 'none' text
         if (htmlAwayGrudges.length === 0) {
           htmlAwayGrudges.push(`<p style="font-size: 18px;">None</p>`);
         }
-        console.log(`Finished HTML: ${htmlAwayGrudges}`);
-        let htmlHomeGrudges = [`<p style="font-size: 18px;">None</p>`, ''];
+        if (htmlHomeGrudges.length === 0) {
+          htmlHomeGrudges.push(`<p style="font-size: 18px;">None</p>`);
+        }
+        console.log(`Finished HTML for away grudges (length: ${htmlAwayGrudges.length}}): ${htmlAwayGrudges}`);
+        console.log(`Finished HTML for home grudges (length: ${htmlHomeGrudges.length}}): ${htmlHomeGrudges}`);
 
         // Body row(s)
         const tbody = document.createElement('tbody');
-        for (let i = 0; i < htmlAwayGrudges.length; i++) {
+        for (let i = 0; i < Math.max(htmlAwayGrudges.length, htmlHomeGrudges.length); i++) {
           const dataRow = document.createElement('tr');
 
           // Add away team data to left column
           const td1 = document.createElement('td');
-          td1.innerHTML = htmlAwayGrudges[i];
+          try:
+            td1.innerHTML = htmlAwayGrudges[i];
+          catch:
+            td2.innerHTML = '';
           td1.style.fontSize = '12px'
           dataRow.appendChild(td1);
 
           // Add home team data to right column
           const td2 = document.createElement('td');
-          td2.innerHTML = htmlHomeGrudges[i];
+          try:
+            td2.innerHTML = htmlHomeGrudges[i];
+          catch:
+            td2.innerHTML = '';
           td2.style.fontSize = '12px'
           dataRow.appendChild(td2);
           
