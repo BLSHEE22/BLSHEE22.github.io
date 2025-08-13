@@ -68,18 +68,28 @@ const teams = {'DAL':{'name': 'Dallas Cowboys',
 //                            };
 let week = 1;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
-const matchups = [{'awayTeam': 'DAL',
-                   'homeTeam': 'PHI',
-                   'awayGrudges': ['away1', 'away2', 'away3'],
-                   'homeGrudges': ['home1', 'home2']}, 
-                  {'awayTeam': 'KAN',
-                   'homeTeam': 'LAC',
-                   'awayGrudges': [],
-                   'homeGrudges': []}, 
-                  {'awayTeam': 'TAM',
-                   'homeTeam': 'ATL',
-                   'awayGrudges': [],
-                   'homeGrudges': []}];
+// TEMP DB vvvv
+const db = {
+    'thursday': [{
+        'awayTeam': 'DAL',
+        'homeTeam': 'PHI',
+        'awayGrudges': ['away1', 'away2', 'away3'],
+        'homeGrudges': ['home1', 'home2']
+    }],
+    'friday': [{
+        'awayTeam': 'KAN',
+        'homeTeam': 'LAC',
+        'awayGrudges': [],
+        'homeGrudges': []
+    }],
+    'sunday': [{
+        'awayTeam': 'TAM',
+        'homeTeam': 'ATL',
+        'awayGrudges': [],
+        'homeGrudges': []
+    }]
+};
+// TEMP DB ^^^
 const awayGrudges = ['a', 'b'];
 const homeGrudges = [];
 const startDate = new Date('2025-08-01');
@@ -132,6 +142,8 @@ for (let day of days) {
             alert(`${day} header clicked!`);
         });
     }
+
+    const matchups = db[day];
 
     for (let matchup of matchups) {
         // Store matchup variables
