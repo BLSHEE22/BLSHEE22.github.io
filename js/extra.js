@@ -66,3 +66,33 @@
 //                 parentElement.appendChild(matchupTable);
 //         }
 // }
+
+// function updateClock() {
+//     const now = new Date(); // Get current date and time
+
+//     // Format the date
+//     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+//     const dateString = now.toLocaleDateString('en-US', options);
+
+//     // Format the time
+//     const timeString = now.toLocaleTimeString('en-US');
+
+//     // Combine and update the HTML element
+//     document.getElementById('clock').innerHTML = `${dateString} - ${timeString}`;
+// }
+
+// Call updateClock initially to display the time immediately
+//updateClock();
+
+// Update the clock every second
+//setInterval(updateClock, 1000);
+
+// function isDateInRange(startDate, endDate) {
+//   // Ensure all inputs are Date objects
+//   const dateToCheck = new Date();
+//   const start = new Date(startDate);
+//   const end = new Date(endDate);
+
+//   // Compare the dates
+//   return dateToCheck >= start && checkDate <= end;
+// }
