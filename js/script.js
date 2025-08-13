@@ -15,7 +15,13 @@ const teams = {'DAL':{'name': 'Dallas Cowboys',
                       'division': 'NFC South'},
               'ATL':{'name': 'Atlanta Falcons',
                       'logo': 'atl-2025',
-                      'division': 'NFC South'}};
+                      'division': 'NFC South'},
+              'MIN':{'name': 'Minnesota Vikings',
+                      'logo': 'min-2025',
+                      'division': 'NFC North'},
+              'CHI':{'name': 'Chicago Bears',
+                      'logo': 'chi-2025',
+                      'division': 'NFC North'}};
 
 // import { weekByWeekInfo } from './data.js';
 
@@ -144,10 +150,7 @@ for (let day of days) {
     // Update day header
     const dayHeader = document.getElementById(day + 'Header');
     if (dayHeader) {
-        dayHeader.innerHTML = day.charAt(0).toUpperCase() + day.slice(1); // Capitalize day name
-        dayHeader.addEventListener('click', () => {
-            alert(`${day} header clicked!`);
-        });
+        dayHeader.innerHTML = `<center>${day.charAt(0).toUpperCase() + day.slice(1)}`; // Capitalize day name
     }
 
     const matchups = db[day];
