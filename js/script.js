@@ -19,37 +19,69 @@ const teams = {'DAL':{'name': 'Dallas Cowboys',
 
 // import { weekByWeekInfo } from './data.js';
 
+// function updateClock() {
+//     const now = new Date(); // Get current date and time
+
+//     // Format the date
+//     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+//     const dateString = now.toLocaleDateString('en-US', options);
+
+//     // Format the time
+//     const timeString = now.toLocaleTimeString('en-US');
+
+//     // Combine and update the HTML element
+//     document.getElementById('clock').innerHTML = `${dateString} - ${timeString}`;
+// }
+
+// Call updateClock initially to display the time immediately
+//updateClock();
+
+// Update the clock every second
+//setInterval(updateClock, 1000);
+
+// function isDateInRange(startDate, endDate) {
+//   // Ensure all inputs are Date objects
+//   const dateToCheck = new Date();
+//   const start = new Date(startDate);
+//   const end = new Date(endDate);
+
+//   // Compare the dates
+//   return dateToCheck >= start && checkDate <= end;
+// }
+
+// export const weekByWeekInfo = {1:{'thursday':{'date':'Thursday, September 4th',
+//                                           'matchups':[{'header':'Dallas Cowboys @ Philadelphia Eagles',
+//                                                        'divisional': true,
+//                                                        'awayGrudges':[{'name':'Miles Sanders',
+//                                                                        'position':'RB',
+//                                                                        'grudgeType':'Primary Grudge',                                                  
+//                                                                        'seasons':'2019-2022',
+//                                                                        'positionRk':'59'},
+//                                                                       {'name':'Parris Campbell',
+//                                                                        'grudgeType':'Grudge',   
+//                                                                        'seasons': '2024',                                                                
+//                                                                        'positionRk':'153'}]',
+//                                                        'homeGrudges':['None'],
+//                                                      }]
+//                                           }
+//                               }
+//                            };
 let week = 1;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 const matchups = [{'awayTeam': 'DAL',
                    'homeTeam': 'PHI',
-                   'awayGrudges': [{'name': 'Miles Sanders',
-                                    'urlName': 'SandMi01_2025',
-                                    'position': 'RB',
-                                    'grudgeType': 'Primary Grudge',
-                                    'seasons': '2019-2022',
-                                    'positionRk': '59'},
-                                   {'name': 'Parris Campbell',
-                                    'urlName': 'CampPa00_2024',
-                                    'position': 'WR',
-                                    'grudgeType': 'Grudge',
-                                    'seasons': '2024',
-                                    'positionRk': '153'}],
-                   'homeGrudges': []}, 
+                   'awayGrudges': ['away1', 'away2', 'away3'],
+                   'homeGrudges': ['home1', 'home2']}, 
                   {'awayTeam': 'KAN',
                    'homeTeam': 'LAC',
-                   'awayGrudges': [{'name': 'Jerry Tillery',
-                                    'urlName': 'TillJe00_2025',
-                                    'position': 'DL',
-                                    'grudgeType': 'Primary Grudge',
-                                    'seasons': '2019-2022',
-                                    'positionRk': 'N/A'}],
+                   'awayGrudges': [],
                    'homeGrudges': []}, 
                   {'awayTeam': 'TAM',
                    'homeTeam': 'ATL',
                    'awayGrudges': [],
                    'homeGrudges': []}];
-
+const awayGrudges = ['a', 'b', 'c', 'd', 'e'];
+const homeGrudges = [];
 const startDate = new Date('2025-08-01');
 const endDate = new Date('2025-09-02');
 const now = new Date();
@@ -59,13 +91,34 @@ let weekObj = document.getElementById('what-week-is-it');
 if (now >= startDate && now <= endDate) {
     weekObj.innerHTML = `
       <p>Yes, there are <strong>${awayGrudges.length}</strong> grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
-      <br><br><hr style="background-color: solidgray;">
+      <br><br><br><br><hr style="background-color: solidgray;">
       <h2 id="upcoming-week">Week 1</h2>
     `;
 }
 else {
     weekObj.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
 }
+
+// for (let week of weekByWeekInfo.keys()) {
+//     if (now >= startDate && now <= endDate) {
+//         document.getElementById('what-week-is-it').innerHTML = `${week}`;
+//         //document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>${week}</a>.</p>`;
+//         break;
+//     }
+//     else {
+//         document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
+//     }
+// }
+
+// for (let week of weeks) {
+//   if (isDateWithinRange(week['start'], week['end']) {
+//       document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week ${week['number']}</a></p>`;
+//       break;
+//   }
+//   else {
+//       document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
+//   }
+// }
 
 for (let day of days) {
     const parentElement = document.getElementById(day);
@@ -81,7 +134,7 @@ for (let day of days) {
     }
 
     for (let matchup of matchups) {
-      // Store matchup variables
+        // Store matchup variables
         const awayTeam = matchup['awayTeam'];
         const homeTeam = matchup['homeTeam'];
         // Create matchup header
@@ -109,62 +162,16 @@ for (let day of days) {
         });
         thead.appendChild(headerRow);
 
-        // Converts grudge information into HTML data for the table
-        function formTableRowHtml(grudgeList, currTeam, grudgeTeam) {
-          let htmlGrudges = [];
-          if (grudgeList.length === 0) {
-            htmlGrudges.push(`<p style="font-size: 18px;">None</p>`);
-            return htmlGrudges;
-          }
-          for (let grudge of grudgeList) {
-            let htmlString = ``;
-            // Add headshot
-            htmlString += `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${grudge['urlName']}.jpg", width="74", height="110", alt=" ">`;
-            // Add name
-            htmlString += `<br/><strong style="font-size: 18px;">${grudge['name']} (${grudge['position']}, ${currTeam})</strong>`;
-            // Add grudge type
-            htmlString += `<br/>${grudge['grudgeType']}`;
-            // Add seasons spent with grudge team
-            htmlString += `<br/>Seasons with ${grudgeTeam}: ${grudge['seasons']}<br/>`;
-            // Add fantasy position rank if applicable
-            if (awayGrudge['positionRk'] != 'N/A') {
-              htmlString += `Fantasy Position Rank: ${grudge['positionRk']}<br/>`;
-            }
-            // Add final spacing
-            htmlString += `<br/>`;
-            // Append full html string to new list
-            htmlAwayGrudges.push(htmlString);
-          }
-          // Return list of html data
-          return htmlGrudges;
-        }
+        // Create htmlAwayGrudges and htmlHomeGrudges, making sure to equate the length
+        //
+        //
 
-        // Store all grudges in this matchup locally
-        let awayGrudges = matchup['awayGrudges'];
-        let homeGrudges = matchup['homeGrudges']; 
-
-        let htmlAwayGrudges = formTableRowHtml(awayGrudges, awayTeam, homeTeam);
-        let htmlHomeGrudges = formTableRowHtml(homeGrudges, homeTeam, awayTeam);
-
-        // make sure lists are the same size
-        while (htmlAwayGrudges.length - htmlHomeGrudges.length > 0) {
-          htmlHomeGrudges.push('');
-        }
-        while (htmlHomeGrudges.length - htmlAwayGrudges.length > 0) {
-          htmlAwayGrudges.push('');
-        }
-
-        // Interleave lists
-        const grudgeRows = htmlAwayGrudges.map((item1, index) => {
-          const item2 = htmlHomeGrudges[index];
-          return [item1, item2]; // Returns an array of arrays: [['away1', 'home1'], ['away2', 'home2'], ['away3', 'home3']]
-        });
-
-        // Form body rows
+        // Body row
         const tbody = document.createElement('tbody');
-        for (let row of grudgeRows) {
+        for (let a of awayGrudges) {
           const dataRow = document.createElement('tr');
-          row.forEach(html => {
+          [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`, 
+           `<p style="font-size: 18px;">None</p>`].forEach(html => {
               const td = document.createElement('td');
               td.innerHTML = html;
               td.style.fontSize = '12px';
