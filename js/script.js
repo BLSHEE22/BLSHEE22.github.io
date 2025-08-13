@@ -112,6 +112,13 @@ const db = {
                          'grudgeType': 'Primary Grudge',
                          'seasons': '2020-2021',
                          'positionRk': 'N/A'
+                        },
+                        {'urlName': 'TranDr00_2025',
+                         'name': 'Drue Tranquill',
+                         'position': 'LB',
+                         'grudgeType': 'Primary Grudge',
+                         'seasons': '2019-2022',
+                         'positionRk': 'N/A'
                         }],
         'homeGrudges': []
     }],
