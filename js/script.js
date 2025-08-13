@@ -173,11 +173,14 @@ for (let day of days) {
                                `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Parris Campbell (WR, DAL)</strong><br/>Grudge<br/>Seasons with PHI: 2024<br/>Fantasy Position Rank: 153<br/><br/>`];
         let htmlHomeGrudges = [`<p style="font-size: 18px;">None</p>`, ``];
 
-        // Interleave lists
-        const grudgeRows = htmlAwayGrudges.map((item1, index) => {
-          const item2 = htmlHomeGrudges[index];
-          return [item1, item2]; // Returns an array of arrays: [['away1', 'home1'], ['away2', 'home2'], ['away3', 'home3']]
-        });
+        // // Interleave lists
+        // const grudgeRows = htmlAwayGrudges.map((item1, index) => {
+        //   const item2 = htmlHomeGrudges[index];
+        //   return [item1, item2]; // Returns an array of arrays: [['away1', 'home1'], ['away2', 'home2'], ['away3', 'home3']]
+        // });
+
+        let grudgeRows = [[`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`, `<p style="font-size: 18px;">None</p>`],
+                          [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Parris Campbell (WR, DAL)</strong><br/>Grudge<br/>Seasons with PHI: 2024<br/>Fantasy Position Rank: 153<br/><br/>`, ``]];
 
         // Form body rows
         const tbody = document.createElement('tbody');
