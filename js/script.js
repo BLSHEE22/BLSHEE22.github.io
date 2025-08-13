@@ -205,8 +205,10 @@ for (let day of days) {
         //   console.log(`Pushed ${urlName} item onto HTML list.`);
         // }
 
+        let injectTest = 'SandMi01_2025';
+      
         // equal length lists
-        let htmlAwayGrudges = [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`,
+        let htmlAwayGrudges = [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${injectTest}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`,
                                `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Parris Campbell (WR, DAL)</strong><br/>Grudge<br/>Seasons with PHI: 2024<br/>Fantasy Position Rank: 153<br/><br/>`];
         console.log(`Finished HTML: ${htmlAwayGrudges}`);
         let htmlHomeGrudges = [`<p style="font-size: 18px;">None</p>`, ''];
