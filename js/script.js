@@ -246,19 +246,21 @@ for (let day of days) {
 
           // Add away team data to left column
           const td1 = document.createElement('td');
-          try:
+          if (i < htmlAwayGrudges.length) {
             td1.innerHTML = htmlAwayGrudges[i];
-          catch:
+          } else {
             td2.innerHTML = '';
+          }
           td1.style.fontSize = '12px'
           dataRow.appendChild(td1);
 
           // Add home team data to right column
           const td2 = document.createElement('td');
-          try:
+          if (i < htmlHomeGrudges.length) {
             td2.innerHTML = htmlHomeGrudges[i];
-          catch:
+          } else {
             td2.innerHTML = '';
+          }
           td2.style.fontSize = '12px'
           dataRow.appendChild(td2);
           
