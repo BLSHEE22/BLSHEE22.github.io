@@ -111,7 +111,7 @@ const db = {
                          'position': 'LB',
                          'grudgeType': 'Primary Grudge',
                          'seasons': '2020-2021',
-                         'positionRk:' 'N/A'
+                         'positionRk': 'N/A'
                         }],
         'homeGrudges': []
     }],
