@@ -82,9 +82,16 @@ const db = {
         'awayGrudges': [],
         'homeGrudges': []
     }],
+    'saturday': [],
     'sunday': [{
         'awayTeam': 'TAM',
         'homeTeam': 'ATL',
+        'awayGrudges': [],
+        'homeGrudges': []
+    }],
+    'monday': [{
+        'awayTeam': 'MIN',
+        'homeTeam': 'CHI',
         'awayGrudges': [],
         'homeGrudges': []
     }]
@@ -148,6 +155,13 @@ for (let day of days) {
     console.log(day)
     console.log(matchups);
     console.log('---');
+
+    if (matchups.length === 0) {
+      const noGamesHeader = document.createElement('p');
+      noGamesHeader.innerHTML = '<center>No Games';
+      parentElement.appendChild(noGamesHeader);
+      console.log('Successfully caught no-game day!');
+    }
 
     for (let matchup of matchups) {
         // Store matchup variables
