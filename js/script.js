@@ -163,7 +163,7 @@ if (now >= startDate && now <= endDate) {
       <p>Yes, there are <strong>22</strong> grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
       <br><hr style="height: 15px; background-color: solidgray;">
       <h2 id="upcoming-week">Week ${week}</h2>
-      <p style="font-size: 10px;">**All game times are in EDT.</p>
+      <p style="font-size: 12px;">**All game times are in EDT.</p>
     `;
 }
 else {
@@ -209,7 +209,7 @@ for (let day of days) {
 
     if (matchups.length === 0) {
       const noGamesHeader = document.createElement('p');
-      noGamesHeader.innerHTML = '<center><br><br>No Games<br><br>';
+      noGamesHeader.innerHTML = '<center><br>No Games<br><br><br>';
       parentElement.appendChild(noGamesHeader);
       console.log('Successfully caught no-game day!');
     }
