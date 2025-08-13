@@ -1,10 +1,10 @@
-const teams = {'DAL':{'name': '8:20 PM (EDT) - Dallas Cowboys',
+const teams = {'DAL':{'name': '8:20 PM - Dallas Cowboys',
                       'logo': 'dal-2025',
                       'division': 'NFC East'},
               'PHI':{'name': 'Philadelphia Eagles',
                      'logo': 'phi-2025',
                      'division': 'NFC East'},
-              'KAN':{'name': '8:00 PM (EDT) - Kansas City Chiefs',
+              'KAN':{'name': '8:00 PM - Kansas City Chiefs',
                       'logo': 'kan-2025',
                       'division': 'AFC West'},
               'LAC':{'name': 'Los Angeles Chargers',
@@ -149,7 +149,8 @@ if (now >= startDate && now <= endDate) {
     weekObj.innerHTML = `
       <p>Yes, there are <strong>22</strong> grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
       <br><hr style="height: 15px; background-color: solidgray;">
-      <h2 id="upcoming-week">Week 1</h2>
+      <h2 id="upcoming-week">Week ${week}</h2>
+      <p>**All game times are in EDT.</p>
     `;
 }
 else {
