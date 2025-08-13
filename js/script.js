@@ -103,7 +103,7 @@ const db = {
     }]
 };
 // TEMP DB ^^^
-const awayGrudges = ['a', 'b'];
+// const awayGrudges = ['a', 'b'];
 const homeGrudges = [];
 const startDate = new Date('2025-08-01');
 const endDate = new Date('2025-09-02');
@@ -196,11 +196,19 @@ for (let day of days) {
         thead.appendChild(headerRow);
 
         // ADD GRUDGE DATA UNPACK HERE
-        // awayGrudges = matchup['awayGrudges'];
+        let htmlAwayGrudges = [];
+        const awayGrudges = matchup['awayGrudges'];
+        console.log(`Away grudges: ${awayGrudges}`);
+        for (let grudge of awayGrudges) {
+          const urlName = grudge['urlName'];
+          htmlAwayGrudges.push(`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${urlName}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`);
+          console.log(`Pushed ${urlName} item onto HTML list.`);
+        }
 
         // equal length lists
-        let htmlAwayGrudges = [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`,
-                               `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Parris Campbell (WR, DAL)</strong><br/>Grudge<br/>Seasons with PHI: 2024<br/>Fantasy Position Rank: 153<br/><br/>`];
+        // let htmlAwayGrudges = [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`,
+        //                        `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Parris Campbell (WR, DAL)</strong><br/>Grudge<br/>Seasons with PHI: 2024<br/>Fantasy Position Rank: 153<br/><br/>`];
+        console.log(`Finished HTML: ${htmlAwayGrudges}`);
         let htmlHomeGrudges = [`<p style="font-size: 18px;">None</p>`, ''];
 
         // Body row(s)
