@@ -78,6 +78,7 @@ const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 // TEMP DB vvvv
 const db = {
     'thursday': [{
+        'time': '8:20 PM',
         'awayTeam': 'DAL',
         'homeTeam': 'PHI',
         'awayGrudges': [{'urlName': 'SandMi01_2025',
@@ -97,6 +98,7 @@ const db = {
         'homeGrudges': []
     }],
     'friday': [{
+        'time': '8:00 PM',
         'awayTeam': 'KAN',
         'homeTeam': 'LAC',
         'awayGrudges': [{'urlName': 'TillJe00_2025',
@@ -131,6 +133,7 @@ const db = {
     }],
     'saturday': [],
     'sunday': [{
+        'time': '1:00 PM',
         'awayTeam': 'TAM',
         'homeTeam': 'ATL',
         'awayGrudges': [],
@@ -143,6 +146,7 @@ const db = {
                         }]
     }],
     'monday': [{
+        'time': '8:15 PM',
         'awayTeam': 'MIN',
         'homeTeam': 'CHI',
         'awayGrudges': [],
