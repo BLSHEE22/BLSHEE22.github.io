@@ -70,10 +70,7 @@ let week = 1;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 const matchups = [{'awayTeam': 'DAL',
                    'homeTeam': 'PHI',
-                   'awayGrudges': [{'name': 'Miles Sanders',
-                                    'urlName': 'SandMi01_2025'},
-                                  {'name': 'Parris Campbell',
-                                    'urlName': 'SandMi01_2025'}],
+                   'awayGrudges': [],
                    'homeGrudges': []}, 
                   {'awayTeam': 'KAN',
                    'homeTeam': 'LAC',
@@ -196,20 +193,23 @@ for (let day of days) {
         // }
 
         // ADD LOOP LOGIC HERE
-        const awayGrudges = [{'picUrl': 'SandMi01_2025',
-                              'name': 'Miles Sanders',
-                              'position': 'RB',
-                              'grudgeType': 'Primary Grudge'},
-                             {'picUrl': 'CampPa00_2024',
-                              'name': 'Parris Campbell',
-                              'position': 'WR',
-                              'grudgeType': 'Grudge'}];
+        // const awayGrudges = [{'picUrl': 'SandMi01_2025',
+        //                       'name': 'Miles Sanders',
+        //                       'position': 'RB',
+        //                       'grudgeType': 'Primary Grudge'},
+        //                      {'picUrl': 'CampPa00_2024',
+        //                       'name': 'Parris Campbell',
+        //                       'position': 'WR',
+        //                       'grudgeType': 'Grudge'}];
+      
+        // TEST SIMPLE LIST
+        const names = ['SandMi01_2025', 'CampPa00_2024'];
 
         // Body row
         const tbody = document.createElement('tbody');
-        for (let a of awayGrudges) {
+        for (let name of names) {
           const dataRow = document.createElement('tr');
-          [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${a['picUrl']}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">${a['name']} (${a['position']}, DAL)</strong><br/>${a['grudgeType']}<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`, 
+          [`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${name}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">Miles Sanders (RB, DAL)</strong><br/>Primary Grudge<br/>Seasons with PHI: 2019-2022<br/>Fantasy Position Rank: 59<br/><br/>`, 
            `<p style="font-size: 18px;">None</p>`].forEach(html => {
               const td = document.createElement('td');
               td.innerHTML = html;
