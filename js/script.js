@@ -1,10 +1,10 @@
-const teams = {'DAL':{'name': '8:20 PM - Dallas Cowboys',
+const teams = {'DAL':{'name': 'Dallas Cowboys',
                       'logo': 'dal-2025',
                       'division': 'NFC East'},
               'PHI':{'name': 'Philadelphia Eagles',
                      'logo': 'phi-2025',
                      'division': 'NFC East'},
-              'KAN':{'name': '8:00 PM - Kansas City Chiefs',
+              'KAN':{'name': 'Kansas City Chiefs',
                       'logo': 'kan-2025',
                       'division': 'AFC West'},
               'LAC':{'name': 'Los Angeles Chargers',
@@ -24,54 +24,6 @@ const teams = {'DAL':{'name': '8:20 PM - Dallas Cowboys',
                       'division': 'NFC North'}};
 
 // import { weekByWeekInfo } from './data.js';
-
-// function updateClock() {
-//     const now = new Date(); // Get current date and time
-
-//     // Format the date
-//     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-//     const dateString = now.toLocaleDateString('en-US', options);
-
-//     // Format the time
-//     const timeString = now.toLocaleTimeString('en-US');
-
-//     // Combine and update the HTML element
-//     document.getElementById('clock').innerHTML = `${dateString} - ${timeString}`;
-// }
-
-// Call updateClock initially to display the time immediately
-//updateClock();
-
-// Update the clock every second
-//setInterval(updateClock, 1000);
-
-// function isDateInRange(startDate, endDate) {
-//   // Ensure all inputs are Date objects
-//   const dateToCheck = new Date();
-//   const start = new Date(startDate);
-//   const end = new Date(endDate);
-
-//   // Compare the dates
-//   return dateToCheck >= start && checkDate <= end;
-// }
-
-// export const weekByWeekInfo = {1:{'thursday':{'date':'Thursday, September 4th',
-//                                           'matchups':[{'header':'Dallas Cowboys @ Philadelphia Eagles',
-//                                                        'divisional': true,
-//                                                        'awayGrudges':[{'name':'Miles Sanders',
-//                                                                        'position':'RB',
-//                                                                        'grudgeType':'Primary Grudge',                                                  
-//                                                                        'seasons':'2019-2022',
-//                                                                        'positionRk':'59'},
-//                                                                       {'name':'Parris Campbell',
-//                                                                        'grudgeType':'Grudge',   
-//                                                                        'seasons': '2024',                                                                
-//                                                                        'positionRk':'153'}]',
-//                                                        'homeGrudges':['None'],
-//                                                      }]
-//                                           }
-//                               }
-//                            };
 let week = 1;
 let totalGrudges = 0;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
