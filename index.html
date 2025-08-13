@@ -17,25 +17,26 @@ layout: default
     padding: 20px;
     background-color: white;
   }
-
-  /* Tables have fixed column widths */
-  table {
-    table-layout: fixed;
-  }
   
   /* Style for all table cells (th and td) */
   table, td, th {
+    table-layout: fixed;
     color: solid gray;
     background-color: white;
     border: 5px solid gray;
     border-collapse: collapse;
+    /* width: 500px; */
+    text-align: center; /* Centers the text horizontally */
+  }
+
+  th {
     width: 500px;
-    /* text-align: center; /* Centers the text horizontally */
+    max-width: 500px;
   }
 
   td {
-    width: 500px;
-    max-width: 500px;
+    width: 400px;
+    max-width: 400px;
   }
 
   /* Style for CLOSED matchup table */
