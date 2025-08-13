@@ -95,7 +95,7 @@ let weekObj = document.getElementById('what-week-is-it');
 if (now >= startDate && now <= endDate) {
     weekObj.innerHTML = `
       <p>Yes, there are <strong>17</strong> grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
-      <br><hr style="height: 40px; background-color: solidgray;">
+      <br><hr style="height: 80px; background-color: solidgray;">
       <h2 id="upcoming-week">Week 1</h2>
     `;
 }
@@ -141,9 +141,9 @@ for (let day of days) {
 
     // If no matchups on day, print 'No Games'
     if (matchups.length === 0) {
-      const matchupHeader = document.createElement('p');
-      matchupHeader.innerHTML = `<center>No Games</center><br>`;
-      parentElement.appendChild(matchupHeader);
+      const noGamesHeader = document.createElement('p');
+      noGamesHeader.innerHTML = `<center>No Games<br>`;
+      parentElement.appendChild(noGamesHeader);
     }
   
     for (let matchup of matchups) {
