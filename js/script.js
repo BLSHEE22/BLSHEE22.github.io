@@ -134,7 +134,13 @@ const db = {
         'awayTeam': 'TAM',
         'homeTeam': 'ATL',
         'awayGrudges': [],
-        'homeGrudges': []
+        'homeGrudges': [{'urlName': 'PiniBr00_2025',
+                         'name': 'Bradley Pinion',
+                         'position': 'P',
+                         'grudgeType': 'Grudge',
+                         'seasons': '2019-2021',
+                         'positionRk': 'N/A'
+                        }]
     }],
     'monday': [{
         'awayTeam': 'MIN',
