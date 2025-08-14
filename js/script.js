@@ -86,20 +86,6 @@ const startDate = new Date('2025-08-01');
 const endDate = new Date('2025-09-02');
 const now = new Date();
 
-let weekObj = document.getElementById('what-week-is-it');
-
-if (now >= startDate && now <= endDate) {
-    weekObj.innerHTML = `
-      <p>Yes, there are <strong>22</strong> grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
-      <br><hr style="height: 15px; background-color: solidgray;">
-      <h2 id="upcoming-week">Week ${week}</h2>
-      <p style="font-size: 12px;">**All game times are in EDT.</p>
-    `;
-}
-else {
-    weekObj.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
-}
-
 // for (let week of weekByWeekInfo.keys()) {
 //     if (now >= startDate && now <= endDate) {
 //         document.getElementById('what-week-is-it').innerHTML = `${week}`;
@@ -241,8 +227,23 @@ for (let day of days) {
     }
 }
 
-// Log total number of grudges
-console.log(`Total number of grudges in week ${week}: ${totalGrudges}`);
+// Log total number of player grudge matches
+console.log(`Total number of player grudge matches in week ${week}: ${totalGrudges}`);
+
+// Create intro block with total number of player grudge matches now counted
+let weekObj = document.getElementById('what-week-is-it');
+
+if (now >= startDate && now <= endDate) {
+    weekObj.innerHTML = `
+      <p>Yes, there are <strong>${totalGrudges}</strong> grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
+      <br><hr style="height: 15px; background-color: solidgray;">
+      <h2 id="upcoming-week">Week ${week}</h2>
+      <p style="font-size: 12px;">**All game times are in EDT.</p>
+    `;
+}
+else {
+    weekObj.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
+}
 
 // Add event listeners for all tables
 document.addEventListener('DOMContentLoaded', () => {
