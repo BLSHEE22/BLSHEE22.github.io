@@ -1,28 +1,3 @@
-const teams = {'DAL':{'name': 'Dallas Cowboys',
-                      'logo': 'dal-2025',
-                      'division': 'NFC East'},
-              'PHI':{'name': 'Philadelphia Eagles',
-                     'logo': 'phi-2025',
-                     'division': 'NFC East'},
-              'KAN':{'name': 'Kansas City Chiefs',
-                      'logo': 'kan-2025',
-                      'division': 'AFC West'},
-              'LAC':{'name': 'Los Angeles Chargers',
-                      'logo': 'sdg-2025',
-                      'division': 'AFC West'},
-              'TAM':{'name': 'Tampa Bay Buccaneers',
-                      'logo': 'tam-2025',
-                      'division': 'NFC South'},
-              'ATL':{'name': 'Atlanta Falcons',
-                      'logo': 'atl-2025',
-                      'division': 'NFC South'},
-              'MIN':{'name': 'Minnesota Vikings',
-                      'logo': 'min-2025',
-                      'division': 'NFC North'},
-              'CHI':{'name': 'Chicago Bears',
-                      'logo': 'chi-2025',
-                      'division': 'NFC North'}};
-
 import {teams, playerGrudges} from './data.js';
 let week = 1;
 let totalGrudges = 0;
