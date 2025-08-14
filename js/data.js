@@ -499,4 +499,4 @@ export const playerGrudges = { // week 1
             'positionRk': 'N/A'
         }]
     }]
-}
+};
