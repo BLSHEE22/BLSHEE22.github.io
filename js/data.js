@@ -103,7 +103,7 @@ export const playerGrudges = { // week 1
         'awayTeam': 'DAL',
         'homeTeam': 'PHI',
         'awayGrudges': [{
-            'urlName': 'SandMi00_2025',
+            'urlName': 'SandMi01_2025',
             'name': 'Miles Sanders',
             'position': 'RB',
             'grudgeType': 'Primary Grudge',
@@ -186,7 +186,7 @@ export const playerGrudges = { // week 1
             'seasons': '2022',
             'positionRk': 'N/A'
         }, {
-            'urlName': 'ThomIs00_2025',
+            'urlName': 'ThomIs01_2025',
             'name': 'Isaiah Thomas',
             'position': 'DE',
             'grudgeType': 'Primary Grudge',
@@ -194,7 +194,7 @@ export const playerGrudges = { // week 1
             'positionRk': 'N/A'
         }],
         'homeGrudges': [{
-            'urlName': 'BrowTo00_2025',
+            'urlName': 'BrowTo01_2025',
             'name': 'Tony Brown',
             'position': 'CB',
             'grudgeType': 'Grudge',
@@ -246,7 +246,7 @@ export const playerGrudges = { // week 1
             'seasons': '2017, 2018, 2019, 2020',
             'positionRk': 'N/A'
         }, {
-            'urlName': 'MeyeJa00_2025',
+            'urlName': 'MeyeJa01_2025',
             'name': 'Jakobi Meyers',
             'position': 'WR',
             'grudgeType': 'Primary Grudge',
@@ -395,7 +395,7 @@ export const playerGrudges = { // week 1
         'awayTeam': 'SFO',
         'homeTeam': 'SEA',
         'awayGrudges': [{
-            'urlName': 'BrowTr00_2025',
+            'urlName': 'BrowTr03_2025',
             'name': 'Tre Brown',
             'position': 'DB',
             'grudgeType': 'Primary Grudge',
@@ -435,7 +435,7 @@ export const playerGrudges = { // week 1
         'awayTeam': 'HTX',
         'homeTeam': 'RAM',
         'awayGrudges': [{
-            'urlName': 'ThomZa00_2025',
+            'urlName': 'ThomZa04_2025',
             'name': 'Zachary Thomas',
             'position': 'OL',
             'grudgeType': 'Primary Grudge',
@@ -462,7 +462,7 @@ export const playerGrudges = { // week 1
         'awayTeam': 'MIN',
         'homeTeam': 'CHI',
         'awayGrudges': [{
-            'urlName': 'HarrJo00_2025',
+            'urlName': 'HarrJo05_2025',
             'name': 'Jonathan Harris',
             'position': 'DE',
             'grudgeType': 'Grudge',
