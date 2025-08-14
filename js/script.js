@@ -156,7 +156,7 @@ let weekObj = document.getElementById('what-week-is-it');
 if (now >= startDate && now <= endDate) {
     weekObj.innerHTML = `
       <p>Yes, there are <strong>${totalGrudges}</strong> grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
-      <br><hr style="height: 15px; background-color: #00072D;">
+      <br><hr style="height: 12px; background-color: solidgray;">
       <h2 id="upcoming-week">Week ${week}</h2>
       <p style="font-size: 12px;">**All game times are in EDT.</p>
     `;
