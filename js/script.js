@@ -1,7 +1,7 @@
 import {teams, playerGrudges} from './data.js';
 let week = 1;
 let totalGrudges = 0;
-const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
+const days = Object.keys(playerGrudges);
 // TEMP DB vvvv
 // const db = {
 //     'thursday': [{
@@ -82,7 +82,6 @@ const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 // };
 // TEMP DB ^^^
 // const awayGrudges = ['a', 'b'];
-const homeGrudges = [];
 const startDate = new Date('2025-08-01');
 const endDate = new Date('2025-09-02');
 const now = new Date();
