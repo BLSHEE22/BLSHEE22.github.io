@@ -110,7 +110,7 @@ export const playerGrudges = { // week 1
             'seasons': '2019, 2020, 2021, 2022',
             'positionRk': '59'
         }, {
-            'urlName': 'CampPa00_2025',
+            'urlName': 'CampPa00_2024',
             'name': 'Parris Campbell',
             'position': 'WR',
             'grudgeType': 'Grudge',
