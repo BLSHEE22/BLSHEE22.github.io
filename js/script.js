@@ -142,7 +142,12 @@ for (let day of days) {
         // Assemble table
         matchupTable.appendChild(thead);
         matchupTable.appendChild(tbody);
-        parentElement.appendChild(matchupTable);  
+        parentElement.appendChild(matchupTable); 
+
+        // Add spacing after table
+        let postTableBr = document.createElement('br');
+        parentElement.appendChild(postTableBr);
+        parentElement.appendChild(postTableBr);
 
     }
 }
