@@ -23,88 +23,88 @@ const teams = {'DAL':{'name': 'Dallas Cowboys',
                       'logo': 'chi-2025',
                       'division': 'NFC North'}};
 
-// import { weekByWeekInfo } from './data.js';
+import {teams, playerGrudges} from './data.js';
 let week = 1;
 let totalGrudges = 0;
 const days = ['thursday', 'friday', 'saturday', 'sunday', 'monday'];
 // TEMP DB vvvv
-const db = {
-    'thursday': [{
-        'time': '8:20 PM',
-        'awayTeam': 'DAL',
-        'homeTeam': 'PHI',
-        'awayGrudges': [{'urlName': 'SandMi01_2025',
-                         'name': 'Miles Sanders',
-                         'position': 'RB',
-                         'grudgeType': 'Primary Grudge',
-                         'seasons': '2019-2022',
-                         'positionRk': '59'
-                        }, 
-                        {'urlName': 'CampPa00_2024',
-                         'name': 'Parris Campbell',
-                         'position': 'WR',
-                         'grudgeType': 'Grudge',
-                         'seasons': '2024',
-                         'positionRk': '153'
-                        }],
-        'homeGrudges': []
-    }],
-    'friday': [{
-        'time': '8:00 PM',
-        'awayTeam': 'KAN',
-        'homeTeam': 'LAC',
-        'awayGrudges': [{'urlName': 'TillJe00_2025',
-                         'name': 'Jerry Tillery',
-                         'position': 'DL',
-                         'grudgeType': 'Primary Grudge',
-                         'seasons': '2019-2022',
-                         'positionRk': 'N/A'
-                        },
-                        {'urlName': 'ChriCo00_2025',
-                         'name': 'Cole Christiansen',
-                         'position': 'LB',
-                         'grudgeType': 'Primary Grudge',
-                         'seasons': '2020-2021',
-                         'positionRk': 'N/A'
-                        },
-                        {'urlName': 'TranDr00_2025',
-                         'name': 'Drue Tranquill',
-                         'position': 'LB',
-                         'grudgeType': 'Primary Grudge',
-                         'seasons': '2019-2022',
-                         'positionRk': 'N/A'
-                        },
-                        {'urlName': 'FultKr00_2025',
-                         'name': 'Kristian Fulton',
-                         'position': 'CB',
-                         'grudgeType': 'Grudge',
-                         'seasons': '2024',
-                         'positionRk': 'N/A'
-                        }],
-        'homeGrudges': []
-    }],
-    'saturday': [],
-    'sunday': [{
-        'time': '1:00 PM',
-        'awayTeam': 'TAM',
-        'homeTeam': 'ATL',
-        'awayGrudges': [],
-        'homeGrudges': [{'urlName': 'PiniBr00_2025',
-                         'name': 'Bradley Pinion',
-                         'position': 'P',
-                         'grudgeType': 'Grudge',
-                         'seasons': '2019-2021',
-                         'positionRk': 'N/A'
-                        }]
-    }],
-    'monday': [{
-        'time': '8:15 PM',
-        'awayTeam': 'MIN',
-        'homeTeam': 'CHI',
-        'awayGrudges': [],
-        'homeGrudges': []
-    }]
-};
+// const db = {
+//     'thursday': [{
+//         'time': '8:20 PM',
+//         'awayTeam': 'DAL',
+//         'homeTeam': 'PHI',
+//         'awayGrudges': [{'urlName': 'SandMi01_2025',
+//                          'name': 'Miles Sanders',
+//                          'position': 'RB',
+//                          'grudgeType': 'Primary Grudge',
+//                          'seasons': '2019-2022',
+//                          'positionRk': '59'
+//                         }, 
+//                         {'urlName': 'CampPa00_2024',
+//                          'name': 'Parris Campbell',
+//                          'position': 'WR',
+//                          'grudgeType': 'Grudge',
+//                          'seasons': '2024',
+//                          'positionRk': '153'
+//                         }],
+//         'homeGrudges': []
+//     }],
+//     'friday': [{
+//         'time': '8:00 PM',
+//         'awayTeam': 'KAN',
+//         'homeTeam': 'LAC',
+//         'awayGrudges': [{'urlName': 'TillJe00_2025',
+//                          'name': 'Jerry Tillery',
+//                          'position': 'DL',
+//                          'grudgeType': 'Primary Grudge',
+//                          'seasons': '2019-2022',
+//                          'positionRk': 'N/A'
+//                         },
+//                         {'urlName': 'ChriCo00_2025',
+//                          'name': 'Cole Christiansen',
+//                          'position': 'LB',
+//                          'grudgeType': 'Primary Grudge',
+//                          'seasons': '2020-2021',
+//                          'positionRk': 'N/A'
+//                         },
+//                         {'urlName': 'TranDr00_2025',
+//                          'name': 'Drue Tranquill',
+//                          'position': 'LB',
+//                          'grudgeType': 'Primary Grudge',
+//                          'seasons': '2019-2022',
+//                          'positionRk': 'N/A'
+//                         },
+//                         {'urlName': 'FultKr00_2025',
+//                          'name': 'Kristian Fulton',
+//                          'position': 'CB',
+//                          'grudgeType': 'Grudge',
+//                          'seasons': '2024',
+//                          'positionRk': 'N/A'
+//                         }],
+//         'homeGrudges': []
+//     }],
+//     'saturday': [],
+//     'sunday': [{
+//         'time': '1:00 PM',
+//         'awayTeam': 'TAM',
+//         'homeTeam': 'ATL',
+//         'awayGrudges': [],
+//         'homeGrudges': [{'urlName': 'PiniBr00_2025',
+//                          'name': 'Bradley Pinion',
+//                          'position': 'P',
+//                          'grudgeType': 'Grudge',
+//                          'seasons': '2019-2021',
+//                          'positionRk': 'N/A'
+//                         }]
+//     }],
+//     'monday': [{
+//         'time': '8:15 PM',
+//         'awayTeam': 'MIN',
+//         'homeTeam': 'CHI',
+//         'awayGrudges': [],
+//         'homeGrudges': []
+//     }]
+// };
 // TEMP DB ^^^
 // const awayGrudges = ['a', 'b'];
 const homeGrudges = [];
@@ -157,7 +157,7 @@ for (let day of days) {
         dayHeader.innerHTML = `<center>${day.charAt(0).toUpperCase() + day.slice(1)}`; // Capitalize day name
     }
 
-    const matchups = db[day];
+    const matchups = playerGrudges[day];
     console.log("---");
     console.log(day)
     console.log(matchups);
