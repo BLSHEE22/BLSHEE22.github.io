@@ -214,7 +214,7 @@ for (let day of days) {
           if (i < htmlAwayGrudges.length) {
             td1.innerHTML = htmlAwayGrudges[i];
           } else {
-            td2.innerHTML = '';
+            td1.innerHTML = '';
           }
           td1.style.fontSize = '12px'
           dataRow.appendChild(td1);
