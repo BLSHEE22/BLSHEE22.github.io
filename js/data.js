@@ -1,5 +1,5 @@
 // all NFL teams and their titles
-const teams = {'DAL': {'name': 'Dallas Cowboys',
+export const teams = {'DAL': {'name': 'Dallas Cowboys',
                        'logo': 'dal-2025',
                        'division': 'NFC East'},
               'PHI': {'name': 'Philadelphia Eagles',
@@ -97,7 +97,7 @@ const teams = {'DAL': {'name': 'Dallas Cowboys',
                       'division': 'NFC North'}};
 
 // all matchups from a week slate and the contained player grudges
-const playerGrudges = { // week 1
+export const playerGrudges = { // week 1
     'thursday': [{
         'time': '8:20 PM',
         'awayTeam': 'DAL',
