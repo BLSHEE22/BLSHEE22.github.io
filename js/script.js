@@ -148,6 +148,7 @@ for (let day of days) {
         let postTableBr = document.createElement('br');
         parentElement.appendChild(postTableBr);
         parentElement.appendChild(postTableBr);
+        parentElement.appendChild(postTableBr);
 
     }
 }
