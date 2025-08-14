@@ -146,9 +146,9 @@ for (let day of days) {
 
         // Add spacing after table
         let postTableBr = document.createElement('br');
+        let postTableBr2 = document.createElement('br');
         parentElement.appendChild(postTableBr);
-        parentElement.appendChild(postTableBr);
-        parentElement.appendChild(postTableBr);
+        parentElement.appendChild(postTableBr2);
 
     }
 }
