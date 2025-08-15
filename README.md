@@ -30,7 +30,7 @@ Thursday, September 4th
   - | <div style="width: 300px;">![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/dal-2025.png)</div>                   | <div style="width: 300px;">![ ](https://cdn.ssref.net/req/202508011/tlogo/pfr/phi-2025.png)</div> |
     | :------------------------------------------------------------------------------: | :-------------------------------------------------------------------: |
     | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg)<br/>**Miles Sanders (RB, DAL)** has a primary grudge against PHI.<br/>He spent his first 4 seasons with PHI (2019-2022).<br/>His position rank in fantasy this season is 59.<br/><br/> | None |
-    | ![ ](https://www.pro-football-reference.com/req/20230307/images/headshots/CampPa00_2024.jpg)<br/> **Parris Campbell (WR, DAL)** has a grudge against PHI.<br/>He spent 1 season with PHI (2024).<br/>His position rank in fantasy this season is 153.<br/><br/> | |
+    
 
 Friday, September 5th  
 - **Kansas City Chiefs vs. Los Angeles Chargers - Divisional Matchup**<br/><br/>
