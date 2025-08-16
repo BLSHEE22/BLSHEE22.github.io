@@ -109,13 +109,6 @@ export const playerGrudges = { // week 1
             'grudgeType': 'Primary Grudge',
             'seasons': '2019, 2020, 2021, 2022',
             'positionRk': '59'
-        }, {
-            'urlName': 'CampPa00_2024',
-            'name': 'Parris Campbell',
-            'position': 'WR',
-            'grudgeType': 'Grudge',
-            'seasons': '2024',
-            'positionRk': '153'
         }],
         'homeGrudges': []
     }],
@@ -124,13 +117,6 @@ export const playerGrudges = { // week 1
         'awayTeam': 'KAN',
         'homeTeam': 'LAC',
         'awayGrudges': [{
-            'urlName': 'TillJe00_2025',
-            'name': 'Jerry Tillery',
-            'position': 'DL',
-            'grudgeType': 'Primary Grudge',
-            'seasons': '2019, 2020, 2021, 2022',
-            'positionRk': 'N/A'
-        }, {
             'urlName': 'ChriCo00_2025',
             'name': 'Cole Christiansen',
             'position': 'LB',
@@ -138,18 +124,25 @@ export const playerGrudges = { // week 1
             'seasons': '2020, 2021',
             'positionRk': 'N/A'
         }, {
-            'urlName': 'TranDr00_2025',
-            'name': 'Drue Tranquill',
-            'position': 'OLB',
-            'grudgeType': 'Primary Grudge',
-            'seasons': '2019, 2020, 2021, 2022',
-            'positionRk': 'N/A'
-        }, {
             'urlName': 'FultKr00_2025',
             'name': 'Kristian Fulton',
             'position': 'CB',
             'grudgeType': 'Grudge',
             'seasons': '2024',
+            'positionRk': 'N/A'
+        }, {
+            'urlName': 'TillJe00_2025',
+            'name': 'Jerry Tillery',
+            'position': 'DL',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2019, 2020, 2021, 2022',
+            'positionRk': 'N/A'
+        }, {
+            'urlName': 'TranDr00_2025',
+            'name': 'Drue Tranquill',
+            'position': 'OLB',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2019, 2020, 2021, 2022',
             'positionRk': 'N/A'
         }],
         'homeGrudges': []
@@ -207,13 +200,34 @@ export const playerGrudges = { // week 1
             'grudgeType': 'Grudge',
             'seasons': '2024',
             'positionRk': 'N/A'
+        }, {
+            'urlName': 'WillTr06_2025',
+            'name': 'Trayveon Williams',
+            'position': 'RB',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2019, 2020, 2021, 2022, 2023, 2024',
+            'positionRk': '155'
         }]
     }, {
         'time': '1:00 PM',
         'awayTeam': 'MIA',
         'homeTeam': 'CLT',
         'awayGrudges': [],
-        'homeGrudges': []
+        'homeGrudges': [{
+            'urlName': 'LammCh00_2025',
+            'name': 'Chris Lammons',
+            'position': 'DB',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2019',
+            'positionRk': 'N/A'
+        }, {
+            'urlName': 'AhmeSa01_2025',
+            'name': 'Salvon Ahmed',
+            'position': 'RB',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2020, 2021, 2022, 2023',
+            'positionRk': '76'
+        }]
     }, {
         'time': '1:00 PM',
         'awayTeam': 'CAR',
@@ -226,24 +240,38 @@ export const playerGrudges = { // week 1
             'seasons': '2021',
             'positionRk': 'N/A'
         }],
-        'homeGrudges': []
+        'homeGrudges': [{
+            'urlName': 'LeexRi00_2025',
+            'name': 'Ricky Lee',
+            'position': 'T',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2023',
+            'positionRk': 'N/A'
+        }]
     }, {
         'time': '1:00 PM',
         'awayTeam': 'RAI',
         'homeTeam': 'NWE',
         'awayGrudges': [{
-            'urlName': 'RobeEl00_2025',
-            'name': 'Elandon Roberts',
-            'position': 'ILB',
-            'grudgeType': 'Primary Grudge',
-            'seasons': '2016, 2017, 2018, 2019',
-            'positionRk': 'N/A'
-        }, {
             'urlName': 'ButlAd00_2025',
             'name': 'Adam Butler',
             'position': 'DT',
             'grudgeType': 'Primary Grudge',
             'seasons': '2017, 2018, 2019, 2020',
+            'positionRk': 'N/A'
+        }, {
+            'urlName': 'DorsPh00_2025',
+            'name': 'Phillip Dorsett',
+            'position': 'WR',
+            'grudgeType': 'Grudge',
+            'seasons': '2017, 2018, 2019',
+            'positionRk': '216'
+        }, {
+            'urlName': 'MafiAt00_2025',
+            'name': 'Atonio Mafi',
+            'position': 'OL',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2023',
             'positionRk': 'N/A'
         }, {
             'urlName': 'MeyeJa01_2025',
@@ -252,6 +280,13 @@ export const playerGrudges = { // week 1
             'grudgeType': 'Primary Grudge',
             'seasons': '2019, 2020, 2021, 2022',
             'positionRk': '29'
+        }, {
+            'urlName': 'RobeEl00_2025',
+            'name': 'Elandon Roberts',
+            'position': 'ILB',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2016, 2017, 2018, 2019',
+            'positionRk': 'N/A'
         }],
         'homeGrudges': [{
             'urlName': 'ChaiKL00_2025',
@@ -289,6 +324,13 @@ export const playerGrudges = { // week 1
             'seasons': '2023',
             'positionRk': '24'
         }, {
+            'urlName': 'PekoKy00_2025',
+            'name': 'Kyle Peko',
+            'position': 'DT',
+            'grudgeType': 'Grudge',
+            'seasons': '2022',
+            'positionRk': 'N/A'
+        }, {
             'urlName': 'SpilRo00_2025',
             'name': 'Robert Spillane',
             'position': 'OLB',
@@ -307,6 +349,13 @@ export const playerGrudges = { // week 1
             'grudgeType': 'Primary Grudge',
             'seasons': '2021, 2022',
             'positionRk': 'N/A'
+        }, {
+            'urlName': 'MustPJ00_2025',
+            'name': 'PJ Mustipher',
+            'position': 'Unknown',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2023',
+            'positionRk': 'N/A'
         }],
         'homeGrudges': []
     }, {
@@ -314,6 +363,13 @@ export const playerGrudges = { // week 1
         'awayTeam': 'PIT',
         'homeTeam': 'NYJ',
         'awayGrudges': [{
+            'urlName': 'ClarCh00_2025',
+            'name': 'Chuck Clark',
+            'position': 'FS',
+            'grudgeType': 'Grudge',
+            'seasons': '2024',
+            'positionRk': 'N/A'
+        }, {
             'urlName': 'EchoBr00_2025',
             'name': 'Brandin Echols',
             'position': 'CB',
@@ -329,38 +385,38 @@ export const playerGrudges = { // week 1
             'positionRk': '15'
         }],
         'homeGrudges': [{
-            'urlName': 'OkorCh00_2025',
-            'name': 'Chukwuma Okorafor',
-            'position': 'T',
-            'grudgeType': 'Primary Grudge',
-            'seasons': '2018, 2019, 2020, 2021, 2022, 2023',
-            'positionRk': 'N/A'
-        }, {
             'urlName': 'FielJu00_2025',
             'name': 'Justin Fields',
             'position': 'QB',
             'grudgeType': 'Grudge',
             'seasons': '2024',
             'positionRk': '31'
+        }, {
+            'urlName': 'OkorCh00_2025',
+            'name': 'Chukwuma Okorafor',
+            'position': 'T',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2018, 2019, 2020, 2021, 2022, 2023',
+            'positionRk': 'N/A'
         }]
     }, {
         'time': '1:00 PM',
         'awayTeam': 'NYG',
         'homeTeam': 'WAS',
         'awayGrudges': [],
-        'homeGrudges': [{
-            'urlName': 'PhilTy00_2025',
-            'name': 'Tyre Phillips',
-            'position': 'OL',
-            'grudgeType': 'Grudge',
-            'seasons': '2022, 2023, 2024',
-            'positionRk': 'N/A'
-        }]
+        'homeGrudges': []
     }, {
         'time': '4:05 PM',
         'awayTeam': 'TEN',
         'homeTeam': 'DEN',
         'awayGrudges': [{
+            'urlName': 'AlleBr00_2025',
+            'name': 'Brandon Allen',
+            'position': 'QB',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2019',
+            'positionRk': '64'
+        }, {
             'urlName': 'BartCo00_2025',
             'name': 'Cody Barton',
             'position': 'OLB',
@@ -382,54 +438,40 @@ export const playerGrudges = { // week 1
             'seasons': '2019, 2020, 2021, 2022',
             'positionRk': 'N/A'
         }, {
-            'urlName': 'AlleBr00_2025',
-            'name': 'Brandon Allen',
+            'urlName': 'SiemTr00_2025',
+            'name': 'Trevor Siemian',
             'position': 'QB',
             'grudgeType': 'Primary Grudge',
-            'seasons': '2019',
-            'positionRk': '64'
+            'seasons': '2015, 2016, 2017',
+            'positionRk': '49'
         }],
         'homeGrudges': []
     }, {
         'time': '4:05 PM',
         'awayTeam': 'SFO',
         'homeTeam': 'SEA',
-        'awayGrudges': [{
-            'urlName': 'BrowTr03_2025',
-            'name': 'Tre Brown',
-            'position': 'DB',
-            'grudgeType': 'Primary Grudge',
-            'seasons': '2021, 2022, 2023, 2024',
-            'positionRk': 'N/A'
-        }],
-        'homeGrudges': [{
-            'urlName': 'JeanSh00_2025',
-            'name': 'Shemar Jean-Charles',
-            'position': 'CB',
-            'grudgeType': 'Grudge',
-            'seasons': '2023',
-            'positionRk': 'N/A'
-        }, {
-            'urlName': 'DarnSa00_2025',
-            'name': 'Sam Darnold',
-            'position': 'QB',
-            'grudgeType': 'Grudge',
-            'seasons': '2023',
-            'positionRk': '9'
-        }, {
-            'urlName': 'SaubEr00_2025',
-            'name': 'Eric Saubert',
-            'position': 'TE',
-            'grudgeType': 'Grudge',
-            'seasons': '2023, 2024',
-            'positionRk': '63'
-        }]
+        'awayGrudges': [],
+        'homeGrudges': []
     }, {
         'time': '4:25 PM',
         'awayTeam': 'DET',
         'homeTeam': 'GNB',
-        'awayGrudges': [],
-        'homeGrudges': []
+        'awayGrudges': [{
+            'urlName': 'TaylMa01_2025',
+            'name': 'Malik Taylor',
+            'position': 'WR',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2020, 2021',
+            'positionRk': '196'
+        }],
+        'homeGrudges': [{
+            'urlName': 'BallCo00_2025',
+            'name': 'Corey Ballentine',
+            'position': 'CB',
+            'grudgeType': 'Grudge',
+            'seasons': '2020, 2021',
+            'positionRk': 'N/A'
+        }]
     }, {
         'time': '4:25 PM',
         'awayTeam': 'HTX',
@@ -462,6 +504,13 @@ export const playerGrudges = { // week 1
         'awayTeam': 'MIN',
         'homeTeam': 'CHI',
         'awayGrudges': [{
+            'urlName': 'DePaAn00_2025',
+            'name': 'Andrew DePaola',
+            'position': 'LS',
+            'grudgeType': 'Grudge',
+            'seasons': '2017',
+            'positionRk': 'N/A'
+        }, {
             'urlName': 'HarrJo05_2025',
             'name': 'Jonathan Harris',
             'position': 'DE',
@@ -474,13 +523,6 @@ export const playerGrudges = { // week 1
             'position': 'CB',
             'grudgeType': 'Primary Grudge',
             'seasons': '2024',
-            'positionRk': 'N/A'
-        }, {
-            'urlName': 'DePaAn00_2025',
-            'name': 'Andrew DePaola',
-            'position': 'LS',
-            'grudgeType': 'Grudge',
-            'seasons': '2017',
             'positionRk': 'N/A'
         }],
         'homeGrudges': [{
