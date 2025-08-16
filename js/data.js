@@ -404,7 +404,49 @@ export const playerGrudges = { // week 1
         'awayTeam': 'NYG',
         'homeTeam': 'WAS',
         'awayGrudges': [],
-        'homeGrudges': []
+        'homeGrudges': [{
+            'urlName': 'CageLa01_2025',
+            'name': 'Lawrence Cager',
+            'position': 'WR',
+            'grudgeType': 'Grudge',
+            'seasons': '2022, 2023',
+            'positionRk': '77'
+        }, {
+            'urlName': 'HamiAn01_2025',
+            'name': 'Antonio Hamilton',
+            'position': 'CB',
+            'grudgeType': 'Grudge',
+            'seasons': '2018, 2019',
+            'positionRk': 'N/A'
+        }, {
+            'urlName': 'HartBo00_2025',
+            'name': 'Bobby Hart',
+            'position': 'G',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2015, 2016, 2017',
+            'positionRk': 'N/A'
+        }, {
+            'urlName': 'OttxTy00_2025',
+            'name': 'Tyler Ott',
+            'position': 'LS',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2015',
+            'positionRk': 'N/A'
+        }, {
+            'urlName': 'PhilTy00_2025',
+            'name': 'Tyre Phillips',
+            'position': 'OL',
+            'grudgeType': 'Grudge',
+            'seasons': '2022, 2023, 2024',
+            'positionRk': 'N/A'
+        }, {
+            'urlName': 'JackTy01_2025',
+            'name': 'Tyree Jackson',
+            'position': 'TE',
+            'grudgeType': 'Grudge',
+            'seasons': '2023',
+            'positionRk': '122'
+        }]
     }, {
         'time': '4:05 PM',
         'awayTeam': 'TEN',
@@ -450,8 +492,50 @@ export const playerGrudges = { // week 1
         'time': '4:05 PM',
         'awayTeam': 'SFO',
         'homeTeam': 'SEA',
-        'awayGrudges': [],
-        'homeGrudges': []
+        'awayGrudges': [{
+            'urlName': 'BrowTr03_2025',
+            'name': 'Tre Brown',
+            'position': 'DB',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2021, 2022, 2023, 2024',
+            'positionRk': 'N/A'
+        }, {
+            'urlName': 'GipsTr00_2025',
+            'name': 'Trevis Gipson',
+            'position': 'DL',
+            'grudgeType': 'Grudge',
+            'seasons': '2024',
+            'positionRk': 'N/A'
+        }, {
+            'urlName': 'TurnMa00_2025',
+            'name': 'Malik Turner',
+            'position': 'WR',
+            'grudgeType': 'Primary Grudge',
+            'seasons': '2018, 2019',
+            'positionRk': '242'
+        }],
+        'homeGrudges': [{
+            'urlName': 'DarnSa00_2025',
+            'name': 'Sam Darnold',
+            'position': 'QB',
+            'grudgeType': 'Grudge',
+            'seasons': '2023',
+            'positionRk': '9'
+        }, {
+            'urlName': 'JeanSh00_2025',
+            'name': 'Shemar Jean-Charles',
+            'position': 'CB',
+            'grudgeType': 'Grudge',
+            'seasons': '2023',
+            'positionRk': 'N/A'
+        }, {
+            'urlName': 'SaubEr00_2025',
+            'name': 'Eric Saubert',
+            'position': 'TE',
+            'grudgeType': 'Grudge',
+            'seasons': '2023, 2024',
+            'positionRk': '63'
+        }]
     }, {
         'time': '4:25 PM',
         'awayTeam': 'DET',
