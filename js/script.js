@@ -91,7 +91,7 @@ for (let day of days) {
             const seasons = grudge['seasons'];
             const positionRk = grudge['positionRk'];
             if (headshotUrl != 'None') {
-                html += `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${urlName}.jpg", width="74", height="110", alt=" "><br/>`;
+                html += `<img src="${headshotUrl}", width="74", height="110", alt=" "><br/>`;
             }
             html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
             html += `${grudgeType}<br/>`;
