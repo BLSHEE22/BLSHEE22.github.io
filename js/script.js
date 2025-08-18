@@ -83,14 +83,22 @@ for (let day of days) {
         function injectGrudgeData(grudges, currTeam, grudgeTeam) {
           let htmlGrudges = [];
           for (let grudge of grudges) {
-            const urlName = grudge['urlName'];
+            let html = "";
+            const headshotUrl = grudge['headshotUrl'];
             const name = grudge['name'];
             const position = grudge['position'];
             const grudgeType = grudge['grudgeType'];
             const seasons = grudge['seasons'];
             const positionRk = grudge['positionRk'];
-            htmlGrudges.push(`<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${urlName}.jpg", width="74", height="110", alt=" "><br/><strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>${grudgeType}<br/>Seasons with ${grudgeTeam}: ${seasons}<br/>Fantasy Position Rank: ${positionRk}<br/><br/>`);
-            console.log(`Pushed item onto HTML list.`);
+            if (headshotUrl != 'None') {
+                html += `<img src="https://www.pro-football-reference.com/req/20230307/images/headshots/${urlName}.jpg", width="74", height="110", alt=" "><br/>`;
+            }
+            html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
+            html += `${grudgeType}<br/>`;
+            html += `Seasons with ${grudgeTeam}: ${seasons}<br/>`;
+            html += `Fantasy Position Rank: ${positionRk}<br/><br/>`;
+            htmlGrudges.push(html);
+            console.log(`Converted ${name} player information to HTML.`);
             totalGrudges++;
           }
           return htmlGrudges;
