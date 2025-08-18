@@ -152,7 +152,7 @@ export const playerGrudges = { // test headshots
             'seasons': '2020',
             'positionRk': 'N/A'
         }, {
-            'headshotUrl': None,
+            'headshotUrl': 'None',
             'name': 'K.J. Henry',
             'position': 'DE',
             'grudgeType': 'Grudge',
