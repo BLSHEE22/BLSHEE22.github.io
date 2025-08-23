@@ -42,7 +42,7 @@ for (let day of days) {
 
     // update day header
     const dayHeader = document.createElement(dayAbbr + "Header");
-    dayHeader.innerHTML = `<h3><center>${day}`;
+    dayHeader.innerHTML = `<h3><center><strong>${day}`;
     dayElement.appendChild(dayHeader);
 
     const matchups = playerGrudges[day];
@@ -230,7 +230,7 @@ else {
 
 // Add week slate header
 weekObj.innerHTML += `<br><hr style="height: 24px; background-color: solidgray;">
-                      <h2 id="upcoming-week">Week ${weekNum}</h2>
+                      <h2 id="upcoming-week"><strong>Week ${weekNum}</h2>
                       <p style="font-size: 12px;">**All game times are in EDT.</p>`;
 
 // Add event listeners for all tables
