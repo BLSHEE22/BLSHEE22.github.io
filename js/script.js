@@ -180,12 +180,45 @@ if (weekNum > 0) {
       <p>Yes, there are <strong>${totalGrudges}</strong> grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>.</p>`;
 }
 else {
-    weekObj.innerHTML = `No, the regular season has not started yet.<br>`;
+    weekObj.innerHTML = `No, the regular season has not started yet.<br><br>
+                        <div id="countdown">
+                          <div id="days", style="font-size: 18px; width: fit-content; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">
+                          </div>
+                          <div id="hours", style="font-size: 18px; width: fit-content; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">
+                          </div>
+                          <div id="minutes", style="font-size: 18px; width: fit-content; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">
+                          </div>
+                          <div id="seconds", style="font-size: 18px; width: fit-content; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">
+                          </div>
+                        </div><br><br>`;
     weekNum = 1;
+    // create countdown clock element
+    const countdownDate = new Date("Sep 4, 2025 00:00:00").getTime();
+
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
+
+      if (distance <= 0) {
+        clearInterval(timer);
+        document.getElementById("timer").innerHTML = "🎉🏈🍺 IT'S FOOTBALL SEASON!!! 🎉🏈🍺";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerHTML = `<center>` + String(days).padStart(2, '0') + `<br><hr><p style="font-size: 10px;">days`;
+      document.getElementById("hours").innerHTML = `<center>` + String(hours).padStart(2, '0') + `<br><hr><p style="font-size: 10px;">hours`;
+      document.getElementById("minutes").innerHTML = `<center>` + String(minutes).padStart(2, '0') + `<br><hr><p style="font-size: 10px;">minutes`;
+      document.getElementById("seconds").innerHTML = `<center>` + String(seconds).padStart(2, '0') + `<br><hr><p style="font-size: 10px;">seconds`;
+    }, 1000);
 }
 
 // Add week slate header
-weekObj.innerHTML += `<br><hr style="height: 12px; background-color: solidgray;">
+weekObj.innerHTML += `<br><hr style="height: 24px; background-color: solidgray;">
                       <h2 id="upcoming-week">Week ${weekNum}</h2>
                       <p style="font-size: 12px;">**All game times are in EDT.</p>`;
 
