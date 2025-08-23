@@ -191,13 +191,13 @@ if (weekNum > 0) {
 else {
     weekObj.innerHTML = `No, the regular season has not started yet.<br><br>
                         <div id="countdown">
-                          <div id="days", style="font-size: 24px; font-weight: bold; width: fit-content; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">
+                          <div id="days", style="font-size: 24px; font-weight: bold; width: fit-content; min-width: 6%; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">
                           </div>
-                          <div id="hours", style="font-size: 24px; font-weight: bold; width: fit-content; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">
+                          <div id="hours", style="font-size: 24px; font-weight: bold; width: fit-content; min-width: 6%; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">
                           </div>
-                          <div id="minutes", style="font-size: 24px; font-weight: bold; width: fit-content; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">
+                          <div id="minutes", style="font-size: 24px; font-weight: bold; width: fit-content; min-width: 6%; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">
                           </div>
-                          <div id="seconds", style="font-size: 24px; font-weight: bold; width: fit-content; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">
+                          <div id="seconds", style="font-size: 24px; font-weight: bold; width: fit-content; min-width: 6%; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">
                           </div>
                         </div><br><br>`;
     weekNum = 1;
