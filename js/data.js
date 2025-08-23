@@ -108,7 +108,13 @@ export const weekLengthInfo = [{'number': 0,
                                 'end': '2025-09-15'}, 
                                {'number': 3,
                                 'start': '2025-09-16',
-                                'end': '2025-09-22'}];
+                                'end': '2025-09-22'},
+                               {'number': 4,
+                                'start': '2025-09-23',
+                                'end': '2025-09-29'},
+                               {'number': 5,
+                                'start': '2025-09-30',
+                                'end': '2025-10-06'}];
 
 // all matchups from a week slate and the contained player grudges
 export const playerGrudges = { // week 1
