@@ -1,10 +1,17 @@
-import {teams, playerGrudges} from './data.js';
-let week = 1;
+import {teams, weekLengthInfo, playerGrudges} from './data.js';
+let weekNum = 1;
 let totalGrudges = 0;
 const days = Object.keys(playerGrudges);
-const startDate = new Date('2025-08-01');
-const endDate = new Date('2025-09-02');
 const now = new Date();
+// const now = new Date('2025-09-14');
+
+for (let week of weekLengthInfo) {
+  if (now >= Date(week['start']) && now <= Date(week['end'])) {
+    weekNum = week['number'];
+    console.log(`Week: ${weekNum}`);
+    break;
+  }
+}
 
 // for (let week of weekByWeekInfo.keys()) {
 //     if (now >= startDate && now <= endDate) {
@@ -162,16 +169,16 @@ for (let day of days) {
 }
 
 // Log total number of player grudge matches
-console.log(`Total number of player grudge matches in week ${week}: ${totalGrudges}`);
+console.log(`Total number of player grudge matches in week ${weekNum}: ${totalGrudges}`);
 
 // Create intro block with total number of player grudge matches now counted
 let weekObj = document.getElementById('what-week-is-it');
 
-if (now >= startDate && now <= endDate) {
+if (weekNum > 0) {
     weekObj.innerHTML = `
-      <p>Yes, there are <strong>${totalGrudges}</strong> grudge matches taking place in <a href=#upcoming-week> week ${week}</a>.</p>
+      <p>Yes, there are <strong>${totalGrudges}</strong> grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>.</p>
       <br><hr style="height: 12px; background-color: solidgray;">
-      <h2 id="upcoming-week">Week ${week}</h2>
+      <h2 id="upcoming-week">Week ${weekNum}</h2>
       <p style="font-size: 12px;">**All game times are in EDT.</p>
     `;
 }

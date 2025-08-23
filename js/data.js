@@ -96,6 +96,20 @@ export const teams = {'DAL': {'name': 'Dallas Cowboys',
                       'logo': 'chi-2025',
                       'division': 'NFC North'}};
 
+// all weeks and matchup date/times from each
+export const weekLengthInfo = [{'number': 0,
+                                'start': '2025-08-01',
+                                'end': '2025-08-30'},
+                               {'number': 1,
+                                'start': '2025-08-31',
+                                'end': '2025-09-08'}, 
+                               {'number': 2,
+                                'start': '2025-09-09',
+                                'end': '2025-09-15'}, 
+                               {'number': 3,
+                                'start': '2025-09-16',
+                                'end': '2025-09-22'}];
+
 // all matchups from a week slate and the contained player grudges
 export const playerGrudges = { // week 1
     'thursday': [{
