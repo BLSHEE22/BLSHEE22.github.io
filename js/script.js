@@ -2,8 +2,7 @@ import {teams, weekLengthInfo, playerGrudges} from './data.js';
 let weekNum = 1;
 let totalGrudges = 0;
 const days = Object.keys(playerGrudges);
-//const now = new Date();
-const now = new Date('2025-08-20');
+const now = new Date();
 
 console.log(weekLengthInfo);
 console.log(Date(['start']));
@@ -34,10 +33,7 @@ for (let day of days) {
 
     // update day header
     const dayHeader = document.createElement(dayAbbr + "Header");
-    // const dayHeader = document.getElementById(day + 'Header');
-    // if (dayHeader) {
-    dayHeader.innerHTML = `<center>${day}`; // Capitalize day name
-    // }
+    dayHeader.innerHTML = `<h3><center>${day}`;
     dayElement.appendChild(dayHeader);
 
     const matchups = playerGrudges[day];
