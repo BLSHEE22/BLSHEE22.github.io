@@ -42,7 +42,7 @@ for (let day of days) {
 
     // update day header
     const dayHeader = document.createElement(dayAbbr + "Header");
-    dayHeader.innerHTML = `<h3><center><strong>${day}`;
+    dayHeader.innerHTML = `<h3><center>${day}`;
     dayElement.appendChild(dayHeader);
 
     const matchups = playerGrudges[day];
