@@ -60,11 +60,12 @@ layout: default
   }
 
   /* Hover effect */
-  thead:hover {
-    border: tomato;
-    transform: scale(1.05);
+  table:hover {
+    transform: scale(1.01);
+    border: 5px solid rgb(4, 221, 4);
     cursor: pointer;
   }
+
 
 </style>
 <!-- <link rel="stylesheet" href="style.css"> -->
@@ -76,33 +77,17 @@ layout: default
 <br/><br/>
 <!-- CENTER DIV -->
 <div class="centered-div">
-<div class="intro">
-<h2>What is a grudge match?</h2>
-  A "grudge match" in the NFL is <strong>when a player or coach faces their former team</strong>.<br/><br/>
-  Grudge matches involving a player&#39;s original team are considered "primary."<br/><br/>
-<h2>Are any taking place this week?</h2>
+  <div class="intro">
+    <h2>What is a grudge match?</h2>
+      A "grudge match" in the NFL is <strong>when a player or coach faces their former team</strong>.<br/><br/>
+      Grudge matches involving a player&#39;s original team are considered "primary."<br/><br/>
+    <h2>Are any taking place this week?</h2>
+      <!-- WHAT WEEK IS IT -->
+      <!--<div id="clock", style="font-size: 18px; width: fit-content; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">date/time clock</div>-->
+      <div id="what-week-is-it">...</div>
+  </div>
   <!-- WEEK SLATE -->
-  <!--<div id="clock", style="font-size: 18px; width: fit-content; color: solid gray; padding: 16px; text-align: left; border: 1px solid gray; border-radius: 5px;">date/time clock</div>-->
-  <div id="what-week-is-it">...</div>
+  <div id="weekSlate"></div>
 </div>
-<!-- DAY SLATE -->
-<div id="thursday">
-<h3 id="thursdayHeader">...</h3>
-</div>
-<br/><br/>
-<!-- DAY SLATE -->
-<div id="friday">
-<h3 id="fridayHeader">...</h3>
-</div>
-<br/><br/>
-<!-- DAY SLATE -->
-<div id="sunday">
-<h3 id="sundayHeader">...</h3>
-</div>
-<br/><br/>
-<!-- DAY SLATE -->
-<div id="monday">
-<h3 id="mondayHeader">...</h3>
-</div>
-</div>
+<!-- SCRIPT -->
 <script type="module" src="js/script.js"></script>

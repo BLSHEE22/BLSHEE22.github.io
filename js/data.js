@@ -112,7 +112,7 @@ export const weekLengthInfo = [{'number': 0,
 
 // all matchups from a week slate and the contained player grudges
 export const playerGrudges = { // week 1
-    'thursday': [{
+    'Thursday, September 4th': [{
         'time': '8:20 PM',
         'awayTeam': 'DAL',
         'homeTeam': 'PHI',
@@ -126,7 +126,7 @@ export const playerGrudges = { // week 1
         }],
         'homeGrudges': []
     }],
-    'friday': [{
+    'Friday, September 5th': [{
         'time': '8:00 PM',
         'awayTeam': 'KAN',
         'homeTeam': 'LAC',
@@ -161,7 +161,7 @@ export const playerGrudges = { // week 1
         }],
         'homeGrudges': []
     }],
-    'sunday': [{
+    'Sunday, September 7th': [{
         'time': '1:00 PM',
         'awayTeam': 'TAM',
         'homeTeam': 'ATL',
@@ -597,7 +597,7 @@ export const playerGrudges = { // week 1
         'awayGrudges': [],
         'homeGrudges': []
     }],
-    'monday': [{
+    'Monday, September 8th': [{
         'time': '8:15 PM',
         'awayTeam': 'MIN',
         'homeTeam': 'CHI',

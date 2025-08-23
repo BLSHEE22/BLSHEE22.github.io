@@ -2,47 +2,43 @@ import {teams, weekLengthInfo, playerGrudges} from './data.js';
 let weekNum = 1;
 let totalGrudges = 0;
 const days = Object.keys(playerGrudges);
-const now = new Date();
-// const now = new Date('2025-09-14');
+//const now = new Date();
+const now = new Date('2025-08-20');
+
+console.log(weekLengthInfo);
+console.log(Date(['start']));
 
 for (let week of weekLengthInfo) {
-  if (now >= Date(week['start']) && now <= Date(week['end'])) {
+  let weekI = week['number'];
+  let weekStart = new Date(week['start']);
+  let weekEnd = new Date(week['end']);
+  console.log(`Trying week ${weekI}....`);
+  console.log(`Start: ${weekStart}`);
+  console.log(`End: ${weekEnd}`);
+  console.log(`Current Date: ${now}`);
+  if (now >= weekStart && now <= weekEnd) {
     weekNum = week['number'];
-    console.log(`Week: ${weekNum}`);
+    console.log(`The week number is ${weekNum}.`);
     break;
   }
+  console.log("---");
 }
 
-// for (let week of weekByWeekInfo.keys()) {
-//     if (now >= startDate && now <= endDate) {
-//         document.getElementById('what-week-is-it').innerHTML = `${week}`;
-//         //document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>${week}</a>.</p>`;
-//         break;
-//     }
-//     else {
-//         document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
-//     }
-// }
-
-// for (let week of weeks) {
-//   if (isDateWithinRange(week['start'], week['end']) {
-//       document.getElementById('what-week-is-it').innerHTML = `<p>Yes, there are <strong>${games.length}</strong> grudge matches taking place in <a href=#upcoming-week>week ${week['number']}</a></p>`;
-//       break;
-//   }
-//   else {
-//       document.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
-//   }
-// }
+// create element to contain all matchups for the current week
+const weekElement = document.getElementById('weekSlate');
 
 for (let day of days) {
-    const parentElement = document.getElementById(day);
-    if (!parentElement) continue; // Skip if the element is not found
+    // create day element
+    const dayAbbr = day.slice(0, 3);
+    const dayElement = document.createElement(dayAbbr);
 
-    // Update day header
-    const dayHeader = document.getElementById(day + 'Header');
-    if (dayHeader) {
-        dayHeader.innerHTML = `<center>${day.charAt(0).toUpperCase() + day.slice(1)}`; // Capitalize day name
-    }
+    // update day header
+    const dayHeader = document.createElement(dayAbbr + "Header");
+    // const dayHeader = document.getElementById(day + 'Header');
+    // if (dayHeader) {
+    dayHeader.innerHTML = `<center>${day}`; // Capitalize day name
+    // }
+    dayElement.appendChild(dayHeader);
 
     const matchups = playerGrudges[day];
     console.log("---");
@@ -53,7 +49,7 @@ for (let day of days) {
     if (matchups.length === 0) {
       const noGamesHeader = document.createElement('p');
       noGamesHeader.innerHTML = '<center><br>No Games<br><br><br>';
-      parentElement.appendChild(noGamesHeader);
+      dayElement.appendChild(noGamesHeader);
       console.log('Successfully caught no-game day!');
     }
 
@@ -70,7 +66,7 @@ for (let day of days) {
         // Add inner html to header object
         matchupHeader.innerHTML = htmlString + '<br>';
         // Add header object to DOM
-        parentElement.appendChild(matchupHeader);
+        dayElement.appendChild(matchupHeader);
 
         // Create table
         const matchupTable = document.createElement('table');
@@ -157,15 +153,24 @@ for (let day of days) {
         // Assemble table
         matchupTable.appendChild(thead);
         matchupTable.appendChild(tbody);
-        parentElement.appendChild(matchupTable); 
+        dayElement.appendChild(matchupTable); 
 
         // Add spacing after table
         let postTableBr = document.createElement('br');
         let postTableBr2 = document.createElement('br');
-        parentElement.appendChild(postTableBr);
-        parentElement.appendChild(postTableBr2);
+        dayElement.appendChild(postTableBr);
+        dayElement.appendChild(postTableBr2);
 
     }
+
+    // Add spacing after day
+    let postDayBr = document.createElement('br');
+    let postDayBr2 = document.createElement('br');
+    dayElement.appendChild(postDayBr);
+    dayElement.appendChild(postDayBr2);
+
+    // Add day element to week element
+    weekElement.appendChild(dayElement);
 }
 
 // Log total number of player grudge matches
@@ -176,15 +181,17 @@ let weekObj = document.getElementById('what-week-is-it');
 
 if (weekNum > 0) {
     weekObj.innerHTML = `
-      <p>Yes, there are <strong>${totalGrudges}</strong> grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>.</p>
-      <br><hr style="height: 12px; background-color: solidgray;">
-      <h2 id="upcoming-week">Week ${weekNum}</h2>
-      <p style="font-size: 12px;">**All game times are in EDT.</p>
-    `;
+      <p>Yes, there are <strong>${totalGrudges}</strong> grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>.</p>`;
 }
 else {
-    weekObj.getElementById('what-week-is-it').innerHTML = `No, the regular season has not started yet.`;
+    weekObj.innerHTML = `No, the regular season has not started yet.<br>`;
+    weekNum = 1;
 }
+
+// Add week slate header
+weekObj.innerHTML += `<br><hr style="height: 12px; background-color: solidgray;">
+                      <h2 id="upcoming-week">Week ${weekNum}</h2>
+                      <p style="font-size: 12px;">**All game times are in EDT.</p>`;
 
 // Add event listeners for all tables
 document.addEventListener('DOMContentLoaded', () => {
