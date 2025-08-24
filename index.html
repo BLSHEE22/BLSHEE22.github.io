@@ -27,7 +27,7 @@ layout: default
   
   /* Matchup Selector */
   .input-box {
-    flex: 1;        
+    flex: 1;  
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
@@ -39,10 +39,13 @@ layout: default
     padding: 10px;
     font-size: 1em;
     margin-top: 10px;
+    text-align: center;
   }
 
   #matchupSelector {
     display: flex;
+    gap: 10px;
+    text-align: center;
   }
 
   /* Table style */
@@ -81,14 +84,14 @@ layout: default
 
   /* Style for OPEN matchup table */
   tbody.open {
-    max-height: 240px;
-    overflow-y: auto;
+    max-height: 2000px;
+    /* overflow-y: auto; scrollability */
     opacity: 1;
   }
 
   /* Hover effect */
   table:hover {
-    transform: scale(1.01);
+    transform: scale(1.001);
     border: 5px solid black;/* #189c5c;*/
     cursor: pointer;
   }
