@@ -390,6 +390,17 @@ function updateResponse() {
      */
     function getGrudges(currTeam, opposingTeam) {
       let grudges = [];
+      // translate teams if needed
+      const team_name_map = {'LAC': 'SDG',
+                             'TEN': 'OTI',
+                             'NE':  'NWE'};
+      if (currTeam in team_name_map) {
+          currTeam = team_name_map[currTeam];
+      }
+      if (opposingTeam in team_name_map) {
+        opposingTeam = team_name_map[opposingTeam];
+      }
+      // form query
       try {
         const query = `SELECT player_id, name, position, team, team_history, initial_team, 
                       fantasy_pos_rk, headshot_url FROM players2 WHERE team == '${currTeam}' AND 
