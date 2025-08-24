@@ -230,9 +230,8 @@ else {
 }
 
 // Add week slate header
-weekObjHeader.innerHTML = `<br><hr>
-                      <h2 id="upcoming-week">Week ${weekNum}</h2>
-                      <p style="font-size: 12px;">**All game times are in EDT.</p>`;
+weekSlateHeader.innerHTML = `<h2 id="upcoming-week">Week ${weekNum}</h2>
+                             <p style="font-size: 12px;">**All game times are in EDT.</p>`;
 
 // Add event listeners for all tables
 document.addEventListener('DOMContentLoaded', () => {
