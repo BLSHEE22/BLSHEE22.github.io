@@ -229,11 +229,125 @@ else {
     }, 1000);
 }
 
+// Add matchup selector object
+const matchupSelector = document.getElementById("matchupSelector");
+
+// Set up awayTeam input box
+matchupSelector.innerHTML = `<div id="away-input-box", class="input-box">
+                             <label id="awayTeam">AWAY</label><br><br>
+                             <select id="awayTeamSelect" name="awayTeam">`;
+
+// Add all teams for 'awayTeam' options
+const awayTeamInput = document.getElementById("awayTeamSelect");
+for (const [key, value] of Object.entries(teams)) {
+  awayTeamInput.innerHTML += `<option value="${key}">${value['name']}</option>`;
+}
+matchupSelector.innerHTML += `</select></div>`;
+
+// Set up homeTeam input box
+matchupSelector.innerHTML += `<div id="home-input-box", class="input-box">
+                            <label id="homeTeam">HOME</label><br><br>
+                            <select id="homeTeamSelect" name="homeTeam">`;
+
+// Add all teams for 'homeTeam' options
+const homeTeamInput = document.getElementById("homeTeamSelect");
+for (const [key, value] of Object.entries(teams)) {
+  homeTeamInput.innerHTML += `<option value="${key}">${value['name']}</option>`;
+}
+matchupSelector.innerHTML += `</select></div>`
+
+// Add logic to respond to matchup selection
+const awayTeamSelect = document.getElementById('awayTeamSelect');
+const homeTeamSelect = document.getElementById('homeTeamSelect');
+const responseArea = document.getElementById('response-area');
+
+// Update custom matchup table
+function updateResponse() {
+  // clear response area
+  responseArea.innerHTML = ``;
+
+  const aTeam = awayTeamSelect.value;
+  const hTeam = homeTeamSelect.value;
+
+  // Update content if both options selected AND selected teams are different
+  if ((aTeam && hTeam) && (aTeam != hTeam)) {
+    // Create table
+    const customTable = document.createElement('table');
+
+    // Create header row
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    [`<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[aTeam]['logo']}.png", width="50", height="50", alt=" ">`,
+     `<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[hTeam]['logo']}.png", width="50", height="50", alt=" ">`].forEach(html => {
+        const th = document.createElement('th');
+        th.innerHTML = html;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+
+    // Add head to table
+    customTable.appendChild(thead);
+
+    // JQUERY DATABASE!!!
+    const htmlCustomAwayGrudges = ['Away1', 'Away2', 'Away3', 'Away4'];
+    const htmlCustomHomeGrudges = ['Home1', 'Home2', 'Home3', ''];
+    // Body row(s)
+    const tbody = document.createElement('tbody');
+    for (let i = 0; i < Math.max(htmlCustomAwayGrudges.length, htmlCustomHomeGrudges.length); i++) {
+      const dataRow = document.createElement('tr');
+
+      // Add away team data to left column
+      const td1 = document.createElement('td');
+      if (i < htmlCustomAwayGrudges.length) {
+        td1.innerHTML = htmlCustomAwayGrudges[i];
+      } else {
+        td1.innerHTML = '';
+      }
+      td1.style.fontSize = '12px'
+      dataRow.appendChild(td1);
+
+      // Add home team data to right column
+      const td2 = document.createElement('td');
+      if (i < htmlCustomHomeGrudges.length) {
+        td2.innerHTML = htmlCustomHomeGrudges[i];
+      } else {
+        td2.innerHTML = '';
+      }
+      td2.style.fontSize = '12px'
+      dataRow.appendChild(td2);
+      
+      // Append row to body
+      tbody.appendChild(dataRow);
+    }
+
+    // Add body to table
+    customTable.appendChild(tbody);
+
+    // Add table to response area
+    responseArea.appendChild(customTable);
+
+  } else {
+    responseArea.innerHTML = "Please select two different teams.";
+  }
+
+  // Listen to custom matchup table
+  responseArea.querySelectorAll('table').forEach(table => {
+    table.addEventListener('click', () => {
+      const tbody = table.querySelector('tbody');
+      tbody.classList.toggle('open');
+    });
+  });
+}
+
+// Listen to both dropdowns
+awayTeamSelect.addEventListener('change', updateResponse);
+homeTeamSelect.addEventListener('change', updateResponse);
+
 // Add week slate header
 weekSlateHeader.innerHTML = `<h2 id="upcoming-week">Week ${weekNum}</h2>
                              <p style="font-size: 12px;">**All game times are in EDT.</p>`;
 
-// Add event listeners for all tables
+// List to all tables in current week
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('table').forEach(table => {
     table.addEventListener('click', () => {
