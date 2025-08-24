@@ -203,7 +203,7 @@ else {
     weekNum = 1;
 
     // create countdown clock element
-    const countdownDate = new Date("Aug 31, 2025 00:00:00").getTime();
+    const countdownDate = new Date("Sep 4, 2025 00:00:00").getTime();
 
     // update every second
     const timer = setInterval(() => {
