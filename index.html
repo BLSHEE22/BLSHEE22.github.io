@@ -19,6 +19,32 @@ layout: default
     background-color: white;
   }
 
+  /* Countdown Clock */
+  #countdown {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Matchup Selector */
+  .input-box {
+    flex: 1;        
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+
+  select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+
+  #matchupSelector {
+    display: flex;
+  }
+
   /* Table style */
   table {
     table-layout: fixed;
@@ -67,12 +93,6 @@ layout: default
     cursor: pointer;
   }
 
-  #countdown {
-    display: flex;
-    gap: 10px;
-  }
-
-
 </style>
 <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
@@ -92,7 +112,30 @@ layout: default
       <!--<div id="clock">date/time clock</div>-->
       <div id="what-week-is-it">...</div>
   </div>
+  <!-- MATCHUP SELECTOR -->
+  <h3>Find Grudge Matches</h3>
+  <div id="matchupSelector">
+      <div class="input-box">
+        <label for="awayTeam">AWAY</label><br><br>
+        <select id="awayTeam" name="awayTeam">
+          <option value="Atlanta Falcons">Atlanta Falcons</option>
+          <option value="Arizona Cardinals">Arizona Cardinals</option>
+          <option value="Buffalo Bills">Buffalo Bills</option>
+          <option value="Carolina Panthers">Carolina Panthers</option>
+        </select>
+      </div>
+      <div class="input-box">
+        <label for="homeTeam">HOME</label><br><br>
+        <select id="homeTeam" name="homeTeam">
+          <option value="Atlanta Falcons">Atlanta Falcons</option>
+          <option value="Arizona Cardinals">Arizona Cardinals</option>
+          <option value="Buffalo Bills">Buffalo Bills</option>
+          <option value="Carolina Panthers">Carolina Panthers</option>
+        </select>
+      </div>
+  </div><br><hr><br>
   <!-- WEEK SLATE -->
+  <div id="weekSlateHeader"></div>
   <div id="weekSlate"></div>
 </div>
 <!-- SCRIPT -->

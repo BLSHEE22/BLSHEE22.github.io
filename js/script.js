@@ -183,6 +183,7 @@ console.log(`Total number of player grudge matches in week ${weekNum}: ${totalGr
 
 // Create intro block with total number of player grudge matches now counted
 let weekObj = document.getElementById('what-week-is-it');
+let weekObjHeader = document.getElementById('weekSlateHeader');
 
 if (weekNum > 0) {
     weekObj.innerHTML = `
@@ -202,7 +203,7 @@ else {
                         </div><br><br>`;
     weekNum = 1;
 
-    // create countdown clock element
+    // set countdown date
     const countdownDate = new Date("Sep 4, 2025 00:00:00").getTime();
 
     // update every second
@@ -229,7 +230,7 @@ else {
 }
 
 // Add week slate header
-weekObj.innerHTML += `<br><hr style="height: 24px; background-color: solidgray;">
+weekObjHeader.innerHTML = `<br><hr>
                       <h2 id="upcoming-week">Week ${weekNum}</h2>
                       <p style="font-size: 12px;">**All game times are in EDT.</p>`;
 
