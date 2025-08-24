@@ -1,3 +1,49 @@
+let db = null;
+
+// Initialize SQL.js
+initSqlJs({
+  locateFile: file => `https://sql.js.org/dist/${file}` // Point to wasm file
+}).then(async SQL => {
+  // Fetch the pre-hosted .db file
+  const response = await fetch('/player_data/players2.db');
+  const buffer = await response.arrayBuffer();
+
+  // Load the database from the buffer
+  db = new SQL.Database(new Uint8Array(buffer));
+  console.log("Database loaded successfully.");
+
+  // Optionally run a query right away
+  const res = db.exec("SELECT name FROM players2 WHERE team == 'NWE';");
+  console.log(res);
+});
+
+// Handle query execution
+document.getElementById('run').addEventListener('click', () => {
+  if (!db) {
+    alert("Database not loaded yet.");
+    return;
+  }
+  // const query = document.getElementById('query').value;
+  try {
+    const results = db.exec(`SELECT player_id, name, position, team, team_history, initial_team, 
+                            fantasy_pos_rk, headshot_url FROM players2 WHERE team == '${t1}' AND 
+                            instr(team_history, '${t2}') > 0;`);
+    if (results.length === 0) {
+      document.getElementById('results').textContent = "Query executed successfully. No rows returned.";
+    } else {
+      const output = results.map(res => {
+        const headers = res.columns.join('\t');
+        const rows = res.values.map(row => row.join('\t')).join('\n');
+        return headers + '\n' + rows;
+      }).join('\n\n');
+
+      document.getElementById('results').textContent = output;
+    }
+  } catch (err) {
+    document.getElementById('results').textContent = "Error: " + err.message;
+  }
+});
+
 // import database
 import {teams, weekLengthInfo, playerGrudges} from './data.js';
 
@@ -288,10 +334,95 @@ function updateResponse() {
     // Add head to table
     customTable.appendChild(thead);
 
-    // JQUERY DATABASE!!!
-    const htmlCustomAwayGrudges = ['Away1', 'Away2', 'Away3', 'Away4'];
-    const htmlCustomHomeGrudges = ['Home1', 'Home2', 'Home3', ''];
-    // Body row(s)
+    /**
+     * Format query information into HTML code to be displayed in a table.
+     *
+     * @param {dict} result - Resulting data from query.
+     * @param {string} currTeam - Abbreviation of the past team.
+     * @param {string} opposingTeam - Abbreviation of the opposing team.
+     * @returns {list[string]} - List of HTML strings representing each player.
+     */
+    function formatQueryData(result, currTeam, opposingTeam) {
+      let htmlList = [];
+      const columnNames = result['columns'];
+      const players = result['values'];
+      for (let player of players) {
+        let html = "";
+        const headshotUrl = player[columnNames.indexOf('headshot_url')];
+        const name = player[columnNames.indexOf('name')];
+        const position = player[columnNames.indexOf('position')];
+        // if opposing team is player's original team, mark the grudge primary
+        let grudgeType = 'Grudge';
+        if (player[columnNames.indexOf('initial_team')] == opposingTeam) {
+            grudgeType = 'Primary Grudge';
+        }
+        // store only relevant player team history
+        let seasons = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'))[opposingTeam];
+        if (seasons.length > 1) {
+          seasons = seasons.join(", ");
+        }
+        console.log(seasons)
+        // if player has no fantasy position rank, mark as 'N/A'
+        let positionRk = player[columnNames.indexOf('fantasy_pos_rk')];
+        if (positionRk == null) {
+          positionRk = 'N/A';
+        }
+        // start splicing together data with html code
+        if (headshotUrl != 'None') {
+            html += `<img src="${headshotUrl}", width="74", height="110", alt=" "><br/>`;
+        }
+        html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
+        html += `${grudgeType}<br/>`;
+        html += `Seasons with ${opposingTeam}: ${seasons}<br/>`;
+        html += `Fantasy Position Rank: ${positionRk}<br/><br/>`;
+        htmlList.push(html);
+        console.log(`Converted ${name} player information to HTML.`);
+      }
+      return htmlList;
+    }
+
+    /**
+     * Find all players on 'currTeam' who have previously played for 'opposingTeam'.
+     *
+     * @param {string} currTeam - Abbreviation of the current team.
+     * @param {string} opposingTeam - Abbreviation of the opposing team.
+     * @returns {list[string]} - List of HTML strings representing each player.
+     */
+    function getGrudges(currTeam, opposingTeam) {
+      let grudges = [];
+      try {
+        const query = `SELECT player_id, name, position, team, team_history, initial_team, 
+                      fantasy_pos_rk, headshot_url FROM players2 WHERE team == '${currTeam}' AND 
+                      instr(team_history, '${opposingTeam}') > 0;`;
+        // const query = document.getElementById('query').value;
+        document.getElementById('query').textContent = query;
+        const results = db.exec(query);
+        if (results.length === 0) {
+          document.getElementById('results').textContent = 'None';
+          grudges.push('None');
+        } else {
+          const output = results.map(res => {
+            const headers = res.columns.join('\t');
+            const rows = res.values.map(row => row.join('\t')).join('\n');
+            return headers + '\n' + rows;
+          }).join('\n\n');
+          document.getElementById('results').textContent = output;
+          let formattedPlayers = formatQueryData(results[0], currTeam, opposingTeam);
+          for (let player of formattedPlayers) {
+            grudges.push(player);
+          }
+        }
+      } catch (err) {
+        document.getElementById('results').textContent = "Error: " + err.message;
+      }
+      return grudges;
+    }
+
+    // once matchup is set, look for player grudges on each side
+    let htmlCustomAwayGrudges = getGrudges(aTeam, hTeam);
+    let htmlCustomHomeGrudges = getGrudges(hTeam, aTeam);
+  
+    // Create body row(s)
     const tbody = document.createElement('tbody');
     for (let i = 0; i < Math.max(htmlCustomAwayGrudges.length, htmlCustomHomeGrudges.length); i++) {
       const dataRow = document.createElement('tr');
