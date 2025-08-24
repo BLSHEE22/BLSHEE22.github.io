@@ -410,7 +410,7 @@ function updateResponse() {
         const results = db.exec(query);
         if (results.length === 0) {
           document.getElementById('results').textContent = 'None';
-          grudges.push('None');
+          grudges.push(`<p style="font-size: 18px;">None</p>`);
         } else {
           const output = results.map(res => {
             const headers = res.columns.join('\t');
