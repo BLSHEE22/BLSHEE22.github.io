@@ -442,11 +442,11 @@ function updateResponse() {
         if (results.length === 0) {
           grudges.push(`<p style="font-size: 18px;">None</p>`);
         } else {
-          const output = results.map(res => {
-            const headers = res.columns.join('\t');
-            const rows = res.values.map(row => row.join('\t')).join('\n');
-            return headers + '\n' + rows;
-          }).join('\n\n');
+          // const output = results.map(res => {
+          //   const headers = res.columns.join('\t');
+          //   const rows = res.values.map(row => row.join('\t')).join('\n');
+          //   return headers + '\n' + rows;
+          // }).join('\n\n');
           let formattedPlayers = formatQueryData(results[0], currTeam, opposingTeam);
           for (let player of formattedPlayers) {
             grudges.push(player);
