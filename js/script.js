@@ -440,7 +440,6 @@ function updateResponse() {
         document.getElementById('query').textContent = query;
         const results = db.exec(query);
         if (results.length === 0) {
-          document.getElementById('results').textContent = 'None';
           grudges.push(`<p style="font-size: 18px;">None</p>`);
         } else {
           const output = results.map(res => {
@@ -448,7 +447,6 @@ function updateResponse() {
             const rows = res.values.map(row => row.join('\t')).join('\n');
             return headers + '\n' + rows;
           }).join('\n\n');
-          document.getElementById('results').textContent = output;
           let formattedPlayers = formatQueryData(results[0], currTeam, opposingTeam);
           for (let player of formattedPlayers) {
             grudges.push(player);
