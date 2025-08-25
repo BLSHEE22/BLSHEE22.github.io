@@ -44,7 +44,7 @@ document.getElementById('run').addEventListener('click', () => {
   }
 });
 
-// import database
+// import legacy data
 import {teams, weekLengthInfo, playerGrudges} from './data.js';
 
 // set default week to 1
@@ -59,9 +59,36 @@ const days = Object.keys(playerGrudges);
 // current date/time
 const now = new Date();
 
+// define position order for use in tables
+const position_order = {"QB": 0, // fantasy
+                        "RB": 1,
+                        "WR": 2,
+                        "TE": 3,
+                        "K": 4,
+                        "DE": 5, // defense
+                        "DT": 6,
+                        "DL": 7,
+                        "OLB": 8,
+                        "MLB": 9,
+                        "ILB": 10,
+                        "LB": 11,
+                        "CB": 12,
+                        "FS": 13,
+                        "SS": 14,
+                        "S": 15,
+                        "DB": 16,
+                        "C": 17, // offensive line
+                        "T": 18,
+                        "G": 19,
+                        "OL": 20,
+                        "LS": 21, // utility
+                        "P": 22,
+                        "Unknown": 1000}
+
 console.log(weekLengthInfo);
 console.log(Date(['start']));
 
+// figure out what week it is
 for (let week of weekLengthInfo) {
   let weekI = week['number'];
   let weekStart = new Date(week['start']);
@@ -283,10 +310,14 @@ matchupSelector.innerHTML = `<div id="away-input-box", class="input-box">
                              <label id="awayTeam">AWAY</label><br><br>
                              <select id="awayTeamSelect" name="awayTeam">`;
 
+// Sort teams list for use in drop-down menu
+const sortedTeams = Object.entries(teams).map(pair => [pair[0], pair[1]['name']]).sort((a, b) => a[1].localeCompare(b[1]));
+console.log(sortedTeams);
+
 // Add all teams for 'awayTeam' options
 const awayTeamInput = document.getElementById("awayTeamSelect");
-for (const [key, value] of Object.entries(teams)) {
-  awayTeamInput.innerHTML += `<option value="${key}">${value['name']}</option>`;
+for (const [key, value] of sortedTeams) {
+  awayTeamInput.innerHTML += `<option value="${key}">${value}</option>`;
 }
 matchupSelector.innerHTML += `</select></div>`;
 
@@ -297,8 +328,8 @@ matchupSelector.innerHTML += `<div id="home-input-box", class="input-box">
 
 // Add all teams for 'homeTeam' options
 const homeTeamInput = document.getElementById("homeTeamSelect");
-for (const [key, value] of Object.entries(teams)) {
-  homeTeamInput.innerHTML += `<option value="${key}">${value['name']}</option>`;
+for (const [key, value] of sortedTeams) {
+  homeTeamInput.innerHTML += `<option value="${key}">${value}</option>`;
 }
 matchupSelector.innerHTML += `</select></div>`
 
@@ -346,7 +377,9 @@ function updateResponse() {
       let htmlList = [];
       const columnNames = result['columns'];
       const players = result['values'];
-      for (let player of players) {
+      const sortedPlayers = players.sort((a, b) => position_order[a[2].trim()] - position_order[b[2].trim()]);
+      console.log(sortedPlayers);
+      for (let player of sortedPlayers) {
         let html = "";
         const headshotUrl = player[columnNames.indexOf('headshot_url')];
         const name = player[columnNames.indexOf('name')];
@@ -368,7 +401,7 @@ function updateResponse() {
           positionRk = 'N/A';
         }
         // start splicing together data with html code
-        if (headshotUrl != 'None') {
+        if (headshotUrl != null) {
             html += `<img src="${headshotUrl}", width="74", height="110", alt=" "><br/>`;
         }
         html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
