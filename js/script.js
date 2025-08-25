@@ -23,11 +23,9 @@ document.getElementById('run').addEventListener('click', () => {
     alert("Database not loaded yet.");
     return;
   }
-  // const query = document.getElementById('query').value;
+  const query = document.getElementById('query').value;
   try {
-    const results = db.exec(`SELECT player_id, name, position, team, team_history, initial_team, 
-                            fantasy_pos_rk, headshot_url FROM players2 WHERE team == '${t1}' AND 
-                            instr(team_history, '${t2}') > 0;`);
+    const results = db.exec(query);
     if (results.length === 0) {
       document.getElementById('results').textContent = "Query executed successfully. No rows returned.";
     } else {
