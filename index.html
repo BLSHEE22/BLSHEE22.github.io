@@ -60,7 +60,7 @@ layout: default
 
   th {
     width: 50%;
-    border: 3px solid gray;
+    border: 5px solid gray;
     min-width: 400px;
     max-width: 400px;
     text-align: center;
@@ -118,6 +118,15 @@ layout: default
       <div id="what-week-is-it">...</div>
   </div>
   <hr>
+  <!-- GRUDGE STATISTICS -->
+  <h2>Grudge Statistics</h2>
+  <br>NFL Insights<br>
+  <h3>How Many Team Alumni Are Still in the League?</h3>
+  <p>Query Results</p>
+  <br><br>
+  <h3>Who is Projected to Have the Most Grudge Matches This Season?</h3>
+  <p>Query Results</p>
+  <br><hr><br>
   <!-- MATCHUP SELECTOR -->
   <h2>Matchup Selector</h2>
   <div id="matchupSelector"></div><br>
@@ -130,6 +139,7 @@ layout: default
 <!-- IMPORT DB -->
 <textarea id="query" rows="4" cols="89">SELECT * FROM players2;</textarea>
 <button id="run">Run Query</button>
+<br>
 <pre id="results", style="color: black;"></pre>
 <!-- SCRIPTS -->
 <script src="https://sql.js.org/dist/sql-wasm.js"></script>
