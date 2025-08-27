@@ -374,10 +374,7 @@ class Roster:
     def players(self):
         """
         Returns a ``list`` of player instances for each player on the requested
-        team's roster if the ``slim`` property is False when calling the Roster
-        class. If the ``slim`` property is True, returns a ``dictionary`` where
-        each key is a string of the player's ID and each value is the player's
-        first and last name as listed on the roster page.
+        team's roster.
         """
         return self._players
 
