@@ -6,6 +6,7 @@ import utils
 from pyquery import PyQuery as pq
 from urllib.error import HTTPError
 
+
 # path to database
 DB_PATH = "data/players.db"
 
@@ -20,10 +21,8 @@ PLAYER_IDS = ['MeyeJa01', 'AchaDe00', 'BradTo00', 'ThieAd00', 'DobbJo00', 'BurnB
 # constants for web scraping
 WORKER_COUNT = 1          # how many workers run at once
 DELAY_BETWEEN = 3         # seconds between requests (per worker)
-REQUEST_TIMEOUT = 15      
-HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                  "AppleWebKit/537.36 (KHTML, like Gecko) "
-                  "Chrome/118.0.5993.118 Safari/537.36"}
+REQUEST_TIMEOUT = 15   
+PROXY_URL = "http://brd-customer-hl_bf49adb1-zone-residential_proxy1:a0hihc30yukf@brd.superproxy.io:33335"
 
 # maps field to its .items() index
 field_map = {'height':0, 'weight':1, 'birth_date':2, 'position':2}
@@ -158,7 +157,7 @@ class Roster:
         first_character = player_id[0]
         url =  PLAYER_URL % (first_character, player_id)
         try:
-            async with session.get(url, headers=HEADERS) as resp:
+            async with session.get(url, proxy=PROXY_URL) as resp:
                 print(f"{url} → {resp.status}")
                 # Force timeout on reading body
                 html = await asyncio.wait_for(resp.read(), timeout=REQUEST_TIMEOUT)
@@ -268,6 +267,7 @@ class Roster:
         # get all player ids from roster table
         print("Getting all players from roster table...")
         player_htmls = page('table#roster tbody tr').items()
+        print(f"Player HTMLs: {player_htmls}")
         try:
             player_ids = [self._get_player_id(p) for p in player_htmls]
         except Exception as e:
