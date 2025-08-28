@@ -264,6 +264,7 @@ class Roster:
         url = self._create_url(year)
         print("Fetching roster page...")
         page = self._pull_team_page(url)
+        print(f"Page: {page}")
         if not page:
             output = ("Can't pull requested team page. Ensure the following "
                     "URL exists: %s" % url)
@@ -271,10 +272,7 @@ class Roster:
         
         # get all player ids from roster table
         print("Getting all players from roster table...")
-        player_ids = []        
-        for player in page('table#roster tbody tr').items():
-            player_id = self._get_player_id(player)
-            player_ids.append(player_id)
+        player_ids = [self._get_player_id(player) for player in page('table#roster tbody tr').items()]
         print(player_ids)
         if not player_ids:
             player_ids = PLAYER_IDS
