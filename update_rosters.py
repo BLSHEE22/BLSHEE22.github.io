@@ -46,6 +46,7 @@ nflTeamTranslator = {"Atlanta Falcons":"ATL", "Buffalo Bills":"BUF",
 ## ROSTER OBJECT ##
 class Roster:
     def __init__(self, team, year, dbConn):
+        print('Initializing roster...')
         self._team = team
         self._year = year
         self._dbConn = dbConn
@@ -53,6 +54,7 @@ class Roster:
         self._players = []
 
         # scrape
+        print('Scraping player data...')
         self._get_all_player_information(year)
 
         # store in db
@@ -155,6 +157,7 @@ class Roster:
             soup : PyQuery object
                 A PyQuery object containing the HTML from the player's stats page.
             """
+            print("Parsing player's team history...")
             # track team history via 'Snap Counts' data
             team_hist = [item.text() for item in soup('[id="snap_counts"] td[data-stat="team"]').items()]
             for i in range(0, len(team_hist)-1):
@@ -201,6 +204,7 @@ class Roster:
  
 
         async def scrape_player(session, player_id):
+            print("Scraping player page...")
             if not player_id:
                 return 'no_player_page'
             first_character = player_id[0]
@@ -334,7 +338,9 @@ class Roster:
                 # if not utils._url_exists(self._create_url(year)) and \
                 # utils._url_exists(self._create_url(str(int(year) - 1))):
                 #     year = str(int(year) - 1)
+            print("Creating roster page url...")
             url = self._create_url(year)
+            print("Fetching roster page...")
             page = self._pull_team_page(url)
             if not page:
                 output = ("Can't pull requested team page. Ensure the following "
@@ -342,9 +348,11 @@ class Roster:
                 raise ValueError(output)
             
             # get all player ids from roster table
+            print("Getting all players from roster table...")
             player_ids = [self._get_player_id(p) for p in page('table#roster tbody tr').items()]
 
             # fetch html page per player id in list
+            print("Fetching all player pages...")
             asyncio.run(fetch_player_html(player_ids))
 
         except Exception as e:
