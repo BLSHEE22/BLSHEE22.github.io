@@ -6,7 +6,7 @@ on:
   workflow_dispatch:        # manual run option
 
 jobs:
-  scrape:
+  update_rosters:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -23,7 +23,7 @@ jobs:
         run: pip install requests pyquery aiohttp
 
 
-      - name: Run scraper
+      - name: Run update script
         run: python3 update_rosters.py
         env:
           BD_USER: ${{ secrets.BD_USER }}
