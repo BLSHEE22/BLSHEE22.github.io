@@ -110,7 +110,6 @@ class Roster:
             soup : PyQuery object
                 A PyQuery object containing the HTML from the player's stats page.
             """
-            print("Parsing player's team history...")
             # track team history via 'Snap Counts' data
             team_hist = [item.text() for item in soup('[id="snap_counts"] td[data-stat="team"]').items()]
             for i in range(0, len(team_hist)-1):
@@ -272,9 +271,7 @@ class Roster:
         
         # get all player ids from roster table
         print("Getting all players from roster table...")
-        print(page('table#roster').html())
         player_ids = [self._get_player_id(player) for player in page('table#roster tbody tr').items()]
-        print(player_ids)
         if not player_ids:
             player_ids = PLAYER_IDS
         return player_ids
@@ -345,7 +342,6 @@ class Roster:
         """
         name_tag = player('td[data-stat="player"] a')
         name = re.sub(r'.*/players/./', '', str(name_tag))
-        print(f"Name: {name}")
         return re.sub(r'\.htm.*', '', name)
 
 
