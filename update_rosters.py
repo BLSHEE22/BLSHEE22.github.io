@@ -262,9 +262,9 @@ class Roster:
                 year = str(int(year) - 1)
         print("Creating roster page url...")
         url = self._create_url(year)
+        print(f"URL: {url}")
         print("Fetching roster page...")
         page = self._pull_team_page(url)
-        print(f"Page: {page}")
         if not page:
             output = ("Can't pull requested team page. Ensure the following "
                     "URL exists: %s" % url)
@@ -272,6 +272,7 @@ class Roster:
         
         # get all player ids from roster table
         print("Getting all players from roster table...")
+        print(page('table#roster').html())
         player_ids = [self._get_player_id(player) for player in page('table#roster tbody tr').items()]
         print(player_ids)
         if not player_ids:
@@ -318,7 +319,7 @@ class Roster:
         """
         try:
             resp = requests.get(url, proxies={"http": PROXY_URL, "https": PROXY_URL}, timeout=30, verify=SSL_PATH)
-            soup = pq(resp.text)
+            soup = pq(utils._remove_html_comment_tags(resp.text))
             return soup
         except HTTPError:
             return None
