@@ -52,6 +52,7 @@ class Roster:
         self._coach = None
         self._players = []
         player_ids = self._get_all_player_ids(year)
+        print(f"Player Ids: {player_ids}")
         if player_ids:
             # Run scraping in the context of this instance
             asyncio.run(self.run_scraping(player_ids))
@@ -262,7 +263,14 @@ class Roster:
         
         # get all player ids from roster table
         print("Getting all players from roster table...")
-        return [self._get_player_id(p) for p in page('table#roster tbody tr').items()]
+        try:
+            player_ids = [self._get_player_id(p) for p in page('table#roster tbody tr').items()]
+        except Exception as e:
+            import traceback
+            print(f">>> Failed to get player ids: {e}")
+            traceback.print_exc()
+            player_ids = PLAYER_IDS
+        return player_ids
     
 
     def _create_url(self, year):
