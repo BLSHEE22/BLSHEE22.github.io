@@ -17,9 +17,13 @@ PLAYER_URL = 'https://www.pro-football-reference.com/players/%s/%s.htm'
 PLAYER_IDS = ['MeyeJa01', 'AchaDe00', 'BradTo00', 'ThieAd00', 'DobbJo00', 'BurnBr00', 'GonzCh00', 
               'DuggKy00', 'MayeDr00']
 
+# constants for web scraping
 WORKER_COUNT = 1          # how many workers run at once
 DELAY_BETWEEN = 3         # seconds between requests (per worker)
-REQUEST_TIMEOUT = 15      # per-response timeout
+REQUEST_TIMEOUT = 15      
+HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/118.0.5993.118 Safari/537.36"}
 
 # maps field to its .items() index
 field_map = {'height':0, 'weight':1, 'birth_date':2, 'position':2}
@@ -154,7 +158,7 @@ class Roster:
         first_character = player_id[0]
         url =  PLAYER_URL % (first_character, player_id)
         try:
-            async with session.get(url) as resp:
+            async with session.get(url, headers=HEADERS) as resp:
                 print(f"{url} → {resp.status}")
                 # Force timeout on reading body
                 html = await asyncio.wait_for(resp.read(), timeout=REQUEST_TIMEOUT)
