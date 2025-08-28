@@ -51,7 +51,7 @@ class Roster:
         self._dbConn = dbConn
         self._coach = None
         self._players = []
-        player_ids = self._get_all_player_ids(team, year)
+        player_ids = self._get_all_player_ids(year)
         if player_ids:
             # Run scraping in the context of this instance
             asyncio.run(self.run_scraping(player_ids))
