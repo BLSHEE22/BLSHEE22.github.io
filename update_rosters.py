@@ -45,27 +45,226 @@ nflTeamTranslator = {"Atlanta Falcons":"ATL", "Buffalo Bills":"BUF",
 
 ## ROSTER OBJECT ##
 class Roster:
-    def __init__(self, team, year, dbConn):
+    def __init__(self, team, dbConn, year=None):
         print('Initializing roster...')
         self._team = team
-        self._year = year
         self._dbConn = dbConn
         self._coach = None
         self._players = []
+        player_ids = self._get_all_player_ids(team, year)
+        if player_ids:
+            # Run scraping in the context of this instance
+            asyncio.run(self.run_scraping(player_ids))
 
-        # scrape latest data
-        try:
-            self._get_all_player_information(year)
-        except Exception as e:
-            import traceback
-            print(f"Scraping failed for {team} roster: {e}")
-            traceback.print_exc()
-
-        # store in db
-        if self._team and self._players:
+        if self._players:
             self._save_to_db()
 
+    async def run_scraping(self, player_ids):
+        """Top-level async runner for fetching all players"""
+        await self.fetch_player_html(player_ids)
+
+    async def fetch_player_html(self, player_ids):
+        queue = asyncio.Queue()
+        for player_id in player_ids:
+            await queue.put(player_id)
+
+        async with aiohttp.ClientSession() as session:
+            workers = [asyncio.create_task(self.worker(f"W{i+1}", session, queue))
+                       for i in range(WORKER_COUNT)]
+            await queue.join()
+            for _ in workers:
+                await queue.put(None)
+            await asyncio.gather(*workers)
+
+    async def worker(self, session, queue):
+        while True:
+            player_id = await queue.get()
+            if player_id is None:
+                break
+            try:
+                await self.scrape_player(session, player_id)
+            finally:
+                queue.task_done()
+
+    async def scrape_player(self, session, player_id):
+        """Fetch and parse one player page"""
+
+        def parse_team_history(soup):
+            """
+            Parse the set of all teams the player has played for.
+
+            Pull the player's team history from the player information and set the
+            'team_history' attribute with the value prior to returning.
+
+            Parameters
+            ----------
+            soup : PyQuery object
+                A PyQuery object containing the HTML from the player's stats page.
+            """
+            print("Parsing player's team history...")
+            # track team history via 'Snap Counts' data
+            team_hist = [item.text() for item in soup('[id="snap_counts"] td[data-stat="team"]').items()]
+            for i in range(0, len(team_hist)-1):
+                if team_hist[i] == '':
+                    team_hist[i] = team_hist[i+1]
+            years_played = [item.text().replace('*', '') for item in soup('[id="snap_counts"] th[data-stat="year_id"]').items()][1:]
+            for i in range(1, len(years_played)):
+                if years_played[i] == '':
+                    years_played[i] = years_played[i-1]
+            if team_hist:
+                if "LAR" in team_hist:
+                    team_hist = [team.replace("LAR", "RAM") for team in team_hist]
+                if "STL" in team_hist:
+                    team_hist = [team.replace("STL", "RAM") for team in team_hist]
+                if "LAC" in team_hist:
+                    team_hist = [team.replace("LAC", "SDG") for team in team_hist]
+                if "IND" in team_hist:
+                    team_hist = [team.replace("IND", "CLT") for team in team_hist]
+                if "OAK" in team_hist:
+                    team_hist = [team.replace("OAK", "RAI") for team in team_hist]
+                if "LVR-OAK" in team_hist:
+                    team_hist = [team.replace("LVR-OAK", "RAI") for team in team_hist]
+                if "LVR" in team_hist:
+                    team_hist = [team.replace("LVR", "RAI") for team in team_hist]
+                if "TEN" in team_hist:
+                    team_hist = [team.replace("TEN", "OTI") for team in team_hist]
+                if "ARI" in team_hist:
+                    team_hist = [team.replace("ARI", "CRD") for team in team_hist]
+                initial_team = team_hist[0]
+            else:
+                initial_team = None
+            team_hist_full = set([(team_hist[i], years_played[i]) for i in range(len(team_hist))])
+            team_hist_dict = dict()
+            for team, yr in team_hist_full:
+                if 'TM' not in team and team != '':
+                    try:
+                        team_hist_dict[team]
+                    except:
+                        team_hist_dict[team] = []
+                    team_hist_dict[team].append(yr)
+                    team_hist_dict[team] = sorted([yr for yr in team_hist_dict[team] if all(char.isnumeric() or char == '*' for char in yr)])
+
+            return (team_hist_dict, initial_team)
+        
+        # SCRAPE_PLAYER 
+        print(f"Scraping {player_id} player page...")
+        if not player_id:
+            return 'no_player_page'
+        first_character = player_id[0]
+        url =  PLAYER_URL % (first_character, player_id)
+        try:
+            async with session.get(url) as resp:
+                print(f"{url} → {resp.status}")
+                # Force timeout on reading body
+                html = await asyncio.wait_for(resp.read(), timeout=REQUEST_TIMEOUT)
+                soup = pq(html)
+                # create player information dict
+                player_info = {'team': None,
+                            'name': None,
+                            'player_id': player_id,
+                            'height': None,
+                            'weight': None,
+                            'position': None,
+                            'birth_date': None,
+                            'team_history': None,
+                            'initial_team': None,
+                            'fantasy_pos_rk': None,
+                            'headshot_url': None}
+                # name
+                player_info['name'] = soup("h1").text().strip()
+                # team
+                narrowedSoup = [item.text().strip() for item in soup('#meta div a').items()]
+                if narrowedSoup:
+                    if narrowedSoup[0] in nflTeamTranslator.keys():
+                        player_info['team'] = str(nflTeamTranslator[narrowedSoup[0]])
+                # height, weight
+                for field in ['height', 'weight']:
+                    value = None
+                    narrowedSoup = [item.text().strip() for item in soup("#meta div p span").items()]
+                    if narrowedSoup:
+                        if any(char.isalpha() for char in narrowedSoup[0]):
+                            narrowedSoup = narrowedSoup[1:]
+                        value = narrowedSoup[field_map[field]]
+                    if " " in value:
+                        print('Skipping ' + field + ' because illegal value \'' + value + '\' found.')
+                        continue
+                    if value and field == 'weight':
+                        value = value[:-2]
+                    player_info[field] = value
+                # position
+                meta_text = "".join([item.text() for item in soup("#meta div p").items()])
+                if 'Position: ' in meta_text:
+                    pos_index = meta_text.index('Position: ')
+                    pos_text = meta_text[pos_index:]
+                    numeric_indices = []
+                    for ft in ['Throws:', '5', '6', '7']:
+                        first_num_index = pos_text.find(ft)
+                        if first_num_index > 0:
+                            numeric_indices.append(first_num_index)
+                    numeric_index = min(numeric_indices)
+                    value = pos_text[10:numeric_index]
+                else:
+                    value = 'Unknown'
+                player_info['position'] = value.strip()
+                # birth_date
+                birth_date = soup('#necro-birth').attr('data-birth')
+                if birth_date:
+                    player_info['birth_date'] = birth_date
+                # team_history, initial_team
+                team_history, initial_team = parse_team_history(soup)
+                player_info['team_history'] = team_history
+                player_info['initial_team'] = initial_team
+                # fantasy_pos_rk
+                value = None
+                fantasy_element = 'td[data-stat="fantasy_rank_pos"]'
+                fantasy_pos_rk_field = [item.text() for item in soup(fantasy_element).items()]
+                if fantasy_pos_rk_field:
+                    value = fantasy_pos_rk_field[-2]
+                player_info['fantasy_pos_rk'] = value
+                # headshot_url
+                value = None
+                headshot_element = '#meta div[class="media-item"] img'
+                headshot_field = [item.attr['src'] for item in soup(headshot_element).items()]
+                if headshot_field:
+                    value = headshot_field[0]
+                player_info['headshot_url'] = value
+                # only append player object if team exists
+                if player_info['team']:
+                    self._players.append(player_info)
+                return player_info
+        except asyncio.TimeoutError:
+            print(f"Timeout fetching {url}")
+            return None
+        except Exception as e:
+            print(f"Error fetching {url}: {e}")
+            return None
+
+
+    def _get_all_player_ids(self, year):
+        """Form player_id list to be converted to URLs"""
+        if not year:
+            year = utils._find_year_for_season('nfl')
+            # If stats for the requested season do not exist yet (as is the
+            # case right before a new season begins), attempt to pull the
+            # previous year's stats. If it exists, use the previous year
+            # instead.
+            if not utils._url_exists(self._create_url(year)) and \
+            utils._url_exists(self._create_url(str(int(year) - 1))):
+                year = str(int(year) - 1)
+        print("Creating roster page url...")
+        url = self._create_url(year)
+        print("Fetching roster page...")
+        page = self._pull_team_page(url)
+        if not page:
+            output = ("Can't pull requested team page. Ensure the following "
+                    "URL exists: %s" % url)
+            raise ValueError(output)
+        
+        # get all player ids from roster table
+        print("Getting all players from roster table...")
+        return [self._get_player_id(p) for p in page('table#roster tbody tr').items()]
     
+
     def _create_url(self, year):
         """
         Build the team URL.
@@ -130,254 +329,6 @@ class Roster:
         name_tag = player('td[data-stat="player"] a')
         name = re.sub(r'.*/players/./', '', str(name_tag))
         return re.sub(r'\.htm.*', '', name)
-
-
-    def _get_all_player_information(self, year):
-        """
-        Find all player IDs for the requested team.
-
-        For the requested team and year (if applicable), pull the roster table
-        and parse the player ID for all players on the roster and create an
-        instance of the Player class for the player. All player instances are
-        added to the 'players' property to get all stats for all players on a
-        team.
-
-        Parameters
-        ----------
-        year : string
-            The 4-digit string representing the year to pull the team's roster
-            from.
-        """
-
-        def parse_team_history(soup):
-            """
-            Parse the set of all teams the player has played for.
-
-            Pull the player's team history from the player information and set the
-            'team_history' attribute with the value prior to returning.
-
-            Parameters
-            ----------
-            soup : PyQuery object
-                A PyQuery object containing the HTML from the player's stats page.
-            """
-            print("Parsing player's team history...")
-            # track team history via 'Snap Counts' data
-            team_hist = [item.text() for item in soup('[id="snap_counts"] td[data-stat="team"]').items()]
-            for i in range(0, len(team_hist)-1):
-                if team_hist[i] == '':
-                    team_hist[i] = team_hist[i+1]
-            years_played = [item.text().replace('*', '') for item in soup('[id="snap_counts"] th[data-stat="year_id"]').items()][1:]
-            for i in range(1, len(years_played)):
-                if years_played[i] == '':
-                    years_played[i] = years_played[i-1]
-            if team_hist:
-                if "LAR" in team_hist:
-                    team_hist = [team.replace("LAR", "RAM") for team in team_hist]
-                if "STL" in team_hist:
-                    team_hist = [team.replace("STL", "RAM") for team in team_hist]
-                if "LAC" in team_hist:
-                    team_hist = [team.replace("LAC", "SDG") for team in team_hist]
-                if "IND" in team_hist:
-                    team_hist = [team.replace("IND", "CLT") for team in team_hist]
-                if "OAK" in team_hist:
-                    team_hist = [team.replace("OAK", "RAI") for team in team_hist]
-                if "LVR-OAK" in team_hist:
-                    team_hist = [team.replace("LVR-OAK", "RAI") for team in team_hist]
-                if "LVR" in team_hist:
-                    team_hist = [team.replace("LVR", "RAI") for team in team_hist]
-                if "TEN" in team_hist:
-                    team_hist = [team.replace("TEN", "OTI") for team in team_hist]
-                if "ARI" in team_hist:
-                    team_hist = [team.replace("ARI", "CRD") for team in team_hist]
-                initial_team = team_hist[0]
-            else:
-                initial_team = None
-            team_hist_full = set([(team_hist[i], years_played[i]) for i in range(len(team_hist))])
-            team_hist_dict = dict()
-            for team, yr in team_hist_full:
-                if 'TM' not in team and team != '':
-                    try:
-                        team_hist_dict[team]
-                    except:
-                        team_hist_dict[team] = []
-                    team_hist_dict[team].append(yr)
-                    team_hist_dict[team] = sorted([yr for yr in team_hist_dict[team] if all(char.isnumeric() or char == '*' for char in yr)])
-
-            return (team_hist_dict, initial_team)
- 
-
-        async def scrape_player(session, player_id):
-            print(f"Scraping {player_id} player page...")
-            if not player_id:
-                return 'no_player_page'
-            first_character = player_id[0]
-            url =  PLAYER_URL % (first_character, player_id)
-            try:
-                async with session.get(url) as resp:
-                    print(f"{url} → {resp.status}")
-                    # Force timeout on reading body
-                    html = await asyncio.wait_for(resp.read(), timeout=REQUEST_TIMEOUT)
-                    soup = pq(html)
-                    # create player information dict
-                    player_info = {'team': None,
-                                'name': None,
-                                'player_id': player_id,
-                                'height': None,
-                                'weight': None,
-                                'position': None,
-                                'birth_date': None,
-                                'team_history': None,
-                                'initial_team': None,
-                                'fantasy_pos_rk': None,
-                                'headshot_url': None}
-                    # name
-                    player_info['name'] = soup("h1").text().strip()
-                    # team
-                    narrowedSoup = [item.text().strip() for item in soup('#meta div a').items()]
-                    if narrowedSoup:
-                        if narrowedSoup[0] in nflTeamTranslator.keys():
-                            player_info['team'] = str(nflTeamTranslator[narrowedSoup[0]])
-                    # height, weight
-                    for field in ['height', 'weight']:
-                        value = None
-                        narrowedSoup = [item.text().strip() for item in soup("#meta div p span").items()]
-                        if narrowedSoup:
-                            if any(char.isalpha() for char in narrowedSoup[0]):
-                                narrowedSoup = narrowedSoup[1:]
-                            value = narrowedSoup[field_map[field]]
-                        if " " in value:
-                            print('Skipping ' + field + ' because illegal value \'' + value + '\' found.')
-                            continue
-                        if value and field == 'weight':
-                            value = value[:-2]
-                        player_info[field] = value
-                    # position
-                    meta_text = "".join([item.text() for item in soup("#meta div p").items()])
-                    if 'Position: ' in meta_text:
-                        pos_index = meta_text.index('Position: ')
-                        pos_text = meta_text[pos_index:]
-                        numeric_indices = []
-                        for ft in ['Throws:', '5', '6', '7']:
-                            first_num_index = pos_text.find(ft)
-                            if first_num_index > 0:
-                                numeric_indices.append(first_num_index)
-                        numeric_index = min(numeric_indices)
-                        value = pos_text[10:numeric_index]
-                    else:
-                        value = 'Unknown'
-                    player_info['position'] = value.strip()
-                    # birth_date
-                    birth_date = soup('#necro-birth').attr('data-birth')
-                    if birth_date:
-                        player_info['birth_date'] = birth_date
-                    # team_history, initial_team
-                    team_history, initial_team = parse_team_history(soup)
-                    player_info['team_history'] = team_history
-                    player_info['initial_team'] = initial_team
-                    # fantasy_pos_rk
-                    value = None
-                    fantasy_element = 'td[data-stat="fantasy_rank_pos"]'
-                    fantasy_pos_rk_field = [item.text() for item in soup(fantasy_element).items()]
-                    if fantasy_pos_rk_field:
-                        value = fantasy_pos_rk_field[-2]
-                    player_info['fantasy_pos_rk'] = value
-                    # headshot_url
-                    value = None
-                    headshot_element = '#meta div[class="media-item"] img'
-                    headshot_field = [item.attr['src'] for item in soup(headshot_element).items()]
-                    if headshot_field:
-                        value = headshot_field[0]
-                    player_info['headshot_url'] = value
-                    # only append player object if team exists
-                    if player_info['team']:
-                        self._players.append(player_info)
-                    return player_info
-            except asyncio.TimeoutError:
-                print(f"Timeout fetching {url}")
-                return None
-            except Exception as e:
-                print(f"Error fetching {url}: {e}")
-                return None
-
-
-        async def worker(name, session, queue):
-            while True:
-                player_id = await queue.get()
-                if player_id is None:
-                    break
-                try:
-                    print(f"Fetching {player_id} player page...")
-                    result = await scrape_player(session, player_id)
-                    print(f"{name} got {player_id} -> {result}")
-                finally:
-                    await asyncio.sleep(DELAY_BETWEEN)  # let the site breathe
-                    queue.task_done()
-
-
-        async def fetch_player_html(player_ids):
-            queue = asyncio.Queue()
-            for player_id in player_ids: # PLAYER_IDS for debugging, player_ids for real
-                await queue.put(player_id)
-
-            timeout = aiohttp.ClientTimeout(total=REQUEST_TIMEOUT + 5)
-            async with aiohttp.ClientSession(timeout=timeout) as session:
-                print(f"Creating {WORKER_COUNT} workers...")
-                workers = [asyncio.create_task(worker(f"W{i+1}", session, queue))
-                        for i in range(WORKER_COUNT)]
-
-                await queue.join()  # wait until all jobs are processed
-
-                # stop workers
-                for _ in workers:
-                    await queue.put(None)
-                await asyncio.gather(*workers)
-        
-
-        async def run_scraping():
-            """Wrappe coroutine to run all scraping tasks"""
-            await fetch_player_html(player_ids)
-
-
-        # GET_ALL_PLAYER_INFORMATION START
-        try:
-            if not year:
-                year = utils._find_year_for_season('nfl')
-                # If stats for the requested season do not exist yet (as is the
-                # case right before a new season begins), attempt to pull the
-                # previous year's stats. If it exists, use the previous year
-                # instead.
-                if not utils._url_exists(self._create_url(year)) and \
-                utils._url_exists(self._create_url(str(int(year) - 1))):
-                    year = str(int(year) - 1)
-            print("Creating roster page url...")
-            url = self._create_url(year)
-            print("Fetching roster page...")
-            page = self._pull_team_page(url)
-            if not page:
-                output = ("Can't pull requested team page. Ensure the following "
-                        "URL exists: %s" % url)
-                raise ValueError(output)
-            
-            # get all player ids from roster table
-            print("Getting all players from roster table...")
-            player_ids = [self._get_player_id(p) for p in page('table#roster tbody tr').items()]
-
-            # fetch html page per player id in list
-            print("Fetching all player pages...")
-            try:
-                asyncio.run(run_scraping())
-            except Exception as e:
-                import traceback
-                print(f"!!! Scraping failed for {self._team}: {e}")
-                traceback.print_exc()
-            
-            #asyncio.run(fetch_player_html(player_ids))
-
-        except Exception as e:
-            import traceback
-            print(f"Error while scraping {self._team}: {e}")
-            traceback.print_exc()
 
 
     def _save_to_db(self):
@@ -447,7 +398,7 @@ if __name__ == "__main__":
     for team in list(nflTeamTranslator.values())[:8]:
         print(f">>> Getting latest {team} roster...")
         try:
-            roster = Roster(team, '2025', conn)
+            roster = Roster(team, conn)
             print(f">>>Successfully updated {team} roster!")
         except Exception as e:
             import traceback
