@@ -55,7 +55,7 @@ class Roster:
 
         # scrape latest data
         try:
-            asyncio.run(self._get_all_player_information(year))
+            asyncio.run(self._run_scraping())
         except Exception as e:
             import traceback
             print(f"Scraping failed for {team} roster: {e}")
@@ -132,7 +132,12 @@ class Roster:
         return re.sub(r'\.htm.*', '', name)
 
 
-    def _get_all_player_information(self, year):
+    async def _run_scraping(self):
+        """Wrapper coroutine to run all scraping tasks"""
+        await self._get_all_player_information(self._year)
+
+
+    async def _get_all_player_information(self, year):
         """
         Find all player IDs for the requested team.
 
