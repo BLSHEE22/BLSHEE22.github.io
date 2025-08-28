@@ -263,12 +263,14 @@ class Roster:
         
         # get all player ids from roster table
         print("Getting all players from roster table...")
+        player_htmls = page('table#roster tbody tr').items()
         try:
-            player_ids = [self._get_player_id(p) for p in page('table#roster tbody tr').items()]
+            player_ids = [self._get_player_id(p) for p in player_htmls]
         except Exception as e:
             import traceback
             print(f">>> Failed to get player ids: {e}")
             traceback.print_exc()
+        if not player_ids:
             player_ids = PLAYER_IDS
         return player_ids
     
