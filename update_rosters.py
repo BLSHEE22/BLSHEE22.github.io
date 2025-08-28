@@ -54,7 +54,6 @@ nflTeamTranslator = {"Atlanta Falcons":"ATL", "Buffalo Bills":"BUF",
 ## ROSTER OBJECT ##
 class Roster:
     def __init__(self, team, dbConn, year=None):
-        print('Initializing roster...')
         self._team = team
         self._dbConn = dbConn
         self._coach = None
@@ -272,7 +271,7 @@ class Roster:
         # get all player ids from roster table
         print("Getting all players from roster table...")
         player_htmls = page('table#roster tbody tr').items()
-        print(f"Player HTMLs: {player_htmls}")
+        print([item.text() for item in player_htmls])
         player_ids = [self._get_player_id(p) for p in player_htmls]
         if not player_ids:
             player_ids = PLAYER_IDS
@@ -342,6 +341,7 @@ class Roster:
         """
         name_tag = player('td[data-stat="player"] a')
         name = re.sub(r'.*/players/./', '', str(name_tag))
+        print(name)
         return re.sub(r'\.htm.*', '', name)
 
 
