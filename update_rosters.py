@@ -319,8 +319,9 @@ class Roster:
             Returns a PyQuery object of the team's HTML page.
         """
         try:
-            resp = requests.get(url, proxies={"http": PROXY_URL}, cert=SSL_PATH)
-            return pq(resp)
+            resp = requests.get(url, proxies={"http": PROXY_URL, "https": PROXY_URL}, timeout=30, verify=SSL_PATH)
+            soup = pq(resp.text)
+            return soup
         except HTTPError:
             return None
 
