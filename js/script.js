@@ -526,25 +526,26 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener("db-ready", () => {
     const alumniData = document.getElementById("teamAlumniData");
     const alumniQuery = `SELECT 
-                            t.team AS Team,
-                            COUNT(p.id) AS AlumniCount
-                          FROM (
-                            -- first, get all distinct team codes
-                            SELECT DISTINCT team 
-                            FROM players
-                          ) t
-                          LEFT JOIN players p
-                            ON p.team != t.team
-                            AND instr(p.team_history, t.team) > 0
-                          GROUP BY t.team
-                          ORDER BY AlumniCount DESC, Team ASC;
-                          `;
+                          t.team AS Team,
+                          COUNT(CASE WHEN p.initial_team = t.team THEN 1 END) AS PrimaryAlumni,
+                          COUNT(CASE WHEN p.initial_team != t.team THEN 1 END) AS NonPrimaryAlumni
+                      FROM (
+                          -- get all distinct team codes
+                          SELECT DISTINCT team
+                          FROM players
+                      ) t
+                      LEFT JOIN players p
+                          ON p.team != t.team
+                          AND instr(p.team_history, t.team) > 0
+                      GROUP BY t.team
+                      ORDER BY COUNT(CASE WHEN p.initial_team = t.team THEN 1 END) + 
+                              COUNT(CASE WHEN p.initial_team != t.team THEN 1 END) DESC, Team ASC;`;
     try {
       const results = db.exec(alumniQuery);
-      console.log(results);
       if (results.length > 0) {
         const teams = results[0].values.map(row => row[0]); // ["ATL", "BUF", ...]
-        const counts = results[0].values.map(row => row[1]); // [40, 34, ...]
+        const primaryCounts = results[0].values.map(row => row[1]); // [40, 34, ...]
+        const nonPrimaryCounts = results[0].values.map(row => row[2]); // [40, 34, ...]
 
         // translate teams as needed
         let formatted_teams = []
@@ -554,28 +555,36 @@ document.addEventListener('DOMContentLoaded', () => {
           } else {
             formatted_teams.push(t);
           }
+          console.log(formatted_teams)
         }
 
         // setup bar chart colors
         const teamConferences = {
-          'ARI': 'NFC', 'ATL': 'NFC', 'BAL': 'AFC', 'BUF': 'AFC',
-          'CAR': 'NFC', 'CHI': 'NFC', 'CIN': 'AFC', 'CLE': 'AFC',
+          'ATL': 'NFC', 'BUF': 'AFC', 'CAR': 'NFC', 'CHI': 'NFC', 
+          'CIN': 'AFC', 'CLE': 'AFC', 'CLT': 'AFC', 'CRD': 'NFC',
           'DAL': 'NFC', 'DEN': 'AFC', 'DET': 'NFC', 'GNB': 'NFC',
-          'HTX': 'AFC', 'IND': 'AFC', 'JAX': 'AFC', 'KAN': 'AFC',
-          'RAI': 'AFC', 'LAC': 'AFC', 'LAR': 'NFC', 'MIA': 'AFC',
-          'MIN': 'NFC', 'NE': 'AFC', 'NOR': 'NFC', 'NYG': 'NFC',
-          'NYJ': 'AFC', 'PHI': 'NFC', 'PIT': 'AFC', 'SEA': 'NFC',
-          'SFO': 'NFC', 'TAM': 'NFC', 'TEN': 'AFC', 'WAS': 'NFC'
+          'HTX': 'AFC', 'JAX': 'AFC', 'KAN': 'AFC', 'MIA': 'AFC',
+          'MIN': 'NFC', 'NOR': 'NFC', 'NE': 'AFC',  'NYG': 'NFC',
+          'NYJ': 'AFC', 'TEN': 'AFC', 'PHI': 'NFC', 'PIT': 'AFC',
+          'RAI': 'AFC', 'RAM': 'NFC', 'RAV': 'AFC', 'LAC': 'AFC',
+          'SEA': 'NFC', 'SFO': 'NFC', 'TAM': 'NFC', 'WAS': 'NFC'
         };
         
-        const colors = results[0].values.map(row => {
-          const team = row[0];
+        const colors = formatted_teams.map(team => {
           return teamConferences[team] === 'AFC' ? 'rgba(255, 99, 132, 0.6)' : 'rgba(54, 162, 235, 0.6)';
         });
         
-        const borderColors = results[0].values.map(row => {
-          const team = row[0];
+        const borderColors = formatted_teams.map(team => {
           return teamConferences[team] === 'AFC' ? 'rgba(255, 99, 132, 1)' : 'rgba(54, 162, 235, 1)';
+        });
+
+        // differentiate primary vs. non-primary grudges
+        const primaryColors = formatted_teams.map(team => {
+          return teamConferences[team] === 'AFC' ? 'rgba(225, 69, 102, 0.6)' : 'rgba(24, 132, 205, 0.6)';
+        });
+        
+        const primaryBorderColors = formatted_teams.map(team => {
+          return teamConferences[team] === 'AFC' ? 'rgba(225, 69, 102, 1)' : 'rgba(24, 132, 205, 1)';
         });
         
         
@@ -586,11 +595,18 @@ document.addEventListener('DOMContentLoaded', () => {
           data: {
               labels: formatted_teams,
               datasets: [{
-                  label: 'Active Alumni',
-                  data: counts,
-                  backgroundColor: colors,
-                  borderColor: borderColors,
-                  borderWidth: 1
+                label: 'Primary',
+                data: primaryCounts,
+                backgroundColor: primaryColors,
+                borderColor: primaryBorderColors,
+                borderWidth: 1
+              },
+              {
+                label: 'Secondary',
+                data: nonPrimaryCounts,
+                backgroundColor: colors,
+                borderColor: borderColors,
+                borderWidth: 1
               }]
           },
           options: {
@@ -608,19 +624,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   }
               },
               scales: {
-                  y: {
-                      beginAtZero: true,
-                      title: {
-                          display: true,
-                          text: 'Number of Active Alumni'
-                      }
-                  },
-                  x: {
-                      title: {
-                          display: true,
-                          text: 'Team'
-                      }
-                  }
+                x: { stacked: true, title: { display: true, text: 'Team' } },
+                y: { stacked: true, beginAtZero: true, title: { display: true, text: 'Number of Active Grudges' } }
               }
           }
         });
@@ -629,6 +634,58 @@ document.addEventListener('DOMContentLoaded', () => {
     catch (err) {
       alumniData.textContent = "Error: " + err.message;
     }
+
+    // make team value bar chart
+    const ctx2 = document.getElementById('teamValueChart').getContext('2d');
+    const teamValueChart = new Chart(ctx2, {
+      type: 'bar',
+      data: {
+          labels: ['DAL', 'RAM', 'NYG', 'NE', 'SFO', 'PHI', 'MIA', 'NYJ',
+                   'RAI', 'WAS', 'CHI', 'HTX', 'ATL', 'SEA', 'DEN', 'KAN',
+                   'PIT', 'GNB', 'TAM', 'MIN', 'LAC', 'TEN', 'CLE', 'RAV',
+                   'DET', 'BUF', 'CAR', 'CLT', 'CRD', 'NOR', 'JAX', 'CIN'],
+          datasets: [{
+              label: '$ Billion',
+              data: [12.8, 10.43, 10.25, 8.76, 8.6, 8.43, 8.25, 8.11,
+                     7.9, 7.47, 7.45, 7.17, 7.05, 6.59, 6.55, 6.53,
+                     6.51, 6.48, 6.47, 6.28, 6.21, 6.2, 6.14, 6,
+                     5.88, 5.87, 5.76, 5.72, 5.66, 5.63, 5.57, 5.5],
+              backgroundColor: 'rgba(128, 239, 128, 0.6)',
+              borderColor: 'rgba(0, 100, 0, 1)',
+              borderWidth: 1
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+              legend: {
+                  display: false
+              },
+              tooltip: {
+                  callbacks: {
+                      label: function(context) {
+                          return `${context.dataset.label}: ${context.parsed.y}`;
+                      }
+                  }
+              }
+          },
+          scales: {
+              y: {
+                  beginAtZero: true,
+                  title: {
+                      display: true,
+                      text: 'USD Value (Billions)'
+                  }
+              },
+              x: {
+                  title: {
+                      display: true,
+                      text: 'Team'
+                  }
+              }
+          }
+      }
+    });
   });
 
   // add hover/click logic to each matchup table

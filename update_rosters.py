@@ -138,6 +138,10 @@ class Roster:
                     team_hist = [team.replace("TEN", "OTI") for team in team_hist]
                 if "ARI" in team_hist:
                     team_hist = [team.replace("ARI", "CRD") for team in team_hist]
+                if "BAL" in team_hist:
+                    team_hist = [team.replace("BAL", "RAV") for team in team_hist]
+                if "HOU" in team_hist:
+                    team_hist = [team.replace("HOU", "HTX") for team in team_hist]
                 initial_team = team_hist[0]
             else:
                 initial_team = None
