@@ -3,7 +3,6 @@ import asyncio
 import aiohttp
 import sqlite3
 import utils
-from lxml.etree import ParserError, XMLSyntaxError
 from pyquery import PyQuery as pq
 from urllib.error import HTTPError
 

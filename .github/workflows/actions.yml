@@ -2,7 +2,7 @@ name: Daily Roster Update
 
 on:
   schedule:
-    - cron: "0 0 * * *"   # every day at midnight UTC
+    - cron: "0 3 * * *"   # every day at 3 AM UTC
   workflow_dispatch:      # manual run option
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
           python-version: "3.10"
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4 aiohttp
+        run: pip install requests pyquery aiohttp
 
 
       - name: Run scraper
