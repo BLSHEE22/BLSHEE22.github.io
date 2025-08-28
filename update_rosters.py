@@ -5,6 +5,7 @@ import asyncio
 import sqlite3
 import utils
 import aiohttp
+import requests
 from pyquery import PyQuery as pq
 from urllib.error import HTTPError
 
@@ -270,7 +271,7 @@ class Roster:
         
         # get all player ids from roster table
         print("Getting all players from roster table...")
-        player_ids = []
+        player_ids = []        
         for player in page('table#roster tbody tr').items():
             player_id = self._get_player_id(player)
             player_ids.append(player_id)
@@ -318,7 +319,8 @@ class Roster:
             Returns a PyQuery object of the team's HTML page.
         """
         try:
-            return pq(utils._remove_html_comment_tags(pq(url)))
+            resp = requests.get(url, proxy=PROXY_URL, ssl=SSL_PATH)
+            return pq(resp)
         except HTTPError:
             return None
 
@@ -416,7 +418,7 @@ if __name__ == "__main__":
     ssl_context.check_hostname = True
     ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    for team in list(nflTeamTranslator.values())[:8]:
+    for team in list(nflTeamTranslator.values())[:3]:
         print(f">>> Getting latest {team} roster...")
         try:
             roster = Roster(team, conn)
