@@ -55,7 +55,7 @@ class Roster:
 
         # scrape latest data
         try:
-            asyncio.run(self._run_scraping())
+            self._get_all_player_information(year)
         except Exception as e:
             import traceback
             print(f"Scraping failed for {team} roster: {e}")
@@ -132,12 +132,7 @@ class Roster:
         return re.sub(r'\.htm.*', '', name)
 
 
-    async def _run_scraping(self):
-        """Wrapper coroutine to run all scraping tasks"""
-        await self._get_all_player_information(self._year)
-
-
-    async def _get_all_player_information(self, year):
+    def _get_all_player_information(self, year):
         """
         Find all player IDs for the requested team.
 
@@ -338,17 +333,23 @@ class Roster:
                     await queue.put(None)
                 await asyncio.gather(*workers)
         
+
+        async def run_scraping():
+            """Wrappe coroutine to run all scraping tasks"""
+            await fetch_player_html(player_ids)
+
+
         # GET_ALL_PLAYER_INFORMATION START
         try:
-            # if not year:
-                # year = utils._find_year_for_season('nfl')
+            if not year:
+                year = utils._find_year_for_season('nfl')
                 # If stats for the requested season do not exist yet (as is the
                 # case right before a new season begins), attempt to pull the
                 # previous year's stats. If it exists, use the previous year
                 # instead.
-                # if not utils._url_exists(self._create_url(year)) and \
-                # utils._url_exists(self._create_url(str(int(year) - 1))):
-                #     year = str(int(year) - 1)
+                if not utils._url_exists(self._create_url(year)) and \
+                utils._url_exists(self._create_url(str(int(year) - 1))):
+                    year = str(int(year) - 1)
             print("Creating roster page url...")
             url = self._create_url(year)
             print("Fetching roster page...")
@@ -364,7 +365,14 @@ class Roster:
 
             # fetch html page per player id in list
             print("Fetching all player pages...")
-            asyncio.run(fetch_player_html(player_ids))
+            try:
+                asyncio.run(run_scraping())
+            except Exception as e:
+                import traceback
+                print(f"!!! Scraping failed for {self._team}: {e}")
+                traceback.print_exc()
+            
+            #asyncio.run(fetch_player_html(player_ids))
 
         except Exception as e:
             import traceback
