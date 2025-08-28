@@ -45,8 +45,9 @@ nflTeamTranslator = {"Atlanta Falcons":"ATL", "Buffalo Bills":"BUF",
 
 ## ROSTER OBJECT ##
 class Roster:
-    def __init__(self, team, dbConn, year=None):
+    def __init__(self, team, year, dbConn):
         self._team = team
+        self._year = year
         self._dbConn = dbConn
         self._coach = None
         self._players = []
@@ -323,17 +324,16 @@ class Roster:
                 await asyncio.gather(*workers)
         
         # GET_ALL_PLAYER_INFORMATION START
-        print(f"[_get_all_player_information] called for team={self._team}")
         try:
-            if not year:
-                year = utils._find_year_for_season('nfl')
+            # if not year:
+                # year = utils._find_year_for_season('nfl')
                 # If stats for the requested season do not exist yet (as is the
                 # case right before a new season begins), attempt to pull the
                 # previous year's stats. If it exists, use the previous year
                 # instead.
-                if not utils._url_exists(self._create_url(year)) and \
-                utils._url_exists(self._create_url(str(int(year) - 1))):
-                    year = str(int(year) - 1)
+                # if not utils._url_exists(self._create_url(year)) and \
+                # utils._url_exists(self._create_url(str(int(year) - 1))):
+                #     year = str(int(year) - 1)
             url = self._create_url(year)
             page = self._pull_team_page(url)
             if not page:
@@ -420,7 +420,7 @@ if __name__ == "__main__":
     for team in list(nflTeamTranslator.values())[:8]:
         print(f">>> Getting latest {team} roster...")
         try:
-            roster = Roster(team, conn)
+            roster = Roster(team, '2025', conn)
             print(f">>>Successfully updated {team} roster!")
         except Exception as e:
             import traceback
