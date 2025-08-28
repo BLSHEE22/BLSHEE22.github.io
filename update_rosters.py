@@ -23,10 +23,10 @@ PLAYER_IDS = ['MeyeJa01', 'AchaDe00', 'BradTo00', 'ThieAd00', 'DobbJo00', 'BurnB
 WORKER_COUNT = 1          # how many workers run at once
 DELAY_BETWEEN = 3         # seconds between requests (per worker)
 REQUEST_TIMEOUT = 15   
-username = os.environ['BD_USER']
-password = os.environ['BD_PASS']
-host = os.environ['P_HOST']
-port = os.environ['P_PORT']
+username = os.environ.get('BD_USER')
+password = os.environ.get('BD_PASS')
+host = os.environ.get('P_HOST')
+port = os.environ.get('P_PORT')
 PROXY_URL = f"http://{username}:{password}@{host}:{port}"
 
 # maps field to its .items() index

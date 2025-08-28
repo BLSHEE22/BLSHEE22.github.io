@@ -25,6 +25,11 @@ jobs:
 
       - name: Run scraper
         run: python3 update_rosters.py
+        env:
+          BD_USER: ${{ secrets.BD_USER }}
+          BD_PASS: ${{ secrets.BD_PASS }}
+          P_HOST: ${{ secrets.P_HOST }}
+          P_PORT: ${{ secrets.P_PORT }}
 
       - name: Commit & Push changes
         run: |
