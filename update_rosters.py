@@ -410,7 +410,15 @@ if __name__ == "__main__":
     print("New table created.")
     conn.commit()
     for team in list(nflTeamTranslator.values())[:8]:
-        print(f"Getting latest {team} roster...")
-        team = Roster(team, conn)
+        # print(f"Getting latest {team} roster...")
+        # team = Roster(team, conn)
+        print(f">>> About to instantiate Roster for {team}")
+        try:
+            roster = Roster(team, conn)
+            print(f">>> Successfully updated {team} roster!")
+        except Exception as e:
+            import traceback
+            print(f">>> Failed to create {team} roster: {e}")
+            traceback.print_exc()
     conn.close()
     print("All done!")
