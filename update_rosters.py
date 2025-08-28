@@ -270,9 +270,11 @@ class Roster:
         
         # get all player ids from roster table
         print("Getting all players from roster table...")
-        player_htmls = page('table#roster tbody tr').items()
-        print([item.text() for item in player_htmls])
-        player_ids = [self._get_player_id(p) for p in player_htmls]
+        player_ids = []
+        for player in page('table#roster tbody tr').items():
+            player_id = self._get_player_id(player)
+            player_ids.append(player_id)
+        print(player_ids)
         if not player_ids:
             player_ids = PLAYER_IDS
         return player_ids
@@ -341,7 +343,7 @@ class Roster:
         """
         name_tag = player('td[data-stat="player"] a')
         name = re.sub(r'.*/players/./', '', str(name_tag))
-        print(name)
+        print(f"Name: {name}")
         return re.sub(r'\.htm.*', '', name)
 
 
