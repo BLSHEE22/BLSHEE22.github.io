@@ -2,9 +2,9 @@ import os
 import re
 import ssl
 import asyncio
-import aiohttp
 import sqlite3
 import utils
+import aiohttp
 from pyquery import PyQuery as pq
 from urllib.error import HTTPError
 
@@ -16,8 +16,7 @@ ROSTER_URL = 'https://www.pro-football-reference.com/teams/%s/%s_roster.htm'
 PLAYER_URL = 'https://www.pro-football-reference.com/players/%s/%s.htm'
 
 # Example: list of player ids
-PLAYER_IDS = ['MeyeJa01', 'AchaDe00', 'BradTo00', 'ThieAd00', 'DobbJo00', 'BurnBr00', 'GonzCh00', 
-              'DuggKy00', 'MayeDr00']
+PLAYER_IDS = ['MayeDr00']
 
 # constants for web scraping
 WORKER_COUNT = 1          # how many workers run at once
@@ -274,12 +273,7 @@ class Roster:
         print("Getting all players from roster table...")
         player_htmls = page('table#roster tbody tr').items()
         print(f"Player HTMLs: {player_htmls}")
-        try:
-            player_ids = [self._get_player_id(p) for p in player_htmls]
-        except Exception as e:
-            import traceback
-            print(f">>> Failed to get player ids: {e}")
-            traceback.print_exc()
+        player_ids = [self._get_player_id(p) for p in player_htmls]
         if not player_ids:
             player_ids = PLAYER_IDS
         return player_ids
