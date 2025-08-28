@@ -319,7 +319,7 @@ class Roster:
             Returns a PyQuery object of the team's HTML page.
         """
         try:
-            resp = requests.get(url, proxy=PROXY_URL, ssl=SSL_PATH)
+            resp = requests.get(url, proxies={"http": PROXY_URL}, cert=SSL_PATH)
             return pq(resp)
         except HTTPError:
             return None
