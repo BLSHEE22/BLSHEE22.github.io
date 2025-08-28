@@ -5,7 +5,7 @@ initSqlJs({
   locateFile: file => `https://sql.js.org/dist/${file}` // Point to wasm file
 }).then(async SQL => {
   // Fetch the pre-hosted .db file
-  const response = await fetch('/data/players2.db');
+  const response = await fetch('/data/players.db');
   const buffer = await response.arrayBuffer();
 
   // Load the database from the buffer
@@ -13,7 +13,7 @@ initSqlJs({
   console.log("Database loaded successfully.");
 
   // Optionally run a query right away
-  const res = db.exec("SELECT name FROM players2 WHERE team == 'NWE';");
+  const res = db.exec("SELECT name FROM players WHERE team == 'NWE';");
   console.log(res);
 });
 
@@ -434,7 +434,7 @@ function updateResponse() {
       // form query
       try {
         const query = `SELECT player_id, name, position, team, team_history, initial_team, 
-                      fantasy_pos_rk, headshot_url FROM players2 WHERE team == '${currTeam}' AND 
+                      fantasy_pos_rk, headshot_url FROM players WHERE team == '${currTeam}' AND 
                       instr(team_history, '${opposingTeam}') > 0;`;
         // const query = document.getElementById('query').value;
         document.getElementById('query').textContent = query;
