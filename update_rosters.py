@@ -77,7 +77,7 @@ class Roster:
                 await queue.put(None)
             await asyncio.gather(*workers)
 
-    async def worker(self, session, queue):
+    async def worker(self, name, session, queue):
         while True:
             player_id = await queue.get()
             if player_id is None:
