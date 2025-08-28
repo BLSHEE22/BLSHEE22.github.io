@@ -53,9 +53,13 @@ class Roster:
         self._coach = None
         self._players = []
 
-        # scrape
-        print('Scraping player data...')
-        self._get_all_player_information(year)
+        # scrape latest data
+        try:
+            asyncio.run(self._get_all_player_information(year))
+        except Exception as e:
+            import traceback
+            print(f"Scraping failed for {team} roster: {e}")
+            traceback.print_exc()
 
         # store in db
         if self._team and self._players:
@@ -204,7 +208,7 @@ class Roster:
  
 
         async def scrape_player(session, player_id):
-            print("Scraping player page...")
+            print(f"Scraping {player_id} player page...")
             if not player_id:
                 return 'no_player_page'
             first_character = player_id[0]
@@ -303,6 +307,7 @@ class Roster:
                 if player_id is None:
                     break
                 try:
+                    print(f"Fetching {player_id} player page...")
                     result = await scrape_player(session, player_id)
                     print(f"{name} got {player_id} -> {result}")
                 finally:
@@ -317,6 +322,7 @@ class Roster:
 
             timeout = aiohttp.ClientTimeout(total=REQUEST_TIMEOUT + 5)
             async with aiohttp.ClientSession(timeout=timeout) as session:
+                print(f"Creating {WORKER_COUNT} workers...")
                 workers = [asyncio.create_task(worker(f"W{i+1}", session, queue))
                         for i in range(WORKER_COUNT)]
 
