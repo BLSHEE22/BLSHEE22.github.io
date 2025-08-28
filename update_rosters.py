@@ -322,27 +322,35 @@ class Roster:
                     await queue.put(None)
                 await asyncio.gather(*workers)
         
-        if not year:
-            year = utils._find_year_for_season('nfl')
-            # If stats for the requested season do not exist yet (as is the
-            # case right before a new season begins), attempt to pull the
-            # previous year's stats. If it exists, use the previous year
-            # instead.
-            if not utils._url_exists(self._create_url(year)) and \
-               utils._url_exists(self._create_url(str(int(year) - 1))):
-                year = str(int(year) - 1)
-        url = self._create_url(year)
-        page = self._pull_team_page(url)
-        if not page:
-            output = ("Can't pull requested team page. Ensure the following "
-                      "URL exists: %s" % url)
-            raise ValueError(output)
-        
-        # get all player ids from roster table
-        player_ids = [self._get_player_id(p) for p in page('table#roster tbody tr').items()]
+        # GET_ALL_PLAYER_INFORMATION START
+        print(f"[_get_all_player_information] called for team={self._team}")
+        try:
+            if not year:
+                year = utils._find_year_for_season('nfl')
+                # If stats for the requested season do not exist yet (as is the
+                # case right before a new season begins), attempt to pull the
+                # previous year's stats. If it exists, use the previous year
+                # instead.
+                if not utils._url_exists(self._create_url(year)) and \
+                utils._url_exists(self._create_url(str(int(year) - 1))):
+                    year = str(int(year) - 1)
+            url = self._create_url(year)
+            page = self._pull_team_page(url)
+            if not page:
+                output = ("Can't pull requested team page. Ensure the following "
+                        "URL exists: %s" % url)
+                raise ValueError(output)
+            
+            # get all player ids from roster table
+            player_ids = [self._get_player_id(p) for p in page('table#roster tbody tr').items()]
 
-        # fetch html page per player id in list
-        asyncio.run(fetch_player_html(player_ids))
+            # fetch html page per player id in list
+            asyncio.run(fetch_player_html(player_ids))
+
+        except Exception as e:
+            import traceback
+            print(f"Error while scraping {self._team}: {e}")
+            traceback.print_exc()
 
 
     def _save_to_db(self):
@@ -410,12 +418,10 @@ if __name__ == "__main__":
     print("New table created.")
     conn.commit()
     for team in list(nflTeamTranslator.values())[:8]:
-        # print(f"Getting latest {team} roster...")
-        # team = Roster(team, conn)
-        print(f">>> About to instantiate Roster for {team}")
+        print(f">>> Getting latest {team} roster...")
         try:
             roster = Roster(team, conn)
-            print(f">>> Successfully updated {team} roster!")
+            print(f">>>Successfully updated {team} roster!")
         except Exception as e:
             import traceback
             print(f">>> Failed to create {team} roster: {e}")
