@@ -1,11 +1,12 @@
+import os
 import re
+import ssl
 import asyncio
 import aiohttp
 import sqlite3
 import utils
 from pyquery import PyQuery as pq
 from urllib.error import HTTPError
-
 
 # path to database
 DB_PATH = "data/players.db"
@@ -22,7 +23,11 @@ PLAYER_IDS = ['MeyeJa01', 'AchaDe00', 'BradTo00', 'ThieAd00', 'DobbJo00', 'BurnB
 WORKER_COUNT = 1          # how many workers run at once
 DELAY_BETWEEN = 3         # seconds between requests (per worker)
 REQUEST_TIMEOUT = 15   
-PROXY_URL = "http://brd-customer-hl_bf49adb1-zone-residential_proxy1:a0hihc30yukf@brd.superproxy.io:33335"
+username = os.environ['BD_USER']
+password = os.environ['BD_PASS']
+host = os.environ['P_HOST']
+port = os.environ['P_PORT']
+PROXY_URL = f"http://{username}:{password}@{host}:{port}"
 
 # maps field to its .items() index
 field_map = {'height':0, 'weight':1, 'birth_date':2, 'position':2}
@@ -157,7 +162,10 @@ class Roster:
         first_character = player_id[0]
         url =  PLAYER_URL % (first_character, player_id)
         try:
-            async with session.get(url, proxy=PROXY_URL) as resp:
+            ssl_context = ssl.create_default_context()
+            ssl_context.check_hostname = True
+            ssl_context.verify_mode = ssl.CERT_REQUIRED
+            async with session.get(url, proxy=PROXY_URL, ssl=ssl_context) as resp:
                 print(f"{url} → {resp.status}")
                 # Force timeout on reading body
                 html = await asyncio.wait_for(resp.read(), timeout=REQUEST_TIMEOUT)
