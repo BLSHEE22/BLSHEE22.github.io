@@ -28,6 +28,7 @@ password = os.environ.get('BD_PASS')
 host = os.environ.get('P_HOST')
 port = os.environ.get('P_PORT')
 PROXY_URL = f"http://{username}:{password}@{host}:{port}"
+SSL_PATH = "ssl/bd.crt"
 
 # maps field to its .items() index
 field_map = {'height':0, 'weight':1, 'birth_date':2, 'position':2}
@@ -162,9 +163,6 @@ class Roster:
         first_character = player_id[0]
         url =  PLAYER_URL % (first_character, player_id)
         try:
-            ssl_context = ssl.create_default_context()
-            ssl_context.check_hostname = True
-            ssl_context.verify_mode = ssl.CERT_REQUIRED
             async with session.get(url, proxy=PROXY_URL, ssl=ssl_context) as resp:
                 print(f"{url} → {resp.status}")
                 # Force timeout on reading body
@@ -417,6 +415,11 @@ if __name__ == "__main__":
                 )''')
     print("New table created.")
     conn.commit()
+    print("Establishing SSL...")
+    ssl_context = ssl.create_default_context(cafile=SSL_PATH)
+    ssl_context.check_hostname = True
+    ssl_context.verify_mode = ssl.CERT_REQUIRED
+    print("SSL established.")
     for team in list(nflTeamTranslator.values())[:8]:
         print(f">>> Getting latest {team} roster...")
         try:
