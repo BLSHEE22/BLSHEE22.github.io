@@ -56,6 +56,12 @@ const days = Object.keys(playerGrudges);
 // current date/time
 const now = new Date();
 
+// translate certain teams from their irl id to database id
+const team_name_map = {'LAC': 'SDG', 'TEN': 'OTI', 'NE':  'NWE'};
+
+// translate certain teams from the db_id to common sense id
+const team_db_name_to_irl_name = {'SDG': 'LAC', 'OTI': 'TEN', 'NWE':  'NE'};
+
 // define position order for use in tables
 const position_order = {"QB": 0, // fantasy
                         "RB": 1,
@@ -420,10 +426,6 @@ function updateResponse() {
      */
     function getGrudges(currTeam, opposingTeam) {
       let grudges = [];
-      // translate teams if needed
-      const team_name_map = {'LAC': 'SDG',
-                             'TEN': 'OTI',
-                             'NE':  'NWE'};
       if (currTeam in team_name_map) {
           currTeam = team_name_map[currTeam];
       }
@@ -535,17 +537,97 @@ document.addEventListener('DOMContentLoaded', () => {
                             ON p.team != t.team
                             AND instr(p.team_history, t.team) > 0
                           GROUP BY t.team
-                          ORDER BY t.team;
+                          ORDER BY AlumniCount DESC, Team ASC;
                           `;
     try {
       const results = db.exec(alumniQuery);
       console.log(results);
       if (results.length > 0) {
-        alumniData.innerHTML = results[0].values;
+        const teams = results[0].values.map(row => row[0]); // ["ATL", "BUF", ...]
+        const counts = results[0].values.map(row => row[1]); // [40, 34, ...]
+
+        // translate teams as needed
+        let formatted_teams = []
+        for (let t of teams) {
+          if (t in team_db_name_to_irl_name) {
+            formatted_teams.push(team_db_name_to_irl_name[t]);
+          } else {
+            formatted_teams.push(t);
+          }
+        }
+
+        // setup bar chart colors
+        const teamConferences = {
+          'ARI': 'NFC', 'ATL': 'NFC', 'BAL': 'AFC', 'BUF': 'AFC',
+          'CAR': 'NFC', 'CHI': 'NFC', 'CIN': 'AFC', 'CLE': 'AFC',
+          'DAL': 'NFC', 'DEN': 'AFC', 'DET': 'NFC', 'GNB': 'NFC',
+          'HTX': 'AFC', 'IND': 'AFC', 'JAX': 'AFC', 'KAN': 'AFC',
+          'RAI': 'AFC', 'LAC': 'AFC', 'LAR': 'NFC', 'MIA': 'AFC',
+          'MIN': 'NFC', 'NE': 'AFC', 'NOR': 'NFC', 'NYG': 'NFC',
+          'NYJ': 'AFC', 'PHI': 'NFC', 'PIT': 'AFC', 'SEA': 'NFC',
+          'SFO': 'NFC', 'TAM': 'NFC', 'TEN': 'AFC', 'WAS': 'NFC'
+        };
+        
+        const colors = results[0].values.map(row => {
+          const team = row[0];
+          return teamConferences[team] === 'AFC' ? 'rgba(255, 99, 132, 0.6)' : 'rgba(54, 162, 235, 0.6)';
+        });
+        
+        const borderColors = results[0].values.map(row => {
+          const team = row[0];
+          return teamConferences[team] === 'AFC' ? 'rgba(255, 99, 132, 1)' : 'rgba(54, 162, 235, 1)';
+        });
+        
+        
+        // make bar chart
+        const ctx = document.getElementById('alumniChart').getContext('2d');
+        const alumniChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: formatted_teams,
+              datasets: [{
+                  label: 'Active Alumni',
+                  data: counts,
+                  backgroundColor: colors,
+                  borderColor: borderColors,
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  legend: {
+                      display: false
+                  },
+                  tooltip: {
+                      callbacks: {
+                          label: function(context) {
+                              return `${context.dataset.label}: ${context.parsed.y}`;
+                          }
+                      }
+                  }
+              },
+              scales: {
+                  y: {
+                      beginAtZero: true,
+                      title: {
+                          display: true,
+                          text: 'Number of Active Alumni'
+                      }
+                  },
+                  x: {
+                      title: {
+                          display: true,
+                          text: 'Team'
+                      }
+                  }
+              }
+          }
+        });
       }
     }
     catch (err) {
-      alumniData.innerHTML = "Error: " + err.message;
+      alumniData.textContent = "Error: " + err.message;
     }
   });
 

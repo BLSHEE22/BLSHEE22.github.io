@@ -129,7 +129,9 @@ layout: default
   <!-- GRUDGE STATISTICS -->
   <h2>Research</h2>
   <h3>How Many Team Alumni Are Still in the League?</h3>
-  <div id="teamAlumniData">...</div>
+  <div id="teamAlumniData">
+    <canvas id="alumniChart" width="800" height="400"></canvas>
+  </div>
   <h3>Who is Projected to Have the Most Grudge Matches This Season?</h3>
   <div id="mostGrudgeMatchesData">...</div>
   <br><hr>
@@ -148,5 +150,6 @@ layout: default
 <br><br>
 <pre id="results", style="color: black;"></pre>
 <!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://sql.js.org/dist/sql-wasm.js"></script>
 <script type="module" src="js/script.js"></script>
