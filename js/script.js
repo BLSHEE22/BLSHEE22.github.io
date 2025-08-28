@@ -12,9 +12,8 @@ initSqlJs({
   db = new SQL.Database(new Uint8Array(buffer));
   console.log("Database loaded successfully.");
 
-  // Optionally run a query right away
-  const res = db.exec("SELECT name FROM players WHERE team == 'NWE';");
-  console.log(res);
+  // broadcast db ready
+  document.dispatchEvent(new Event("db-ready"));
 });
 
 // Handle query execution
@@ -518,8 +517,39 @@ homeTeamSelect.addEventListener('change', updateResponse);
 weekSlateHeader.innerHTML = `<h2 id="upcoming-week">Week ${weekNum}</h2>
                              <p style="font-size: 12px;">**All game times are in EDT.</p>`;
 
-// List to all tables in current week
+// wait for all content to load
 document.addEventListener('DOMContentLoaded', () => {
+
+  // Add query results to grudge statistics element
+  document.addEventListener("db-ready", () => {
+    const alumniData = document.getElementById("teamAlumniData");
+    const alumniQuery = `SELECT 
+                            t.team AS Team,
+                            COUNT(p.id) AS AlumniCount
+                          FROM (
+                            -- first, get all distinct team codes
+                            SELECT DISTINCT team 
+                            FROM players
+                          ) t
+                          LEFT JOIN players p
+                            ON p.team != t.team
+                            AND instr(p.team_history, t.team) > 0
+                          GROUP BY t.team
+                          ORDER BY t.team;
+                          `;
+    try {
+      const results = db.exec(alumniQuery);
+      console.log(results);
+      if (results.length > 0) {
+        alumniData.innerHTML = results[0].values;
+      }
+    }
+    catch (err) {
+      alumniData.innerHTML = "Error: " + err.message;
+    }
+  });
+
+  // add hover/click logic to each matchup table
   document.querySelectorAll('table').forEach(table => {
     table.addEventListener('click', () => {
       const tbody = table.querySelector('tbody');
