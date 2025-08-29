@@ -584,11 +584,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // differentiate primary vs. non-primary grudges
         const primaryColors = formatted_teams.map(team => {
-          return teamConferences[team] === 'AFC' ? 'rgba(225, 69, 102, 0.6)' : 'rgba(24, 132, 205, 0.6)';
+          return teamConferences[team] === 'AFC' ? 'rgba(205, 49, 82, 0.6)' : 'rgba(4, 92, 185, 0.6)';
         });
         
         const primaryBorderColors = formatted_teams.map(team => {
-          return teamConferences[team] === 'AFC' ? 'rgba(225, 69, 102, 1)' : 'rgba(24, 132, 205, 1)';
+          return teamConferences[team] === 'AFC' ? 'rgba(205, 49, 82, 1)' : 'rgba(4, 92, 185, 1)';
         });
         
         
@@ -629,7 +629,7 @@ document.addEventListener('DOMContentLoaded', () => {
               },
               scales: {
                 x: { stacked: true, title: { display: true, text: 'Team' } },
-                y: { stacked: true, beginAtZero: true, title: { display: true, text: 'Number of Active Grudges' } }
+                y: { stacked: true, beginAtZero: true, title: { display: true, text: 'Number of Grudges Against' } }
               }
           }
         });
