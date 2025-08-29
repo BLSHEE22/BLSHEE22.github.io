@@ -525,7 +525,8 @@ function updateResponse() {
 
   // Listen to custom matchup table
   responseArea.querySelectorAll('table').forEach(table => {
-    table.addEventListener('click', () => {
+    const thead = table.querySelector('thead');
+    thead.addEventListener('click', () => {
       const tbody = table.querySelector('tbody');
       tbody.classList.toggle('open');
     });

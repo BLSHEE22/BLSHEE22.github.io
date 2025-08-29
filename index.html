@@ -17,7 +17,7 @@ layout: default
   /* Centered div */
   .centered-div {
     padding: 20px;
-    background-color: white;
+    background: white;
   }
 
   /* Countdown Clock */
@@ -92,11 +92,12 @@ layout: default
   }
 
   /* Table hover effect */
-  /* table:hover {
-    transform: scale(1.001);
-    border: 5px solid black;
+  thead:hover {
+    background:
+  radial-gradient(ellipse at top, beige, transparent),
+  radial-gradient(ellipse at bottom, white, transparent);
     cursor: pointer;
-  }  */
+  }  
 
   /* Data cell pulse animation */
   @keyframes pulse {
@@ -107,6 +108,7 @@ layout: default
 
   /* Data cell hover effect */
   td:hover {
+    color: black;
     border: 2px solid gray;
     background:
               radial-gradient(ellipse at top, lightgray, transparent),
@@ -216,10 +218,10 @@ layout: default
     <canvas id="alumniChart" width="800" height="400"></canvas>
   </div><br>
   <h3>Average Roster Turnover % Per Team (Last Decade)</h3>
-  <div id="rosterTurnoverHeader"></div><br>
-  <div id="rosterTurnover">
+  <div id="rosterTurnoverHeader">WIP</div><br>
+  <!-- <div id="rosterTurnover">
     <canvas id="rosterTurnoverChart" width="800" height="400"></canvas>
-  </div>
+  </div> -->
   <!-- <h3>How Much is Each Team Worth?</h3>
   <div id="teamValue">
     <canvas id="teamValueChart" width="800" height="400"></canvas>
