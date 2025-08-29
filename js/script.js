@@ -392,9 +392,9 @@ function updateResponse() {
         const name = player[columnNames.indexOf('name')];
         const position = player[columnNames.indexOf('position')];
         // if opposing team is player's original team, mark the grudge primary
-        let grudgeType = 'Secondary';
+        let grudgeType = 'Secondary Grudges';
         if (player[columnNames.indexOf('initial_team')] == opposingTeam) {
-            grudgeType = 'Primary';
+            grudgeType = 'Primary Grudges';
         }
         // store only relevant player team history
         let seasons = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'))[opposingTeam];
