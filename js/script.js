@@ -388,9 +388,9 @@ function updateResponse() {
         const name = player[columnNames.indexOf('name')];
         const position = player[columnNames.indexOf('position')];
         // if opposing team is player's original team, mark the grudge primary
-        let grudgeType = 'Grudge';
+        let grudgeType = 'Secondary';
         if (player[columnNames.indexOf('initial_team')] == opposingTeam) {
-            grudgeType = 'Primary Grudge';
+            grudgeType = 'Primary';
         }
         // store only relevant player team history
         let seasons = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'))[opposingTeam];
@@ -543,13 +543,13 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const results = db.exec(alumniQuery);
       if (results.length > 0) {
-        const teams = results[0].values.map(row => row[0]); // ["ATL", "BUF", ...]
+        const alumTeams = results[0].values.map(row => row[0]); // ["ATL", "BUF", ...]
         const primaryCounts = results[0].values.map(row => row[1]); // [40, 34, ...]
         const nonPrimaryCounts = results[0].values.map(row => row[2]); // [40, 34, ...]
 
         // translate teams as needed
         let formatted_teams = []
-        for (let t of teams) {
+        for (let t of alumTeams) {
           if (t in team_db_name_to_irl_name) {
             formatted_teams.push(team_db_name_to_irl_name[t]);
           } else {
@@ -557,6 +557,10 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           console.log(formatted_teams)
         }
+
+        // write superlative team to header
+        const full_team_name = teams[formatted_teams[0]]['name']
+        document.getElementById('activeGrudgeHeader').innerHTML = `The <strong>${full_team_name}</strong> are the most heavily grudged team among active players this season.`;
 
         // setup bar chart colors
         const teamConferences = {
