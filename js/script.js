@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // write superlative team to header
         const full_team_name = teams[formatted_teams[0]]['name']
-        document.getElementById('activeGrudgeHeader').innerHTML = `The <strong>${full_team_name}</strong> are the most heavily grudged team among active players this season.`;
+        document.getElementById('activeGrudgeHeader').innerHTML = `The <strong>${full_team_name}</strong> are the most grudged team among active players this season.`;
 
         // setup bar chart colors
         const teamConferences = {
