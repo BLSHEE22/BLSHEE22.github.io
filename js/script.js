@@ -163,19 +163,22 @@ for (let day of days) {
         });
         thead.appendChild(headerRow);
 
+        // DEPRECATE ME!!!!
         // inject grudge information into HTML code to display in table
         function injectGrudgeData(grudges, currTeam, grudgeTeam) {
           let htmlGrudges = [];
           for (let grudge of grudges) {
             let html = "";
-            const headshotUrl = grudge['headshotUrl'];
+            //const headshotUrl = grudge['headshotUrl'];
+            const headshotUrl = grudge['headshotUrl'].slice(69, -9);
+            const yearSuffix = "_2025.jpg";
             const name = grudge['name'];
             const position = grudge['position'];
             const grudgeType = grudge['grudgeType'];
             const seasons = grudge['seasons'];
             const positionRk = grudge['positionRk'];
             if (headshotUrl != 'None') {
-                html += `<img src="${headshotUrl}", width="74", height="110", alt=" "><br/>`;
+                html += `<img src="${headshotUrl}${yearSuffix}", width="74", height="110", alt=" "><br/>`;
             }
             html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
             html += `${grudgeType}<br/>`;
@@ -384,7 +387,8 @@ function updateResponse() {
       console.log(sortedPlayers);
       for (let player of sortedPlayers) {
         let html = "";
-        const headshotUrl = player[columnNames.indexOf('headshot_url')];
+        //const headshotUrl = player[columnNames.indexOf('headshot_url')];
+        const headshotUrl = `https://www.pro-football-reference.com/req/20230307/images/headshots/${player[columnNames.indexOf('player_id')]}_2025.jpg`;
         const name = player[columnNames.indexOf('name')];
         const position = player[columnNames.indexOf('position')];
         // if opposing team is player's original team, mark the grudge primary
@@ -555,7 +559,6 @@ document.addEventListener('DOMContentLoaded', () => {
           } else {
             formatted_teams.push(t);
           }
-          console.log(formatted_teams)
         }
 
         // write superlative team to header
@@ -639,57 +642,57 @@ document.addEventListener('DOMContentLoaded', () => {
       alumniData.textContent = "Error: " + err.message;
     }
 
-    // make team value bar chart
-    const ctx2 = document.getElementById('teamValueChart').getContext('2d');
-    const teamValueChart = new Chart(ctx2, {
-      type: 'bar',
-      data: {
-          labels: ['DAL', 'RAM', 'NYG', 'NE', 'SFO', 'PHI', 'MIA', 'NYJ',
-                   'RAI', 'WAS', 'CHI', 'HTX', 'ATL', 'SEA', 'DEN', 'KAN',
-                   'PIT', 'GNB', 'TAM', 'MIN', 'LAC', 'TEN', 'CLE', 'RAV',
-                   'DET', 'BUF', 'CAR', 'CLT', 'CRD', 'NOR', 'JAX', 'CIN'],
-          datasets: [{
-              label: '$ Billion',
-              data: [12.8, 10.43, 10.25, 8.76, 8.6, 8.43, 8.25, 8.11,
-                     7.9, 7.47, 7.45, 7.17, 7.05, 6.59, 6.55, 6.53,
-                     6.51, 6.48, 6.47, 6.28, 6.21, 6.2, 6.14, 6,
-                     5.88, 5.87, 5.76, 5.72, 5.66, 5.63, 5.57, 5.5],
-              backgroundColor: 'rgba(128, 239, 128, 0.6)',
-              borderColor: 'rgba(0, 100, 0, 1)',
-              borderWidth: 1
-          }]
-      },
-      options: {
-          responsive: true,
-          plugins: {
-              legend: {
-                  display: false
-              },
-              tooltip: {
-                  callbacks: {
-                      label: function(context) {
-                          return `${context.dataset.label}: ${context.parsed.y}`;
-                      }
-                  }
-              }
-          },
-          scales: {
-              y: {
-                  beginAtZero: true,
-                  title: {
-                      display: true,
-                      text: 'USD Value (Billions)'
-                  }
-              },
-              x: {
-                  title: {
-                      display: true,
-                      text: 'Team'
-                  }
-              }
-          }
-      }
-    });
+    // make TEAM $ VALUE bar chart
+    //const ctx2 = document.getElementById('teamValueChart').getContext('2d');
+    // const teamValueChart = new Chart(ctx2, {
+    //   type: 'bar',
+    //   data: {
+    //       labels: ['DAL', 'RAM', 'NYG', 'NE', 'SFO', 'PHI', 'MIA', 'NYJ',
+    //                'RAI', 'WAS', 'CHI', 'HTX', 'ATL', 'SEA', 'DEN', 'KAN',
+    //                'PIT', 'GNB', 'TAM', 'MIN', 'LAC', 'TEN', 'CLE', 'RAV',
+    //                'DET', 'BUF', 'CAR', 'CLT', 'CRD', 'NOR', 'JAX', 'CIN'],
+    //       datasets: [{
+    //           label: '$ Billion',
+    //           data: [12.8, 10.43, 10.25, 8.76, 8.6, 8.43, 8.25, 8.11,
+    //                  7.9, 7.47, 7.45, 7.17, 7.05, 6.59, 6.55, 6.53,
+    //                  6.51, 6.48, 6.47, 6.28, 6.21, 6.2, 6.14, 6,
+    //                  5.88, 5.87, 5.76, 5.72, 5.66, 5.63, 5.57, 5.5],
+    //           backgroundColor: 'rgba(128, 239, 128, 0.6)',
+    //           borderColor: 'rgba(0, 100, 0, 1)',
+    //           borderWidth: 1
+    //       }]
+    //   },
+    //   options: {
+    //       responsive: true,
+    //       plugins: {
+    //           legend: {
+    //               display: false
+    //           },
+    //           tooltip: {
+    //               callbacks: {
+    //                   label: function(context) {
+    //                       return `${context.dataset.label}: ${context.parsed.y}`;
+    //                   }
+    //               }
+    //           }
+    //       },
+    //       scales: {
+    //           y: {
+    //               beginAtZero: true,
+    //               title: {
+    //                   display: true,
+    //                   text: 'USD Value (Billions)'
+    //               }
+    //           },
+    //           x: {
+    //               title: {
+    //                   display: true,
+    //                   text: 'Team'
+    //               }
+    //           }
+    //       }
+    //   }
+    // });
   });
 
   // add hover/click logic to each matchup table
