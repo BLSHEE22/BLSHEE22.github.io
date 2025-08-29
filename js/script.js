@@ -171,14 +171,23 @@ for (let day of days) {
             let html = "";
             //const headshotUrl = grudge['headshotUrl'];
             const headshotUrl = grudge['headshotUrl'].slice(69, -9);
-            const yearSuffix = "_2025.jpg";
+            const headshotYear = '2025';
             const name = grudge['name'];
             const position = grudge['position'];
             const grudgeType = grudge['grudgeType'];
             const seasons = grudge['seasons'];
             const positionRk = grudge['positionRk'];
             if (headshotUrl != 'None') {
-                html += `<img src="${headshotUrl}${yearSuffix}", width="74", height="110", alt=" "><br/>`;
+              img_str = `<div class="img-container">
+                          <img src="${headshotUrl}_${headshotYear}.jpg" class="normal" alt="Player Normal">
+                          <img src="${headshotUrl}_${seasons.slice(0, 3)}.jpg" class="hover" alt="Player Hover">
+                        </div><br>`
+              img_str2 = `<img src="${headshotUrl}_${headshotYear}.jpg", 
+                          data-hover="${headshotUrl}_${seasons.slice(0, 3)}.jpg", 
+                          data-normal="${headshotUrl}_${headshotYear}.jpg", width="74", height="110", alt=" ">
+                        <br>`;
+              console.log(`Image HTML: ${img_str}`);
+              html += img_str;
             }
             html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
             html += `${grudgeType}<br/>`;
@@ -388,13 +397,14 @@ function updateResponse() {
       for (let player of sortedPlayers) {
         let html = "";
         //const headshotUrl = player[columnNames.indexOf('headshot_url')];
-        const headshotUrl = `https://www.pro-football-reference.com/req/20230307/images/headshots/${player[columnNames.indexOf('player_id')]}_2025.jpg`;
+        const headshotUrl = `https://www.pro-football-reference.com/req/20230307/images/headshots/${player[columnNames.indexOf('player_id')]}`;
+        const headshotYear = '2025';
         const name = player[columnNames.indexOf('name')];
         const position = player[columnNames.indexOf('position')];
         // if opposing team is player's original team, mark the grudge primary
-        let grudgeType = 'Secondary Grudges';
+        let grudgeType = 'Secondary Grudge';
         if (player[columnNames.indexOf('initial_team')] == opposingTeam) {
-            grudgeType = 'Primary Grudges';
+            grudgeType = 'Primary Grudge';
         }
         // store only relevant player team history
         let seasons = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'))[opposingTeam];
@@ -409,7 +419,14 @@ function updateResponse() {
         }
         // start splicing together data with html code
         if (headshotUrl != null) {
-            html += `<img src="${headshotUrl}", width="74", height="110", alt=" "><br/>`;
+          const first_grudge_season = seasons.slice(0, 4);
+          html += `<img src="${headshotUrl}_${headshotYear}.jpg", 
+                      data-hover="${headshotUrl}_${first_grudge_season}.jpg",
+                      data-normal="${headshotUrl}_${headshotYear}.jpg",
+                      width="74",
+                      height="110",
+                      alt=" ">
+                   <br>`;
         }
         html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
         html += `${grudgeType}<br/>`;
@@ -513,7 +530,46 @@ function updateResponse() {
       tbody.classList.toggle('open');
     });
   });
+
+  // add headshot image hover effect
+  document.querySelectorAll("td img").forEach(img => {
+    const normalSrc = img.dataset.normal || img.src;
+    const hoverSrc  = img.dataset.hover;
+  
+    // Preload hover image
+    const preload = new Image();
+    preload.src = hoverSrc;
+  
+    // Wait until image is loaded
+    img.addEventListener("load", () => {
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("fade-wrapper");
+  
+      // Clone hover image
+      const hoverImg = img.cloneNode();
+      hoverImg.src = hoverSrc;
+      hoverImg.classList.add("hover");
+  
+      // Prepare normal image
+      img.classList.add("normal");
+      img.removeAttribute("data-hover");
+      img.removeAttribute("data-normal");
+  
+      // Replace img with wrapper
+      img.parentNode.insertBefore(wrapper, img);
+      wrapper.appendChild(img);
+      wrapper.appendChild(hoverImg);
+    });
+  
+    // If cached image already loaded, trigger load manually
+    if (img.complete) {
+      img.dispatchEvent(new Event("load"));
+    }
+  });
+
 }
+
+//// GLOBAL PART OF SCRIPT /////
 
 // Listen to both dropdowns
 awayTeamSelect.addEventListener('change', updateResponse);
@@ -602,14 +658,14 @@ document.addEventListener('DOMContentLoaded', () => {
           data: {
               labels: formatted_teams,
               datasets: [{
-                label: 'Primary',
+                label: 'Primary Grudges',
                 data: primaryCounts,
                 backgroundColor: primaryColors,
                 borderColor: primaryBorderColors,
                 borderWidth: 1
               },
               {
-                label: 'Secondary',
+                label: 'Secondary Grudges',
                 data: nonPrimaryCounts,
                 backgroundColor: colors,
                 borderColor: borderColors,
@@ -702,4 +758,5 @@ document.addEventListener('DOMContentLoaded', () => {
       tbody.classList.toggle('open');
     });
   });
+
 });
