@@ -75,6 +75,13 @@ layout: default
     text-align: center;
   }
 
+  /* Data cell pulse animation */
+  @keyframes pulse {
+    0% { box-shadow: 0 0 5px black; }
+    50% { box-shadow: 0 0 20px black; }
+    100% { box-shadow: 0 0 5px black; }
+  }
+
   /* Style for CLOSED matchup table */
   tbody {
     overflow: hidden; 
@@ -93,18 +100,9 @@ layout: default
 
   /* Table hover effect */
   thead:hover {
-    background:
-  radial-gradient(ellipse at top, beige, transparent),
-  radial-gradient(ellipse at bottom, white, transparent);
+    animation: pulse 1.5s infinite;
     cursor: pointer;
   }  
-
-  /* Data cell pulse animation */
-  @keyframes pulse {
-    0% { box-shadow: 0 0 5px black; }
-    50% { box-shadow: 0 0 20px black; }
-    100% { box-shadow: 0 0 5px black; }
-  }
 
   /* Data cell hover effect */
   td:hover {
