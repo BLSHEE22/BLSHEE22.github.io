@@ -88,283 +88,140 @@ const position_order = {"QB": 0, // fantasy
                         "P": 22,
                         "Unknown": 1000}
 
-console.log(weekLengthInfo);
-console.log(Date(['start']));
 
-// figure out what week it is
-for (let week of weekLengthInfo) {
-  let weekI = week['number'];
-  let weekStart = new Date(week['start']);
-  let weekEnd = new Date(week['end']);
-  console.log(`Trying week ${weekI}....`);
-  console.log(`Start: ${weekStart}`);
-  console.log(`End: ${weekEnd}`);
-  console.log(`Current Date: ${now}`);
-  if (now >= weekStart && now <= weekEnd) {
-    weekNum = week['number'];
-    console.log(`The week number is ${weekNum}.`);
-    break;
-  }
-  console.log("---");
-}
+/**
+ * Upate matchup table content.
+ *
+ * @param {string} aTeam - Away team abbreviation
+ * @param {string} hTeam - Home team abbreviation
+ * @param {Object} responseArea - HTML element where table will be placed
+ * @void
+ */
+function updateResponse(aTeam, hTeam, responseArea, custom=false) {
 
-// create element to contain all matchups for the current week
-const weekElement = document.getElementById('weekSlate');
 
-for (let day of days) {
-    // create day element
-    const dayAbbr = day.slice(0, 3);
-    const dayElement = document.createElement(dayAbbr);
-
-    // update day header
-    const dayHeader = document.createElement(dayAbbr + "Header");
-    dayHeader.innerHTML = `<h3><center>${day}`;
-    dayElement.appendChild(dayHeader);
-
-    const matchups = playerGrudges[day];
-    console.log("---");
-    console.log(day)
-    console.log(matchups);
-    console.log('---');
-
-    if (matchups.length === 0) {
-      const noGamesHeader = document.createElement('p');
-      noGamesHeader.innerHTML = '<center><br>No Games<br><br><br>';
-      dayElement.appendChild(noGamesHeader);
-      console.log('Successfully caught no-game day!');
-    }
-
-    for (let matchup of matchups) {
-        // Store matchup variables
-        const awayTeam = matchup['awayTeam'];
-        const homeTeam = matchup['homeTeam'];
-        // Create matchup header
-        const matchupHeader = document.createElement('p');
-        let htmlString = `<center><strong>${matchup['time']} - ${teams[awayTeam]['name']} @ ${teams[homeTeam]['name']}</strong>`;
-        if (teams[awayTeam]['division'] == teams[homeTeam]['division']) {
-            htmlString += '<br>Divisional Matchup';
-        }
-        // Add inner html to header object
-        matchupHeader.innerHTML = htmlString + '<br>';
-        // Add header object to DOM
-        dayElement.appendChild(matchupHeader);
-
-        // Create table
-        const matchupTable = document.createElement('table');
-
-        // Header row
-        const thead = document.createElement('thead');
-        const headerRow = document.createElement('tr');
-        [`<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[awayTeam]['logo']}.png", width="50", height="50", alt=" ">`,
-         `<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[homeTeam]['logo']}.png", width="50", height="50", alt=" ">`].forEach(html => {
-            const th = document.createElement('th');
-            th.innerHTML = html;
-            headerRow.appendChild(th);
-        });
-        thead.appendChild(headerRow);
-
-        // DEPRECATE ME!!!!
-        // inject grudge information into HTML code to display in table
-        function injectGrudgeData(grudges, currTeam, grudgeTeam) {
-          let htmlGrudges = [];
-          for (let grudge of grudges) {
-            let html = "";
-            //const headshotUrl = grudge['headshotUrl'];
-            const headshotUrl = grudge['headshotUrl'].slice(69, -9);
-            const headshotYear = '2025';
-            const name = grudge['name'];
-            const position = grudge['position'];
-            const grudgeType = grudge['grudgeType'];
-            const seasons = grudge['seasons'];
-            const positionRk = grudge['positionRk'];
-            if (headshotUrl != 'None') {
-              img_str = `<div class="img-container">
-                          <img src="${headshotUrl}_${headshotYear}.jpg" class="normal" alt="Player Normal">
-                          <img src="${headshotUrl}_${seasons.slice(0, 3)}.jpg" class="hover" alt="Player Hover">
-                        </div><br>`
-              img_str2 = `<img src="${headshotUrl}_${headshotYear}.jpg", 
-                          data-hover="${headshotUrl}_${seasons.slice(0, 3)}.jpg", 
-                          data-normal="${headshotUrl}_${headshotYear}.jpg", width="74", height="110", alt=" ">
-                        <br>`;
-              console.log(`Image HTML: ${img_str}`);
-              html += img_str;
-            }
-            html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
-            html += `${grudgeType}<br/>`;
-            html += `Seasons with ${grudgeTeam}: ${seasons}<br/>`;
-            html += `Fantasy Position Rank: ${positionRk}<br/><br/>`;
-            htmlGrudges.push(html);
-            console.log(`Converted ${name} player information to HTML.`);
-            totalGrudges++;
-          }
-          return htmlGrudges;
-        }
-
-        // form HTML
-        let htmlAwayGrudges = injectGrudgeData(matchup['awayGrudges'], awayTeam, homeTeam);
-        let htmlHomeGrudges = injectGrudgeData(matchup['homeGrudges'], homeTeam, awayTeam);
-      
-        // if no grudge data, append 'none' text
-        if (htmlAwayGrudges.length === 0) {
-          htmlAwayGrudges.push(`<p style="font-size: 18px;">None</p>`);
-        }
-        if (htmlHomeGrudges.length === 0) {
-          htmlHomeGrudges.push(`<p style="font-size: 18px;">None</p>`);
-        }
-        console.log(`Finished HTML for away grudges (length: ${htmlAwayGrudges.length}}): ${htmlAwayGrudges}`);
-        console.log(`Finished HTML for home grudges (length: ${htmlHomeGrudges.length}}): ${htmlHomeGrudges}`);
-
-        // Body row(s)
-        const tbody = document.createElement('tbody');
-        for (let i = 0; i < Math.max(htmlAwayGrudges.length, htmlHomeGrudges.length); i++) {
-          const dataRow = document.createElement('tr');
-
-          // Add away team data to left column
-          const td1 = document.createElement('td');
-          if (i < htmlAwayGrudges.length) {
-            td1.innerHTML = htmlAwayGrudges[i];
-          } else {
-            td1.innerHTML = '';
-          }
-          td1.style.fontSize = '12px'
-          dataRow.appendChild(td1);
-
-          // Add home team data to right column
-          const td2 = document.createElement('td');
-          if (i < htmlHomeGrudges.length) {
-            td2.innerHTML = htmlHomeGrudges[i];
-          } else {
-            td2.innerHTML = '';
-          }
-          td2.style.fontSize = '12px'
-          dataRow.appendChild(td2);
-          
-          // Append row to body
-          tbody.appendChild(dataRow);
-        }
-
-        // Assemble table
-        matchupTable.appendChild(thead);
-        matchupTable.appendChild(tbody);
-        dayElement.appendChild(matchupTable); 
-
-        // Add spacing after table
-        let postTableBr = document.createElement('br');
-        let postTableBr2 = document.createElement('br');
-        dayElement.appendChild(postTableBr);
-        dayElement.appendChild(postTableBr2);
-
-    }
-
-    // Add spacing after day
-    let postDayBr = document.createElement('br');
-    let postDayBr2 = document.createElement('br');
-    dayElement.appendChild(postDayBr);
-    dayElement.appendChild(postDayBr2);
-
-    // Add day element to week element
-    weekElement.appendChild(dayElement);
-}
-
-// Log total number of player grudge matches
-console.log(`Total number of player grudge matches in week ${weekNum}: ${totalGrudges}`);
-
-// Create intro block with total number of player grudge matches now counted
-let weekObj = document.getElementById('what-week-is-it');
-let weekObjHeader = document.getElementById('weekSlateHeader');
-
-if (weekNum > 0) {
-    weekObj.innerHTML = `
-      <p>Yes, there are <strong>${totalGrudges}</strong> grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>.</p>`;
-}
-else {
-    weekObj.innerHTML = `No, the regular season has not started yet.<br><br>
-                        <div id="countdown">
-                          <div id="days", style="font-size: 24px; font-weight: bold; width: fit-content; min-width: 6%; color: solid gray; padding: 16px; text-align: left; border: 2px solid gray; border-radius: 5px;">
-                          </div>
-                          <div id="hours", style="font-size: 24px; font-weight: bold; width: fit-content; min-width: 6%; color: solid gray; padding: 16px; text-align: left; border: 2px solid gray; border-radius: 5px;">
-                          </div>
-                          <div id="minutes", style="font-size: 24px; font-weight: bold; width: fit-content; min-width: 6%; color: solid gray; padding: 16px; text-align: left; border: 2px solid gray; border-radius: 5px;">
-                          </div>
-                          <div id="seconds", style="font-size: 24px; font-weight: bold; width: fit-content; min-width: 6%; color: solid gray; padding: 16px; text-align: left; border: 2px solid gray; border-radius: 5px;">
-                          </div>
-                        </div><br><br>`;
-    weekNum = 1;
-
-    // set countdown date
-    const countdownDate = new Date("Sep 4, 2025 00:00:00").getTime();
-
-    // update every second
-    const timer = setInterval(() => {
-      const nowTick = new Date().getTime();
-      const distance = countdownDate - nowTick;
-
-      if (distance <= 0) {
-        clearInterval(timer);
-        document.getElementById("countdown").innerHTML = "🎉🏈🍺 IT'S FOOTBALL SEASON!!! 🍺🏈🎉";
-        return;
+  /**
+   * Format query information into HTML code to be displayed in a table.
+   *
+   * @param {dict} result - Resulting data from query.
+   * @param {string} currTeam - Abbreviation of the past team.
+   * @param {string} opposingTeam - Abbreviation of the opposing team.
+   * @returns {list[string]} - List of HTML strings representing each player.
+   */
+  function formatQueryData(result, currTeam, opposingTeam) {
+    let htmlList = [];
+    const columnNames = result['columns'];
+    const players = result['values'];
+    const sortedPlayers = players.sort((a, b) => position_order[a[2].trim()] - position_order[b[2].trim()]);
+    console.log(sortedPlayers);
+    for (let player of sortedPlayers) {
+      let html = "";
+      //const headshotUrl = player[columnNames.indexOf('headshot_url')];
+      const headshotUrl = `https://www.pro-football-reference.com/req/20230307/images/headshots/${player[columnNames.indexOf('player_id')]}`;
+      const headshotYear = '2025';
+      const name = player[columnNames.indexOf('name')];
+      const position = player[columnNames.indexOf('position')];
+      // if opposing team is player's original team, mark the grudge primary
+      let grudgeType = 'Secondary Grudge';
+      if (player[columnNames.indexOf('initial_team')] == opposingTeam) {
+          grudgeType = 'Primary Grudge';
       }
+      // store only relevant player team history
+      let seasons = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'))[opposingTeam];
+      if (seasons.length > 1) {
+        seasons = seasons.join(", ");
+      }
+      console.log(seasons)
+      // if player has no fantasy position rank, mark as 'N/A'
+      let positionRk = player[columnNames.indexOf('fantasy_pos_rk')];
+      if (positionRk == null) {
+        positionRk = 'N/A';
+      }
+      // start splicing together data with html code
+      if (headshotUrl != null) {
+        const first_grudge_season = seasons.slice(0, 4);
+        html += `<img src="${headshotUrl}_${headshotYear}.jpg", 
+                    data-hover="${headshotUrl}_${first_grudge_season}.jpg",
+                    data-normal="${headshotUrl}_${headshotYear}.jpg",
+                    width="74",
+                    height="110",
+                    alt=" ">
+                 <br>`;
+      }
+      html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
+      html += `${grudgeType}<br/>`;
+      html += `Seasons with ${opposingTeam}: ${seasons}<br/>`;
+      html += `Fantasy Position Rank: ${positionRk}<br/><br/>`;
+      htmlList.push(html);
+      console.log(`Converted ${name} player information to HTML.`);
+      if (!custom) {
+        totalGrudges++;
+      } 
+    }
+    return htmlList;
+  }
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      document.getElementById("days").innerHTML = `<center>` + String(days).padStart(2, '0') + `<br><hr><p style="font-size: 10px; font-weight: normal;">days`;
-      document.getElementById("hours").innerHTML = `<center>` + String(hours).padStart(2, '0') + `<br><hr><p style="font-size: 10px; font-weight: normal;">hours`;
-      document.getElementById("minutes").innerHTML = `<center>` + String(minutes).padStart(2, '0') + `<br><hr><p style="font-size: 10px; font-weight: normal;">minutes`;
-      document.getElementById("seconds").innerHTML = `<center>` + String(seconds).padStart(2, '0') + `<br><hr><p style="font-size: 10px; font-weight: normal;">seconds`;
-    }, 1000);
-}
+  /**
+   * Find all players on 'currTeam' who have previously played for 'opposingTeam'.
+   *
+   * @param {string} currTeam - Abbreviation of the current team.
+   * @param {string} opposingTeam - Abbreviation of the opposing team.
+   * @returns {list[string]} - List of HTML strings representing each player.
+   */
+  function getGrudges(currTeam, opposingTeam, custom) {
+    let grudges = [];
+    if (currTeam in team_name_map) {
+        currTeam = team_name_map[currTeam];
+    }
+    if (opposingTeam in team_name_map) {
+      opposingTeam = team_name_map[opposingTeam];
+    }
+    // form query
+    try {
+      const query = `SELECT player_id, name, position, team, team_history, initial_team, 
+                    fantasy_pos_rk, headshot_url FROM players WHERE team == '${currTeam}' AND 
+                    instr(team_history, '${opposingTeam}') > 0;`;
+      // const query = document.getElementById('query').value;
+      document.getElementById('query').textContent = query;
+      const results = db.exec(query);
+      if (results.length === 0) {
+        grudges.push(`<p style="font-size: 18px;">None</p>`);
+      } else {
+        // const output = results.map(res => {
+        //   const headers = res.columns.join('\t');
+        //   const rows = res.values.map(row => row.join('\t')).join('\n');
+        //   return headers + '\n' + rows;
+        // }).join('\n\n');
+        let formattedPlayers = formatQueryData(results[0], currTeam, opposingTeam, custom);
+        for (let player of formattedPlayers) {
+          grudges.push(player);
+        }
+      }
+    } catch (err) {
+      document.getElementById('results').textContent = "Error: " + err.message;
+    }
+    return grudges;
+  }
 
-// Add matchup selector object
-const matchupSelector = document.getElementById("matchupSelector");
 
-// Set up awayTeam input box
-matchupSelector.innerHTML = `<div id="away-input-box", class="input-box">
-                             <label id="awayTeam">AWAY</label><br><br>
-                             <select id="awayTeamSelect" name="awayTeam">`;
+  // If custom table, clear response area
+  if (custom) {
+    responseArea.innerHTML = ``;
+  }
 
-// Sort teams list for use in drop-down menu
-const sortedTeams = Object.entries(teams).map(pair => [pair[0], pair[1]['name']]).sort((a, b) => a[1].localeCompare(b[1]));
-console.log(sortedTeams);
-
-// Add all teams for 'awayTeam' options
-const awayTeamInput = document.getElementById("awayTeamSelect");
-for (const [key, value] of sortedTeams) {
-  awayTeamInput.innerHTML += `<option value="${key}">${value}</option>`;
-}
-matchupSelector.innerHTML += `</select></div>`;
-
-// Set up homeTeam input box
-matchupSelector.innerHTML += `<div id="home-input-box", class="input-box">
-                            <label id="homeTeam">HOME</label><br><br>
-                            <select id="homeTeamSelect" name="homeTeam">`;
-
-// Add all teams for 'homeTeam' options
-const homeTeamInput = document.getElementById("homeTeamSelect");
-for (const [key, value] of sortedTeams) {
-  homeTeamInput.innerHTML += `<option value="${key}">${value}</option>`;
-}
-matchupSelector.innerHTML += `</select></div>`
-
-// Add logic to respond to matchup selection
-const awayTeamSelect = document.getElementById('awayTeamSelect');
-const homeTeamSelect = document.getElementById('homeTeamSelect');
-const responseArea = document.getElementById('response-area');
-
-// Update custom matchup table
-function updateResponse() {
-  // clear response area
-  responseArea.innerHTML = ``;
-
-  const aTeam = awayTeamSelect.value;
-  const hTeam = homeTeamSelect.value;
+  // Deprecate as part of refactor
+  //const aTeam = awayTeamSelect.value;
+  //const hTeam = homeTeamSelect.value;
 
   // Update content if both options selected AND selected teams are different
   if ((aTeam && hTeam) && (aTeam != hTeam)) {
     // Create table
     const customTable = document.createElement('table');
+    customTable.innerHTML += `<colgroup>
+                                <col style="width:50%;">
+                                <col style="width:50%;">
+                              </colgroup>`;
 
     // Create header row and add to thead
     const thead = document.createElement('thead');
@@ -382,112 +239,16 @@ function updateResponse() {
     // Add thead to table
     customTable.appendChild(thead);
 
-    /**
-     * Format query information into HTML code to be displayed in a table.
-     *
-     * @param {dict} result - Resulting data from query.
-     * @param {string} currTeam - Abbreviation of the past team.
-     * @param {string} opposingTeam - Abbreviation of the opposing team.
-     * @returns {list[string]} - List of HTML strings representing each player.
-     */
-    function formatQueryData(result, currTeam, opposingTeam) {
-      let htmlList = [];
-      const columnNames = result['columns'];
-      const players = result['values'];
-      const sortedPlayers = players.sort((a, b) => position_order[a[2].trim()] - position_order[b[2].trim()]);
-      console.log(sortedPlayers);
-      for (let player of sortedPlayers) {
-        let html = "";
-        //const headshotUrl = player[columnNames.indexOf('headshot_url')];
-        const headshotUrl = `https://www.pro-football-reference.com/req/20230307/images/headshots/${player[columnNames.indexOf('player_id')]}`;
-        const headshotYear = '2025';
-        const name = player[columnNames.indexOf('name')];
-        const position = player[columnNames.indexOf('position')];
-        // if opposing team is player's original team, mark the grudge primary
-        let grudgeType = 'Secondary Grudge';
-        if (player[columnNames.indexOf('initial_team')] == opposingTeam) {
-            grudgeType = 'Primary Grudge';
-        }
-        // store only relevant player team history
-        let seasons = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'))[opposingTeam];
-        if (seasons.length > 1) {
-          seasons = seasons.join(", ");
-        }
-        console.log(seasons)
-        // if player has no fantasy position rank, mark as 'N/A'
-        let positionRk = player[columnNames.indexOf('fantasy_pos_rk')];
-        if (positionRk == null) {
-          positionRk = 'N/A';
-        }
-        // start splicing together data with html code
-        if (headshotUrl != null) {
-          const first_grudge_season = seasons.slice(0, 4);
-          html += `<img src="${headshotUrl}_${headshotYear}.jpg", 
-                      data-hover="${headshotUrl}_${first_grudge_season}.jpg",
-                      data-normal="${headshotUrl}_${headshotYear}.jpg",
-                      width="74",
-                      height="110",
-                      alt=" ">
-                   <br>`;
-        }
-        html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
-        html += `${grudgeType}<br/>`;
-        html += `Seasons with ${opposingTeam}: ${seasons}<br/>`;
-        html += `Fantasy Position Rank: ${positionRk}<br/><br/>`;
-        htmlList.push(html);
-        console.log(`Converted ${name} player information to HTML.`);
-      }
-      return htmlList;
-    }
-
-    /**
-     * Find all players on 'currTeam' who have previously played for 'opposingTeam'.
-     *
-     * @param {string} currTeam - Abbreviation of the current team.
-     * @param {string} opposingTeam - Abbreviation of the opposing team.
-     * @returns {list[string]} - List of HTML strings representing each player.
-     */
-    function getGrudges(currTeam, opposingTeam) {
-      let grudges = [];
-      if (currTeam in team_name_map) {
-          currTeam = team_name_map[currTeam];
-      }
-      if (opposingTeam in team_name_map) {
-        opposingTeam = team_name_map[opposingTeam];
-      }
-      // form query
-      try {
-        const query = `SELECT player_id, name, position, team, team_history, initial_team, 
-                      fantasy_pos_rk, headshot_url FROM players WHERE team == '${currTeam}' AND 
-                      instr(team_history, '${opposingTeam}') > 0;`;
-        // const query = document.getElementById('query').value;
-        document.getElementById('query').textContent = query;
-        const results = db.exec(query);
-        if (results.length === 0) {
-          grudges.push(`<p style="font-size: 18px;">None</p>`);
-        } else {
-          // const output = results.map(res => {
-          //   const headers = res.columns.join('\t');
-          //   const rows = res.values.map(row => row.join('\t')).join('\n');
-          //   return headers + '\n' + rows;
-          // }).join('\n\n');
-          let formattedPlayers = formatQueryData(results[0], currTeam, opposingTeam);
-          for (let player of formattedPlayers) {
-            grudges.push(player);
-          }
-        }
-      } catch (err) {
-        document.getElementById('results').textContent = "Error: " + err.message;
-      }
-      return grudges;
-    }
-
-    // once matchup is set, look for player grudges on each side
-    let htmlCustomAwayGrudges = getGrudges(aTeam, hTeam);
-    let htmlCustomHomeGrudges = getGrudges(hTeam, aTeam);
+    // Look for player grudges on each side
+    console.log(aTeam);
+    console.log(hTeam);
+    let htmlCustomAwayGrudges = getGrudges(aTeam, hTeam, custom);
+    let htmlCustomHomeGrudges = getGrudges(hTeam, aTeam, custom);
   
     // Create body row(s)
     const tbody = document.createElement('tbody');
+    console.log(htmlCustomAwayGrudges.length);
+    console.log(htmlCustomHomeGrudges.length);
     for (let i = 0; i < Math.max(htmlCustomAwayGrudges.length, htmlCustomHomeGrudges.length); i++) {
       const dataRow = document.createElement('tr');
 
@@ -525,8 +286,122 @@ function updateResponse() {
     responseArea.innerHTML = "Please select two different teams.";
   }
 
-  // Listen to custom matchup table
-  responseArea.querySelectorAll('table').forEach(table => {
+  if (custom) {
+    // add hover/click listeners to new custom table
+    responseArea.querySelectorAll('table').forEach(table => {
+      const thead = table.querySelector('thead');
+      const tbody = table.querySelector('tbody');
+      thead.addEventListener('click', () => {
+        tbody.classList.toggle("open");
+        thead.classList.toggle("open"); // flip caret
+      });
+    });
+    // add headshot image hover effect to new custom table
+    responseArea.querySelectorAll("td img").forEach(img => {
+      const normalSrc = img.dataset.normal || img.src;
+      const hoverSrc  = img.dataset.hover;
+    
+      // Preload hover image
+      const preload = new Image();
+      preload.src = hoverSrc;
+    
+      // Wait until image is loaded
+      img.addEventListener("load", () => {
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("fade-wrapper");
+    
+        // Clone hover image
+        const hoverImg = img.cloneNode();
+        hoverImg.src = hoverSrc;
+        hoverImg.classList.add("hover");
+    
+        // Prepare normal image
+        img.classList.add("normal");
+        img.removeAttribute("data-hover");
+        img.removeAttribute("data-normal");
+    
+        // Replace img with wrapper
+        img.parentNode.insertBefore(wrapper, img);
+        wrapper.appendChild(img);
+        wrapper.appendChild(hoverImg);
+      });
+    
+      // If cached image already loaded, trigger load manually
+      if (img.complete) {
+        img.dispatchEvent(new Event("load"));
+      }
+
+    });
+  }
+
+} 
+
+/**
+ * TODO: Refactor into function/s!
+ * - Table creation/injection for current week's matchup slate
+ */
+function updateWeekSlate() {
+  for (let day of days) {
+      // create day element
+      const dayAbbr = day.slice(0, 3);
+      const dayElement = document.createElement(dayAbbr);
+
+      // update day header
+      const dayHeader = document.createElement(dayAbbr + "Header");
+      dayHeader.innerHTML = `<h3><center>${day}`;
+      dayElement.appendChild(dayHeader);
+
+      const matchups = playerGrudges[day];
+      console.log("---");
+      console.log(day)
+      console.log(matchups);
+      console.log('---');
+
+      if (matchups.length === 0) {
+        const noGamesHeader = document.createElement('p');
+        noGamesHeader.innerHTML = '<center><br>No Games<br><br><br>';
+        dayElement.appendChild(noGamesHeader);
+        console.log('Successfully caught no-game day!');
+      }
+
+      for (let matchup of matchups) {
+          // Store matchup variables
+          const awayTeam = matchup['awayTeam'];
+          const homeTeam = matchup['homeTeam'];
+
+          // Create matchup header
+          const matchupHeader = document.createElement('p');
+          let htmlString = `<center><strong>${matchup['time']} - ${teams[awayTeam]['name']} @ ${teams[homeTeam]['name']}</strong>`;
+          if (teams[awayTeam]['division'] == teams[homeTeam]['division']) {
+              htmlString += '<br>Divisional Matchup';
+          }
+          // Add inner html to header object
+          matchupHeader.innerHTML = htmlString + '<br>';
+          // Add header object to DOM
+          dayElement.appendChild(matchupHeader);
+
+          // Create table and add to element
+          updateResponse(awayTeam, homeTeam, dayElement); 
+
+          // Add spacing after table
+          let postTableBr = document.createElement('br');
+          let postTableBr2 = document.createElement('br');
+          dayElement.appendChild(postTableBr);
+          dayElement.appendChild(postTableBr2);
+
+      }
+
+      // Add spacing after day
+      let postDayBr = document.createElement('br');
+      let postDayBr2 = document.createElement('br');
+      dayElement.appendChild(postDayBr);
+      dayElement.appendChild(postDayBr2);
+
+      // Add day element to week element
+      weekElement.appendChild(dayElement);
+  }
+  // add hover/click listeners
+  document.querySelectorAll('table').forEach(table => {
     const thead = table.querySelector('thead');
     const tbody = table.querySelector('tbody');
     thead.addEventListener('click', () => {
@@ -534,7 +409,6 @@ function updateResponse() {
       thead.classList.toggle("open"); // flip caret
     });
   });
-
   // add headshot image hover effect
   document.querySelectorAll("td img").forEach(img => {
     const normalSrc = img.dataset.normal || img.src;
@@ -569,25 +443,138 @@ function updateResponse() {
     if (img.complete) {
       img.dispatchEvent(new Event("load"));
     }
-  });
 
+  });
 }
 
-//// GLOBAL PART OF SCRIPT /////
+// Get current week
+console.log('Getting current week...')
+for (let week of weekLengthInfo) {
+  let weekI = week['number'];
+  let weekStart = new Date(week['start']);
+  let weekEnd = new Date(week['end']);
+  console.log(`Trying week ${weekI}....`);
+  console.log(`Start: ${weekStart}`);
+  console.log(`End: ${weekEnd}`);
+  console.log(`Current Date: ${now}`);
+  if (now >= weekStart && now <= weekEnd) {
+    weekNum = week['number'];
+    console.log(`The week number is ${weekNum}.`);
+    break;
+  }
+  console.log("---");
+}
 
-// Listen to both dropdowns
-awayTeamSelect.addEventListener('change', updateResponse);
-homeTeamSelect.addEventListener('change', updateResponse);
+// Create element to contain all matchups for the current week
+const weekElement = document.getElementById('weekSlate');
 
 // Add week slate header
 weekSlateHeader.innerHTML = `<h2 id="upcoming-week">Week ${weekNum}</h2>
                              <p style="font-size: 12px;">**All game times are in EDT.</p>`;
 
-// wait for all content to load
+// Wait for all content to load
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Add query results to grudge statistics element
+  // Wait for DB to load
   document.addEventListener("db-ready", () => {
+
+    // start creating tables per matchup in week slate
+    updateWeekSlate();
+
+    // Log total number of player grudge matches
+    console.log(`Total number of player grudge matches in week ${weekNum}: ${totalGrudges}`);
+
+    // Create intro block with total number of player grudge matches now counted
+    let weekObj = document.getElementById('what-week-is-it');
+    let weekObjHeader = document.getElementById('weekSlateHeader');
+
+    if (weekNum > 0) {
+        weekObj.innerHTML = `
+          <p>Yes, there are <strong>${totalGrudges}</strong> grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>.</p>`;
+    }
+    else {
+        weekObj.innerHTML = `No, the regular season has not started yet.<br><br>
+                            <div id="countdown">
+                              <div id="days", style="font-size: 24px; font-weight: bold; width: fit-content; min-width: 6%; color: solid gray; padding: 16px; text-align: left; border: 2px solid gray; border-radius: 5px;">
+                              </div>
+                              <div id="hours", style="font-size: 24px; font-weight: bold; width: fit-content; min-width: 6%; color: solid gray; padding: 16px; text-align: left; border: 2px solid gray; border-radius: 5px;">
+                              </div>
+                              <div id="minutes", style="font-size: 24px; font-weight: bold; width: fit-content; min-width: 6%; color: solid gray; padding: 16px; text-align: left; border: 2px solid gray; border-radius: 5px;">
+                              </div>
+                              <div id="seconds", style="font-size: 24px; font-weight: bold; width: fit-content; min-width: 6%; color: solid gray; padding: 16px; text-align: left; border: 2px solid gray; border-radius: 5px;">
+                              </div>
+                            </div><br><br>`;
+        weekNum = 1;
+
+        // set countdown date
+        const countdownDate = new Date("Sep 4, 2025 00:00:00").getTime();
+
+        // update every second
+        const timer = setInterval(() => {
+          const nowTick = new Date().getTime();
+          const distance = countdownDate - nowTick;
+
+          if (distance <= 0) {
+            clearInterval(timer);
+            document.getElementById("countdown").innerHTML = "🎉🏈🍺 IT'S FOOTBALL SEASON!!! 🍺🏈🎉";
+            return;
+          }
+
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          document.getElementById("days").innerHTML = `<center>` + String(days).padStart(2, '0') + `<br><hr><p style="font-size: 10px; font-weight: normal;">days`;
+          document.getElementById("hours").innerHTML = `<center>` + String(hours).padStart(2, '0') + `<br><hr><p style="font-size: 10px; font-weight: normal;">hours`;
+          document.getElementById("minutes").innerHTML = `<center>` + String(minutes).padStart(2, '0') + `<br><hr><p style="font-size: 10px; font-weight: normal;">minutes`;
+          document.getElementById("seconds").innerHTML = `<center>` + String(seconds).padStart(2, '0') + `<br><hr><p style="font-size: 10px; font-weight: normal;">seconds`;
+        }, 1000);
+    }
+
+    // Add matchup selector object
+    const matchupSelector = document.getElementById("matchupSelector");
+
+    // Set up awayTeam input box
+    matchupSelector.innerHTML = `<div id="away-input-box", class="input-box">
+                                <label id="awayTeam">AWAY</label><br><br>
+                                <select id="awayTeamSelect" name="awayTeam">`;
+
+    // Sort teams list for use in drop-down menu
+    const sortedTeams = Object.entries(teams).map(pair => [pair[0], pair[1]['name']]).sort((a, b) => a[1].localeCompare(b[1]));
+
+    // Add all teams for 'awayTeam' options
+    const awayTeamInput = document.getElementById("awayTeamSelect");
+    for (const [key, value] of sortedTeams) {
+      awayTeamInput.innerHTML += `<option value="${key}">${value}</option>`;
+    }
+    matchupSelector.innerHTML += `</select></div>`;
+
+    // Set up homeTeam input box
+    matchupSelector.innerHTML += `<div id="home-input-box", class="input-box">
+                                <label id="homeTeam">HOME</label><br><br>
+                                <select id="homeTeamSelect" name="homeTeam">`;
+
+    // Add all teams for 'homeTeam' options
+    const homeTeamInput = document.getElementById("homeTeamSelect");
+    for (const [key, value] of sortedTeams) {
+      homeTeamInput.innerHTML += `<option value="${key}">${value}</option>`;
+    }
+    matchupSelector.innerHTML += `</select></div>`
+
+    // Add logic to respond to matchup selection
+    const awayTeamSelect = document.getElementById('awayTeamSelect');
+    const homeTeamSelect = document.getElementById('homeTeamSelect');
+    const resultingTable = document.getElementById('response-area');
+
+    // Listen to both team select dropdowns and update resulting table upon change
+    awayTeamSelect.addEventListener('change', () => {
+      updateResponse(awayTeamSelect.value, homeTeamSelect.value, resultingTable, true);
+    });
+    homeTeamSelect.addEventListener('change', () => {
+      updateResponse(awayTeamSelect.value, homeTeamSelect.value, resultingTable, true);
+    });
+
     const alumniData = document.getElementById("teamAlumniData");
     const alumniQuery = `SELECT 
                           t.team AS Team,

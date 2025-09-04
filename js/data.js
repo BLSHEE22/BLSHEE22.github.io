@@ -121,21 +121,34 @@ export const weekLengthInfo = [{'number': 0,
 
 // all matchups from a week slate and the contained player grudges
 export const playerGrudges = {
-            'Thursday, September 4th': [{
-                'time': '8:20 PM',
-                'awayTeam': 'DAL',
-                'homeTeam': 'PHI',
-                'awayGrudges': [{
-                    'headshotUrl': 'https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg',
-                    'name': 'Miles Sanders',
-                    'position': 'RB',
-                    'grudgeType': 'Primary Grudge',
-                    'seasons': '2019, 2020, 2021, 2022',
-                    'positionRk': '59'
-                }],
-                'homeGrudges': []
-            }]
-        } // deprecate me!
+        'Thursday, September 4th': [{
+            'time': '8:20 PM',
+            'awayTeam': 'DAL',
+            'homeTeam': 'PHI'
+        }],
+        'Friday, September 5th': [{
+            'time': '8:00 PM',
+            'awayTeam': 'KAN',
+            'homeTeam': 'LAC'
+        }],
+        'Sunday, September 7th': [{
+                'time': '1:00 PM',
+                'awayTeam': 'TAM',
+                'homeTeam': 'ATL'
+            },
+            {
+                'time': '1:00 PM',
+                'awayTeam': 'CIN',
+                'homeTeam': 'CLE'
+            },
+            {
+                'time': '1:00 PM',
+                'awayTeam': 'MIA',
+                'homeTeam': 'CLT'
+            }
+        ]
+    }
+
 // export const playerGrudges = { // week 1
 //     'Thursday, September 4th': [{
 //         'time': '8:20 PM',
