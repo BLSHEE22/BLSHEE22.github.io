@@ -67,7 +67,7 @@ layout: default
   } */
 
   /* NEW style for table*/
-  .dropdown-table {
+  table {
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
@@ -83,19 +83,19 @@ layout: default
   }   */
 
   /* NEW style for thead*/
-  .dropdown-table thead {
+  thead {
     color: black;
     cursor: pointer;
     transition: box-shadow 0.2s ease, transform 0.2s ease;
   }
 
   /* NEW style for mouse-over theader*/
-  .dropdown-table thead:hover {
+  thead:hover {
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     transform: translateY(-1px);
   }
 
-  .dropdown-table thead:hover .caret {
+  thead:hover .caret {
     color: black; /* highlight color on hover */
   }
 
@@ -108,9 +108,9 @@ layout: default
   } */
 
   /* NEW style for header cell*/
-  .dropdown-table thead th {
+  thead th {
     color: black;
-    width: 50%;
+    width: 50% !important;
     padding: 0.75rem;
     /* min-width: 400px;*/
     /* max-width: 400px;*/
@@ -120,16 +120,16 @@ layout: default
   }
 
   /* Hide middle border between the two TH cells */
-  .dropdown-table th:first-child {
+  th:first-child {
     border-right: 0; /* remove right border of first TH */
   }
 
-  .dropdown-table th:last-child {
+  th:last-child {
     border-left: 0; /* remove left border of second TH */
   }
 
   /* NEW caret centered between the two columns */
-  .dropdown-table .caret {
+  .caret {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -142,12 +142,12 @@ layout: default
     pointer-events: none;
   }
 
-  .dropdown-table thead.open .caret {
+  thead.open .caret {
     transform: translate(-50%, -50%) rotate(-135deg); /* points up */
   }
 
   /* Style for CLOSED matchup table */
-  .dropdown-table tbody {
+  tbody {
     overflow: hidden; 
     max-height: 0;
     display: block;
@@ -156,7 +156,7 @@ layout: default
   }
 
   /* Style for OPEN matchup table */
-  .dropdown-table tbody.open {
+  tbody.open {
     /*display: table-row-group;*/
     max-height: 2000px;
     /*overflow-y: auto;*/
@@ -173,9 +173,9 @@ layout: default
   } */
 
   /* NEW style for data cell */
-  .dropdown-table td {
+  td {
     padding: 0.5rem;
-    width: 50%;
+    width: 50% !important;
     /*min-width: 400px;*/
     /*max-width: 400px;*/
     text-align: center;
@@ -183,7 +183,7 @@ layout: default
   }
 
   /* Data cell hover effect */
-  .dropdown-table td:hover {
+  td:hover {
     color: black;
     border: 2px solid gray;
     background:
@@ -217,16 +217,16 @@ layout: default
   }
 
   /* Trigger hover when mouse is anywhere over the TD cell */
-  .dropdown-table td:hover .fade-wrapper img.hover {
+  td:hover .fade-wrapper img.hover {
     opacity: 1;
   }
 
-  .dropdown-table td:hover .fade-wrapper img.normal {
+  td:hover .fade-wrapper img.normal {
     opacity: 0;
   }
 
   /* Grayscale on hover */
-  .dropdown-table td:hover .fade-wrapper img {
+  td:hover .fade-wrapper img {
     filter: grayscale(0%);
   }
 

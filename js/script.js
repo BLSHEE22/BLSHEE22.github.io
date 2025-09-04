@@ -218,7 +218,7 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
   if ((aTeam && hTeam) && (aTeam != hTeam)) {
     // Create table
     const customTable = document.createElement('table');
-    customTable.className = "dropdown-table";
+    //customTable.className = "dropdown-table";
     customTable.innerHTML += `<colgroup>
                                 <col style="width:50%;">
                                 <col style="width:50%;">
