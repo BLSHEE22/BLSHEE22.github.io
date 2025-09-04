@@ -93,6 +93,10 @@ layout: default
     transform: translateY(-1px);
   }
 
+  thead:hover .caret {
+    color: black; /* highlight color on hover */
+  }
+
   /* th {
     width: 50%;
     border: 5px solid gray;
@@ -116,13 +120,17 @@ layout: default
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform 0.2s ease;
-    pointer-events: none; /* so clicks pass through */
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #666;
+    border-bottom: 2px solid #666;
+    transform: translate(-50%, -50%) rotate(45deg); /* points down */
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    pointer-events: none;
   }
 
   thead.open .caret {
-    transform: rotate(180deg); /* rotated when expanded */
+    transform: translate(-50%, -50%) rotate(-135deg); /* points up */
   }
 
   /* Style for CLOSED matchup table */

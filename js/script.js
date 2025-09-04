@@ -376,7 +376,7 @@ function updateResponse() {
         headerRow.appendChild(th);
     });
     // Add drop-down caret
-    thead.innerHTML += `<span class="caret">▾</span>`;
+    thead.innerHTML += `<span class="caret"></span>`;
     thead.appendChild(headerRow);
 
     // Add thead to table
@@ -528,10 +528,10 @@ function updateResponse() {
   // Listen to custom matchup table
   responseArea.querySelectorAll('table').forEach(table => {
     const thead = table.querySelector('thead');
+    const tbody = table.querySelector('tbody');
     thead.addEventListener('click', () => {
-      const tbody = table.querySelector('tbody');
-      thead.classList.toggle("open");
-      tbody.classList.toggle('open');
+      tbody.classList.toggle("open");
+      thead.classList.toggle("open"); // flip caret
     });
   });
 
