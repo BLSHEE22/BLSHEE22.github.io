@@ -366,7 +366,7 @@ function updateResponse() {
     // Create table
     const customTable = document.createElement('table');
 
-    // Create header row
+    // Create header row and add to thead
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
     [`<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[aTeam]['logo']}.png", width="50", height="50", alt=" ">`,
@@ -375,9 +375,11 @@ function updateResponse() {
         th.innerHTML = html;
         headerRow.appendChild(th);
     });
+    // Add drop-down caret
+    thead.innerHTML += `<span class="caret">▾</span>`;
     thead.appendChild(headerRow);
 
-    // Add head to table
+    // Add thead to table
     customTable.appendChild(thead);
 
     /**
@@ -528,6 +530,7 @@ function updateResponse() {
     const thead = table.querySelector('thead');
     thead.addEventListener('click', () => {
       const tbody = table.querySelector('tbody');
+      thead.classList.toggle("open");
       tbody.classList.toggle('open');
     });
   });

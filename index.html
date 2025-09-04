@@ -5,6 +5,13 @@ layout: default
   <link rel="icon" type="image/png" href="/images/swords.png">
 <style>
 
+  /* Data cell pulse animation */
+  @keyframes pulse {
+    0% { box-shadow: 0 0 5px black; }
+    50% { box-shadow: 0 0 20px black; }
+    100% { box-shadow: 0 0 5px black; }
+  }
+
   /* Site background */
   body {
     background-color: #00072D;
@@ -49,7 +56,7 @@ layout: default
   }
 
   /* Table style */
-  table {
+  /* table {
     table-layout: fixed;
     color: solid gray;
     background-color: white;
@@ -57,29 +64,65 @@ layout: default
     border-collapse: collapse;
     width: 100%;
     text-align: center;
+  } */
+
+  /* NEW style for table*/
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem auto;
+    text-align: center;
   }
 
-  th {
+  /* Header hover effect */
+  /* thead:hover {
+    background: white;
+    cursor: pointer;
+  }   */
+
+  /* NEW style for thead*/
+  thead {
+    color: black;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  /* NEW style for mouse-over theader*/
+  thead:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transform: translateY(-1px);
+  }
+
+  /* th {
     width: 50%;
     border: 5px solid gray;
     min-width: 400px;
     max-width: 400px;
     text-align: center;
-  }
+  } */
 
-  td {
-    width: 50%;
-    border: 1px solid gray;
+  /* NEW style for header cell*/
+  thead th {
+    color: black;
+    padding: 0.75rem;
     min-width: 400px;
     max-width: 400px;
     text-align: center;
+    position: relative;
   }
 
-  /* Data cell pulse animation */
-  @keyframes pulse {
-    0% { box-shadow: 0 0 5px black; }
-    50% { box-shadow: 0 0 20px black; }
-    100% { box-shadow: 0 0 5px black; }
+  /* NEW caret centered between the two columns */
+  .caret {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s ease;
+    pointer-events: none; /* so clicks pass through */
+  }
+
+  thead.open .caret {
+    transform: rotate(180deg); /* rotated when expanded */
   }
 
   /* Style for CLOSED matchup table */
@@ -98,24 +141,29 @@ layout: default
     opacity: 1;
   }
 
-  /* Table hover effect */
-  /* table:hover {
-    border: 5px solid black;
-    cursor: pointer;
-  }   */
+  /* Style for data cell */
+  /* td {
+    width: 50%;
+    border: 1px solid gray;
+    min-width: 400px;
+    max-width: 400px;
+    text-align: center;
+  } */
 
-  /* Header hover effect */
-  thead:hover {
-    background: white;
-    border-top: 1px groove gray;
-    border-bottom: 1px groove gray;
-    cursor: pointer;
-  }  
+  /* NEW style for data cell */
+  td {
+    padding: 0.5rem;
+    width: 50%;
+    min-width: 400px;
+    max-width: 400px;
+    text-align: center;
+    border-top: 1px solid #eee;
+  }
 
   /* Data cell hover effect */
   td:hover {
     color: black;
-    border: 2px solid gray;
+    /*border: 2px solid gray;*/
     background:
               radial-gradient(ellipse at top, lightgray, transparent),
               radial-gradient(ellipse at bottom, beige, transparent);
