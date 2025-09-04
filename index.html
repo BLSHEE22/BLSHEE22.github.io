@@ -67,7 +67,7 @@ layout: default
   } */
 
   /* NEW style for table*/
-  table {
+  .dropdown-table {
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
@@ -83,19 +83,19 @@ layout: default
   }   */
 
   /* NEW style for thead*/
-  thead {
+  .dropdown-table thead {
     color: black;
     cursor: pointer;
     transition: box-shadow 0.2s ease, transform 0.2s ease;
   }
 
   /* NEW style for mouse-over theader*/
-  thead:hover {
+  .dropdown-table thead:hover {
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     transform: translateY(-1px);
   }
 
-  thead:hover .caret {
+  .dropdown-table thead:hover .caret {
     color: black; /* highlight color on hover */
   }
 
@@ -108,7 +108,7 @@ layout: default
   } */
 
   /* NEW style for header cell*/
-  thead th {
+  .dropdown-table thead th {
     color: black;
     width: 50%;
     padding: 0.75rem;
@@ -120,11 +120,11 @@ layout: default
   }
 
   /* Hide middle border between the two TH cells */
-  th:first-child {
+  .dropdown-table th:first-child {
     border-right: 0; /* remove right border of first TH */
   }
 
-  th:last-child {
+  .dropdown-table th:last-child {
     border-left: 0; /* remove left border of second TH */
   }
 
@@ -142,12 +142,12 @@ layout: default
     pointer-events: none;
   }
 
-  thead.open .caret {
+  .dropdown-table thead.open .caret {
     transform: translate(-50%, -50%) rotate(-135deg); /* points up */
   }
 
   /* Style for CLOSED matchup table */
-  tbody {
+  .dropdown-table tbody {
     overflow: hidden; 
     max-height: 0;
     display: block;
@@ -156,7 +156,7 @@ layout: default
   }
 
   /* Style for OPEN matchup table */
-  tbody.open {
+  .dropdown-table tbody.open {
     /*display: table-row-group;*/
     max-height: 2000px;
     /*overflow-y: auto;*/
@@ -173,8 +173,9 @@ layout: default
   } */
 
   /* NEW style for data cell */
-  td {
+  .dropdown-table td {
     padding: 0.5rem;
+    width: 50%;
     /*min-width: 400px;*/
     /*max-width: 400px;*/
     text-align: center;
@@ -182,7 +183,7 @@ layout: default
   }
 
   /* Data cell hover effect */
-  td:hover {
+  .dropdown-table td:hover {
     color: black;
     border: 2px solid gray;
     background:
@@ -216,16 +217,16 @@ layout: default
   }
 
   /* Trigger hover when mouse is anywhere over the TD cell */
-  td:hover .fade-wrapper img.hover {
+  .dropdown-table td:hover .fade-wrapper img.hover {
     opacity: 1;
   }
 
-  td:hover .fade-wrapper img.normal {
+  .dropdown-table td:hover .fade-wrapper img.normal {
     opacity: 0;
   }
 
   /* Grayscale on hover */
-  td:hover .fade-wrapper img {
+  .dropdown-table td:hover .fade-wrapper img {
     filter: grayscale(0%);
   }
 
