@@ -108,8 +108,6 @@ layout: default
 
   /* NEW style for header cell*/
   thead th {
-    border-bottom: 1px solid #ddd;
-    border-right: none; /* removes dividing line */
     color: black;
     padding: 0.75rem;
     min-width: 400px;
@@ -118,8 +116,13 @@ layout: default
     position: relative;
   }
 
-  thead th + th {
-    border-left: none; /* removes other side of dividing line */
+  /* Hide middle border between the two TH cells */
+  th:first-child {
+    border-right: 0; /* remove right border of first TH */
+  }
+
+  th:last-child {
+    border-left: 0; /* remove left border of second TH */
   }
 
   /* NEW caret centered between the two columns */
