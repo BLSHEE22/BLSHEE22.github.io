@@ -107,12 +107,18 @@ layout: default
 
   /* NEW style for header cell*/
   thead th {
+    border-bottom: 1px solid #ddd;
+    border-right: none; /* removes dividing line */
     color: black;
     padding: 0.75rem;
     min-width: 400px;
     max-width: 400px;
     text-align: center;
     position: relative;
+  }
+
+  thead th + th {
+    border-left: none; /* removes other side of dividing line */
   }
 
   /* NEW caret centered between the two columns */
