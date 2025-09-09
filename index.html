@@ -4,25 +4,45 @@ layout: default
 <head>
   <link rel="icon" type="image/png" href="images/swords2.png">
   <style>
-    
-    table.dropdown-table {
-      width: 100%;
-      table-layout: fixed;
-      border-collapse: collapse;
-      border: 4px solid gray;
-      margin: 1rem auto;
-      text-align: center;
-    }
 
-    /* NEW style for header cell*/
-    table.dropdown-table th {
-      color: black;
-      width: 50% !important;
-      padding: 0.75rem;
-      vertical-align: middle;
-      text-align: center;
-    }
+  .dropdown-table {
+    width: 100%;
+    table-layout: fixed;    /* 🚨 forces fixed widths */
+    border-collapse: collapse;
+    display: table;         /* reset if theme messes with display */
+  }
+
+  .dropdown-table th,
+  .dropdown-table td {
+    width: 50%;             /* matches <colgroup> */
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;       /* prevents content from expanding the column */
+    text-overflow: ellipsis;
+    white-space: nowrap;    /* optional: keeps everything on one line */
+  }
     
+  /*
+  .dropdown-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 4px solid gray;
+    margin: 1rem auto;
+    text-align: center;
+    display: table;
+  }
+
+  /* NEW style for header cell*/
+  /*
+  .dropdown-table th {
+    color: black;
+    width: 50% !important;
+    padding: 0.75rem;
+    vertical-align: middle;
+    text-align: center;
+  }*/
+
   </style>
 <!-- <style>
 
