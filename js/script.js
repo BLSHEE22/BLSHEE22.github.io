@@ -220,19 +220,24 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
     const customTable = document.createElement('table');
     customTable.className = "dropdown-table";
     customTable.innerHTML += `<colgroup>
-                                <col style="width:50%;">
-                                <col style="width:50%;">
+                                <col>
+                                <col>
                               </colgroup>`;
 
     // Create header row and add to thead
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    [`<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[aTeam]['logo']}.png", width="50", height="50", alt=" ">`,
-     `<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[hTeam]['logo']}.png", width="50", height="50", alt=" ">`].forEach(html => {
-        const th = document.createElement('th');
-        th.innerHTML = html;
-        headerRow.appendChild(th);
-    });
+    const th = document.createElement('th');
+    th.colSpan = 2;
+    th.innerHTML = `Click to Expand`;
+    headerRow.appendChild(th);
+    // [`<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[aTeam]['logo']}.png", width="50", height="50", alt=" ">`,
+    //  `<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[hTeam]['logo']}.png", width="50", height="50", alt=" ">`].forEach(html => {
+    //     const th = document.createElement('th');
+    //     th.colSpan = 2;
+    //     th.innerHTML = html;
+    //     headerRow.appendChild(th);
+    // });
     // Add drop-down caret
     thead.innerHTML += `<span class="caret"></span>`;
     thead.appendChild(headerRow);
