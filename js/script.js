@@ -227,19 +227,14 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
     // Create header row and add to thead
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    const th = document.createElement('th');
-    th.colSpan = 2;
-    th.innerHTML = `Click to Expand`;
-    headerRow.appendChild(th);
-    // [`<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[aTeam]['logo']}.png", width="50", height="50", alt=" ">`,
-    //  `<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[hTeam]['logo']}.png", width="50", height="50", alt=" ">`].forEach(html => {
-    //     const th = document.createElement('th');
-    //     th.colSpan = 2;
-    //     th.innerHTML = html;
-    //     headerRow.appendChild(th);
-    // });
+    [`<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[aTeam]['logo']}.png", width="50", height="50", alt=" ">`,
+     `<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[hTeam]['logo']}.png", width="50", height="50", alt=" ">`].forEach(html => {
+        const th = document.createElement('th');
+        th.innerHTML = html;
+        headerRow.appendChild(th);
+    });
     // Add drop-down caret
-    thead.innerHTML += `<span class="caret"></span>`;
+    thead.innerHTML += `<span class="caret">⌄</span>`;
     thead.appendChild(headerRow);
 
     // Add thead to table
@@ -294,7 +289,7 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
 
   if (custom) {
     // add hover/click listeners to new custom table
-    responseArea.querySelectorAll('dropdown-table').forEach(table => {
+    responseArea.querySelectorAll('table').forEach(table => {
       const thead = table.querySelector('thead');
       const tbody = table.querySelector('tbody');
       thead.addEventListener('click', () => {
@@ -407,7 +402,7 @@ function updateWeekSlate() {
       weekElement.appendChild(dayElement);
   }
   // add hover/click listeners
-  document.querySelectorAll('dropdown-table').forEach(table => {
+  document.querySelectorAll('table').forEach(table => {
     const thead = table.querySelector('thead');
     const tbody = table.querySelector('tbody');
     thead.addEventListener('click', () => {
@@ -749,7 +744,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // add hover/click logic to each matchup table
-  document.querySelectorAll('dropdown-table').forEach(table => {
+  document.querySelectorAll('table').forEach(table => {
     table.addEventListener('click', () => {
       const tbody = table.querySelector('tbody');
       tbody.classList.toggle('open');

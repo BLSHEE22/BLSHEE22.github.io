@@ -4,18 +4,34 @@ layout: default
 <head>
   <link rel="icon" type="image/png" href="images/swords2.png">
   <style>
+
+    /* Site background */
+    body {
+      background-color: #00072D;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center center;
+    }
+  
+    /* Centered div */
+    .centered-div {
+      padding: 20px;
+      background: white;
+    }
+
     /* === Core Table Styles === */
     .dropdown-table {
       width: 100%;
       table-layout: fixed;       /* force equal column widths */
       border-collapse: collapse;
-      display: table !important; /* override Jekyll themes that use block/flex */
+      display: table !important; /* override Jekyll theme quirks */
       margin-bottom: 1em;
-      cursor: pointer;           /* show clickable header */
+      cursor: pointer;           /* indicate header is clickable */
     }
     
     .dropdown-table col {
-      width: 50%;                /* both columns equal */
+      width: 50%;
     }
     
     .dropdown-table th,
@@ -24,7 +40,7 @@ layout: default
       text-align: center;
       box-sizing: border-box;
       border: 1px solid #ccc;
-      overflow: hidden;          /* stop content stretching */
+      overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -67,7 +83,14 @@ layout: default
     .dropdown-table tbody.open {
       display: table-row-group;
     }
-    </style>
+    
+    /* === Logo Styling === */
+    .dropdown-table th img {
+      max-height: 40px;   /* keep logos a nice size */
+      max-width: 80%;     /* prevent overflow */
+      vertical-align: middle;
+    }
+  </style>
 <!-- <style>
 
   /* Data cell pulse animation */
