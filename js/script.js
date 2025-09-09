@@ -218,7 +218,7 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
   if ((aTeam && hTeam) && (aTeam != hTeam)) {
     // Create table
     const customTable = document.createElement('table');
-    //customTable.className = "dropdown-table";
+    customTable.className = "dropdown-table";
     customTable.innerHTML += `<colgroup>
                                 <col style="width:50%;">
                                 <col style="width:50%;">
@@ -289,7 +289,7 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
 
   if (custom) {
     // add hover/click listeners to new custom table
-    responseArea.querySelectorAll('table').forEach(table => {
+    responseArea.querySelectorAll('dropdown-table').forEach(table => {
       const thead = table.querySelector('thead');
       const tbody = table.querySelector('tbody');
       thead.addEventListener('click', () => {
@@ -402,7 +402,7 @@ function updateWeekSlate() {
       weekElement.appendChild(dayElement);
   }
   // add hover/click listeners
-  document.querySelectorAll('table').forEach(table => {
+  document.querySelectorAll('dropdown-table').forEach(table => {
     const thead = table.querySelector('thead');
     const tbody = table.querySelector('tbody');
     thead.addEventListener('click', () => {
@@ -744,7 +744,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // add hover/click logic to each matchup table
-  document.querySelectorAll('table').forEach(table => {
+  document.querySelectorAll('dropdown-table').forEach(table => {
     table.addEventListener('click', () => {
       const tbody = table.querySelector('tbody');
       tbody.classList.toggle('open');
