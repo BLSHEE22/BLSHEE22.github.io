@@ -86,10 +86,20 @@ layout: default
     
     /* === Logo Styling === */
     .dropdown-table th img {
-      max-height: 40px;   /* keep logos a nice size */
-      max-width: 80%;     /* prevent overflow */
+      /*max-height: 40px;   /* keep logos a nice size */
+      /*max-width: 80%;     /* prevent overflow */
       vertical-align: middle;
     }
+
+    /* Hide middle border between the two TH cells */
+    th:first-child {
+      border-right: 0; /* remove right border of first TH */
+    }
+
+    th:last-child {
+      border-left: 0; /* remove left border of second TH */
+    }
+
   </style>
 <!-- <style>
 
