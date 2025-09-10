@@ -65,11 +65,15 @@ layout: default
       margin-bottom: 1em;
       cursor: pointer;           /* indicate header is clickable */
     }
+
+    .dropdown-table table:hover {
+      border: 4x solid black;
+    }
     
     .dropdown-table col {
       width: 50%;
     }
-    
+
     .dropdown-table th,
     .dropdown-table td {
       padding: 10px;
@@ -108,7 +112,7 @@ layout: default
     /* NEW style for mouse-over theader*/
     .dropdown-table thead:hover {
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      transform: translateY(-1px);
+      transform: translateY(-1.5px);
     }
     
     .dropdown-table thead.open .caret {
