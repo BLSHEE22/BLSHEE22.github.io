@@ -114,7 +114,7 @@ layout: default
     /* === Body open/close === */
     .dropdown-table tbody {
       /*display: none;*/
-      display: block;
+      /*display: table-row-group;*/
       overflow: hidden; 
       max-height: 0;
       opacity: 0;
@@ -145,10 +145,10 @@ layout: default
     .dropdown-table td:hover {
       color: black;
       /*border: 2px solid gray;*/
-      /* background:
+      background:
                 radial-gradient(ellipse at top, lightgray, transparent),
-                radial-gradient(ellipse at bottom, beige, transparent); */
-      animation: pulse 5s infinite; 
+                radial-gradient(ellipse at bottom, beige, transparent);
+      /*animation: pulse 5s infinite; */
       cursor: pointer;
     }
 
@@ -167,7 +167,8 @@ layout: default
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: opacity 1s ease, filter 1s ease;
+      transition: opacity .1s ease, filter .1s ease;
+      filter: grayscale(0%);
     }
 
     .fade-wrapper img.hover {
@@ -180,6 +181,7 @@ layout: default
 
     .fade-wrapper:hover img.hover {
       opacity: 1;
+      filter: grayscale(33%);
     }
 
     /* Hide sections until refactor is completed */
