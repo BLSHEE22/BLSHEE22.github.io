@@ -615,6 +615,8 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
 
+        console.log(`Teams in table: ${formatted_teams}`);
+
         // write superlative team to header
         const full_team_name = teams[formatted_teams[0]]['name']
         document.getElementById('activeGrudgeHeader').innerHTML = `The <strong>${full_team_name}</strong> are the most grudged team among active players this season.`;
