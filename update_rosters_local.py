@@ -6,6 +6,7 @@ import sqlite3
 import utils
 import aiohttp
 import requests
+from time import sleep
 from pyquery import PyQuery as pq
 from urllib.error import HTTPError
 
@@ -59,16 +60,17 @@ class Roster:
         self._dbConn = dbConn
         self._coach = None
         self._players = []
-        # player_ids = self._get_all_player_ids(year)
-        # print(f"Player Ids: {player_ids}")
-        # if player_ids:
-        #     # Run scraping in the context of this instance
-        #     asyncio.run(self.run_scraping(player_ids))
+        player_ids = self._get_all_player_ids(year)
+        print(f"Player Ids: {player_ids}")
+        if player_ids:
+            # Run scraping in the context of this instance
+            asyncio.run(self.run_scraping(player_ids))
 
-        # if self._players:
-        #     self._save_to_db()
+        if self._players:
+            self._save_to_db()
 
-        self._save_to_db()
+        # DEBUGGING
+        # self._save_to_db()
 
     async def run_scraping(self, player_ids):
         """Top-level async runner for fetching all players"""
@@ -363,19 +365,20 @@ class Roster:
         print(f"Storing new {self._team} roster in database...")
         cur = self._dbConn.cursor()
         # insert each player
-        cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
-                                                team_history, initial_team, fantasy_pos_rk, headshot_url) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", 
-                        [('DAL', 'Miles Sanders', 'SandMi01', '6-7', '104', 'FB', '2002-10-01', "{'PHI': ['2019', '2020', '2021', '2022'], 'CAR': ['2023', '2024']}", 'PHI', '1', 'https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg'), 
-                         ('PHI', 'Jakobi Meyers', 'MeyeJa01', '5-2', '495', 'WR', '1961-01-05', "{'DAL': ['2022'], 'MIN': ['2018', '2019', '2020', '2021', '2023', '2024']}", 'DAL', '99', 'https://www.pro-football-reference.com/req/20230307/images/headshots/MeyeJa01_2023.jpg')])
-
+        # DEBUGGING
         # cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
         #                                         team_history, initial_team, fantasy_pos_rk, headshot_url) 
-        #                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-        #                 [(player['team'], player['name'], player['player_id'], player['height'],
-        #                   player['weight'], player['position'], player['birth_date'], 
-        #                   str(player['team_history']), player['initial_team'], player['fantasy_pos_rk'],
-        #                   player['headshot_url']) for player in self._players])
+        #                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", 
+        #                 [('DAL', 'Miles Sanders', 'SandMi01', '6-7', '104', 'FB', '2002-10-01', "{'PHI': ['2019', '2020', '2021', '2022'], 'CAR': ['2023', '2024']}", 'PHI', '1', 'https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg'), 
+        #                  ('PHI', 'Jakobi Meyers', 'MeyeJa01', '5-2', '495', 'WR', '1961-01-05', "{'DAL': ['2022'], 'MIN': ['2018', '2019', '2020', '2021', '2023', '2024']}", 'DAL', '99', 'https://www.pro-football-reference.com/req/20230307/images/headshots/MeyeJa01_2023.jpg')])
+
+        cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
+                                                team_history, initial_team, fantasy_pos_rk, headshot_url) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                        [(player['team'], player['name'], player['player_id'], player['height'],
+                          player['weight'], player['position'], player['birth_date'], 
+                          str(player['team_history']), player['initial_team'], player['fantasy_pos_rk'],
+                          player['headshot_url']) for player in self._players])
         # remove duplicate players
         cur.execute('''DELETE FROM players WHERE id NOT IN 
                         (SELECT MAX(id) FROM players GROUP BY player_id)''')
@@ -428,11 +431,12 @@ if __name__ == "__main__":
     # ssl_context.check_hostname = True
     # ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    for team in list(nflTeamTranslator.values())[:1]:
+    for team in list(nflTeamTranslator.values())[:4]:
         print(f">>> Getting latest {team} roster...")
         try:
             roster = Roster(team, conn)
             print(f">>>Successfully updated {team} roster!")
+            sleep(10)
         except Exception as e:
             import traceback
             print(f">>> Failed to create {team} roster: {e}")
