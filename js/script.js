@@ -252,12 +252,15 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
 
       // Add away team data to left column
       const td1 = document.createElement('td');
+      const pulseBox1 = document.createElement('div');
+      pulseBox1.className = "pulse-box";
       if (i < htmlCustomAwayGrudges.length) {
         td1.innerHTML = htmlCustomAwayGrudges[i];
       } else {
         td1.innerHTML = '';
       }
       td1.style.fontSize = '12px'
+      //td1.append(pulseBox1);
       dataRow.appendChild(td1);
 
       // Add home team data to right column

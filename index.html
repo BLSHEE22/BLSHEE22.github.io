@@ -6,9 +6,9 @@ layout: default
   <style>
     /* Data cell pulse animation */
     @keyframes pulse {
-      0% { box-shadow: 0 0 5px black; }
-      50% { box-shadow: 0 0 20px black; }
-      100% { box-shadow: 0 0 5px black; }
+      0% { box-shadow: 0 0 5px gray; }
+      50% { box-shadow: 0 0 20px gray; }
+      100% { box-shadow: 0 0 5px gray; }
     }
 
     /* Site background */
@@ -148,8 +148,13 @@ layout: default
       background:
                 radial-gradient(ellipse at top, lightgray, transparent),
                 radial-gradient(ellipse at bottom, beige, transparent);
-      /*animation: pulse 5s infinite; */
+      animation: pulse 5s infinite;
+      transform: translateY(-1px);
       cursor: pointer;
+    }
+
+    td div:hover {
+      animation: pulse 5s infinite;
     }
 
     /* Headshot image hover effect */
@@ -167,8 +172,8 @@ layout: default
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: opacity .25s ease, filter .25s ease;
-      filter: grayscale(0%);
+      transition: opacity .1s ease, filter .1s ease;
+      filter: grayscale(15%);
     }
 
     .fade-wrapper img.hover {
@@ -181,7 +186,7 @@ layout: default
 
     .fade-wrapper:hover img.hover {
       opacity: 1;
-      filter: grayscale(33%);
+      filter: grayscale(40%);
     }
 
     /* Hide sections until refactor is completed */
