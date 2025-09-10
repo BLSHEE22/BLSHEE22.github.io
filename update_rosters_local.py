@@ -1,6 +1,7 @@
 import os
 import re
 import ssl
+import sys
 import asyncio
 import sqlite3
 import utils
@@ -433,7 +434,8 @@ if __name__ == "__main__":
     # ssl_context.check_hostname = True
     # ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    for team in list(nflTeamTranslator.values())[6:8]:
+    teams_to_fetch = list(nflTeamTranslator.values())[sys.argv[0]:sys.argv[1]]
+    for team in teams_to_fetch:
         print(f">>> Getting latest {team} roster...")
         try:
             roster = Roster(team, conn)
