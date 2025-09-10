@@ -143,7 +143,7 @@ export const weekSlateInfo = [{'number': 0,
                                             {
                                                 'time': '1:00 PM',
                                                 'awayTeam': 'RAI',
-                                                'homeTeam': 'NWE'
+                                                'homeTeam': 'NE'
                                             },
                                             {
                                                 'time': '1:00 PM',
@@ -157,7 +157,7 @@ export const weekSlateInfo = [{'number': 0,
                                             },
                                             {
                                                 'time': '4:05 PM',
-                                                'awayTeam': 'OTI',
+                                                'awayTeam': 'TEN',
                                                 'homeTeam': 'DEN'
                                             },
                                             {

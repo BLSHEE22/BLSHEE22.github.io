@@ -433,7 +433,7 @@ if __name__ == "__main__":
     # ssl_context.check_hostname = True
     # ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    for team in list(nflTeamTranslator.values())[4:6]:
+    for team in list(nflTeamTranslator.values())[6:8]:
         print(f">>> Getting latest {team} roster...")
         try:
             roster = Roster(team, conn)
