@@ -87,21 +87,6 @@ layout: default
       background: white;
       transition: background 0.2s ease;
     }
-    
-    /* .dropdown-table thead:hover {
-      background: #f9f9f9;
-    } */
-    
-    /* .dropdown-table thead .caret {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      font-size: 14px;
-      color: #888;
-      transition: transform 0.2s ease, color 0.2s ease;
-    } */
 
     .caret {
       position: absolute;
@@ -114,6 +99,10 @@ layout: default
       transform: translate(-50%, -50%) rotate(180deg); /* points down */
       transition: transform 0.2s ease, border-color 0.2s ease;
       pointer-events: none;
+    }
+
+    thead:hover .caret {
+      color: black; /* highlight color on hover */
     }
     
     .dropdown-table thead:hover .caret {
