@@ -114,15 +114,16 @@ layout: default
     /* === Body open/close === */
     .dropdown-table tbody {
       /*display: none;*/
+      display: table-row-group;
       overflow: hidden; 
       max-height: 0;
-      display: block;
       opacity: 0;
       transition: max-height 0.5s ease, opacity 0.5s ease;
     }
     
     .dropdown-table tbody.open {
       display: table-row-group;
+      max-height: 2000px;
       opacity: 1;
     }
     
@@ -144,10 +145,10 @@ layout: default
     .dropdown-table td:hover {
       color: black;
       /*border: 2px solid gray;*/
-      /* background:
+      background:
                 radial-gradient(ellipse at top, lightgray, transparent),
-                radial-gradient(ellipse at bottom, beige, transparent); */
-      animation: pulse 0.5s infinite; 
+                radial-gradient(ellipse at bottom, beige, transparent);
+      animation: pulse 5s infinite; 
       cursor: pointer;
     }
 
@@ -166,34 +167,19 @@ layout: default
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: opacity 0.5s ease, filter 0.5s ease;
-      filter: grayscale(33%);
+      /*transition: opacity 2s ease, filter 2s ease;*/
     }
 
     .fade-wrapper img.hover {
       opacity: 0;
     }
 
-    /* Trigger hover when mouse is anywhere over the TD cell */
-    td img:hover .fade-wrapper img.hover {
-      opacity: 1;
-    }
-
-    td img:hover .fade-wrapper img.normal {
+    .fade-wrapper:hover img.default {
       opacity: 0;
     }
 
-    /* td:hover .fade-wrapper img.hover {
+    .fade-wrapper:hover img.hover {
       opacity: 1;
-    }
-
-    td:hover .fade-wrapper img.normal {
-      opacity: 0;
-    } */
-
-    /* Grayscale on hover */
-    td:hover .fade-wrapper img {
-      filter: grayscale(0%);
     }
 
     /* Hide sections until refactor is completed */
