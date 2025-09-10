@@ -96,17 +96,13 @@ layout: default
       height: 8px;
       border-right: 2px solid #666;
       border-bottom: 2px solid #666;
-      transform: translate(-50%, -50%) rotate(180deg); /* points down */
+      transform: translate(-50%, -50%) rotate(45deg); /* points down */
       transition: transform 0.2s ease, border-color 0.2s ease;
       pointer-events: none;
     }
-
-    thead:hover .caret {
-      color: black; /* highlight color on hover */
-    }
     
     .dropdown-table thead:hover .caret {
-      color: #000;
+      border-top-color: black;
     }
 
     /* NEW style for mouse-over theader*/
