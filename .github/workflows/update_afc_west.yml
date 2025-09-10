@@ -1,0 +1,40 @@
+name: Update AFC West
+
+on:
+  #schedule:
+   #- cron: "0 7 * * 3,6"   # Wed and Sat at 7 AM UTC
+  workflow_dispatch:        # manual run option
+
+jobs:
+  update_afc_west:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install requests pyquery aiohttp
+
+
+      - name: Run update script
+        run: python3 update_rosters.py afc_west
+        env:
+          BD_USER: ${{ secrets.BD_USER }}
+          BD_PASS: ${{ secrets.BD_PASS }}
+          P_HOST: ${{ secrets.P_HOST }}
+          P_PORT: ${{ secrets.P_PORT }}
+
+      - name: Commit & Push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/players.db
+          git commit -m "Update AFC West Rosters [skip ci]" || echo "No changes to commit"
+          git push

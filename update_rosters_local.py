@@ -53,6 +53,15 @@ nflTeamTranslator = {"Atlanta Falcons":"ATL", "Buffalo Bills":"BUF",
                      "Seattle Seahawks":"SEA", "San Francisco 49ers":"SFO", 
                      "Tampa Bay Buccaneers":"TAM", "Washington Commanders":"WAS"}
 
+# map division to list of teams
+nflDivisions = {"afc_east": ['BUF', 'MIA', 'NYJ', 'NWE'],
+                "afc_north": ['CIN', 'CLE', 'PIT', 'RAV'],
+                "afc_south": ['CLT', 'HTX', 'JAX', 'OTI'],
+                "afc_west": ['DEN', 'KAN', 'RAI', 'SDG'],
+                "nfc_east": ['DAL', 'NYG', 'PHI', 'WAS'],
+                "nfc_north": ['CHI', 'DET', 'GNB', 'MIN'],
+                "nfc_south": ['ATL', 'CAR', 'NOR', 'TAM'],
+                "nfc_west": ['CRD', 'RAM', 'SEA', 'SFO']}
 
 ## ROSTER OBJECT ##
 class Roster:
@@ -434,7 +443,7 @@ if __name__ == "__main__":
     # ssl_context.check_hostname = True
     # ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    teams_to_fetch = list(nflTeamTranslator.values())[int(sys.argv[1]):int(sys.argv[2])]
+    teams_to_fetch = nflDivisions[int(sys.argv[1])]
     for team in teams_to_fetch:
         print(f">>> Getting latest {team} roster...")
         try:
