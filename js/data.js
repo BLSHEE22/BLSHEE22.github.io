@@ -97,15 +97,101 @@ export const teams = {'DAL': {'name': 'Dallas Cowboys',
                       'division': 'NFC North'}};
 
 // all weeks and matchup date/times from each
-export const weekLengthInfo = [{'number': 0,
+export const weekSlateInfo = [{'number': 0,
                                 'start': '2025-08-01',
-                                'end': '2025-08-30'},
+                                'end': '2025-08-30',
+                                'matchups': {}},
                                {'number': 1,
                                 'start': '2025-08-31',
-                                'end': '2025-09-08'}, 
+                                'end': '2025-09-08',
+                                'matchups': {
+                                        'Thursday, September 4th': [{
+                                            'time': '8:20 PM',
+                                            'awayTeam': 'DAL',
+                                            'homeTeam': 'PHI'
+                                        }],
+                                        'Friday, September 5th': [{
+                                            'time': '8:00 PM',
+                                            'awayTeam': 'KAN',
+                                            'homeTeam': 'LAC'
+                                        }],
+                                        'Sunday, September 7th': [{
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'TAM',
+                                                'homeTeam': 'ATL'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'CIN',
+                                                'homeTeam': 'CLE'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'MIA',
+                                                'homeTeam': 'CLT'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'CRD',
+                                                'homeTeam': 'NOR'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'CAR',
+                                                'homeTeam': 'JAX'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'RAI',
+                                                'homeTeam': 'NWE'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'PIT',
+                                                'homeTeam': 'NYJ'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'NYG',
+                                                'homeTeam': 'WAS'
+                                            },
+                                            {
+                                                'time': '4:05 PM',
+                                                'awayTeam': 'OTI',
+                                                'homeTeam': 'DEN'
+                                            },
+                                            {
+                                                'time': '4:05 PM',
+                                                'awayTeam': 'SFO',
+                                                'homeTeam': 'SEA'
+                                            },
+                                            {
+                                                'time': '4:25 PM',
+                                                'awayTeam': 'DET',
+                                                'homeTeam': 'GNB'
+                                            },
+                                            {
+                                                'time': '4:25 PM',
+                                                'awayTeam': 'HTX',
+                                                'homeTeam': 'RAM'
+                                            },
+                                            {
+                                                'time': '8:20 PM',
+                                                'awayTeam': 'RAV',
+                                                'homeTeam': 'BUF'
+                                            }
+
+                                        ],
+                                        'Monday, September 8th': [{
+                                                'time': '8:15 PM',
+                                                'awayTeam': 'MIN',
+                                                'homeTeam': 'CHI'
+                                            }]
+                                    }}, 
                                {'number': 2,
                                 'start': '2025-09-09',
-                                'end': '2025-09-15'}, 
+                                'end': '2025-09-15',
+                                'matchups': {}}, 
                                {'number': 3,
                                 'start': '2025-09-16',
                                 'end': '2025-09-22'},

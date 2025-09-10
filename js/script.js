@@ -42,7 +42,7 @@ document.getElementById('run').addEventListener('click', () => {
 });
 
 // import legacy data
-import {teams, weekLengthInfo, playerGrudges} from './data.js';
+import {teams, weekSlateInfo, playerGrudges} from './data.js';
 
 // set default week to 1
 let weekNum = 1;
@@ -51,7 +51,7 @@ let weekNum = 1;
 let totalGrudges = 0;
 
 // create div per day in matchup list
-const days = Object.keys(playerGrudges);
+//const days = Object.keys(playerGrudges);
 
 // current date/time
 const now = new Date();
@@ -450,7 +450,7 @@ function updateWeekSlate() {
 
 // Get current week
 console.log('Getting current week...')
-for (let week of weekLengthInfo) {
+for (let week of weekSlateInfo) {
   let weekI = week['number'];
   let weekStart = new Date(week['start']);
   let weekEnd = new Date(week['end']);
@@ -465,6 +465,11 @@ for (let week of weekLengthInfo) {
   }
   console.log("---");
 }
+
+weekNum = 1;
+
+// Collect matchup dates from week number
+const days = Object.keys(weekSlateInfo[weekNum]['matchups']);
 
 // Create element to contain all matchups for the current week
 const weekElement = document.getElementById('weekSlate');
