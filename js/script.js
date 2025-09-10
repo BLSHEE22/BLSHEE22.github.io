@@ -234,7 +234,7 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
         headerRow.appendChild(th);
     });
     // Add drop-down caret
-    thead.innerHTML += `<span class="caret">⌄</span>`;
+    thead.innerHTML += `<span class="caret"></span>`;
     thead.appendChild(headerRow);
 
     // Add thead to table
