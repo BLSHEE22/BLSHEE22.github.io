@@ -352,7 +352,7 @@ function updateWeekSlate() {
       dayHeader.innerHTML = `<h3><center>${day}`;
       dayElement.appendChild(dayHeader);
 
-      const matchups = playerGrudges[day];
+      const matchups = matchupsInWeek[day];
       console.log("---");
       console.log(day)
       console.log(matchups);
@@ -468,8 +468,9 @@ for (let week of weekSlateInfo) {
 
 weekNum = 1;
 
-// Collect matchup dates from week number
-const days = Object.keys(weekSlateInfo[weekNum]['matchups']);
+// Collect all matchups in week
+const matchupsInWeek = weekSlateInfo[weekNum]['matchups'];
+const days = Object.keys(matchupsInWeek);
 
 // Create element to contain all matchups for the current week
 const weekElement = document.getElementById('weekSlate');
