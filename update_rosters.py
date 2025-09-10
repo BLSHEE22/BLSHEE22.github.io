@@ -1,6 +1,7 @@
 import os
 import re
 import ssl
+import sys
 import asyncio
 import sqlite3
 import utils
@@ -51,6 +52,15 @@ nflTeamTranslator = {"Atlanta Falcons":"ATL", "Buffalo Bills":"BUF",
                      "Seattle Seahawks":"SEA", "San Francisco 49ers":"SFO", 
                      "Tampa Bay Buccaneers":"TAM", "Washington Commanders":"WAS"}
 
+# map division to list of teams
+nflDivisions = {"afc_east": ['BUF', 'MIA', 'NYJ', 'NWE'],
+                "afc_north": ['CIN', 'CLE', 'PIT', 'RAV'],
+                "afc_south": ['CLT', 'HTX', 'JAX', 'OTI'],
+                "afc_west": ['DEN', 'KAN', 'RAI', 'SDG'],
+                "nfc_east": ['DAL', 'NYG', 'PHI', 'WAS'],
+                "nfc_north": ['CHI', 'DET', 'GNB', 'MIN'],
+                "nfc_south": ['ATL', 'CAR', 'NOR', 'TAM'],
+                "nfc_west": ['CRD', 'RAM', 'SEA', 'SFO']}
 
 ## ROSTER OBJECT ##
 class Roster:
@@ -67,6 +77,9 @@ class Roster:
 
         if self._players:
             self._save_to_db()
+
+        # DEBUGGING
+        # self._save_to_db()
 
     async def run_scraping(self, player_ids):
         """Top-level async runner for fetching all players"""
@@ -359,6 +372,15 @@ class Roster:
         """
         print(f"Storing new {self._team} roster in database...")
         cur = self._dbConn.cursor()
+        cur.execute(f"DELETE FROM players WHERE team = ?", (self._team,))
+
+        # DEBUGGING
+        # cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
+        #                                         team_history, initial_team, fantasy_pos_rk, headshot_url) 
+        #                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", 
+        #                 [('DAL', 'Miles Sanders', 'SandMi01', '6-7', '104', 'FB', '2002-10-01', "{'PHI': ['2019', '2020', '2021', '2022'], 'CAR': ['2023', '2024']}", 'PHI', '1', 'https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2023.jpg'), 
+        #                  ('PHI', 'Jakobi Meyers', 'MeyeJa01', '5-2', '495', 'WR', '1961-01-05', "{'DAL': ['2022'], 'MIN': ['2018', '2019', '2020', '2021', '2023', '2024']}", 'DAL', '99', 'https://www.pro-football-reference.com/req/20230307/images/headshots/MeyeJa01_2023.jpg')])
+
         # insert each player
         cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
                                                 team_history, initial_team, fantasy_pos_rk, headshot_url) 
@@ -391,35 +413,17 @@ class Roster:
 
 
 if __name__ == "__main__":
+    # gather command line argument 
+    division = sys.argv[1]
     # create db
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
-    print("Creating new table...")
-    # delete old table
-    cur.execute('''DROP TABLE IF EXISTS players''')
-    # create new table
-    cur.execute('''CREATE TABLE players (
-                        id INTEGER PRIMARY KEY,
-                        team TEXT,
-                        name TEXT,
-                        player_id TEXT,
-                        height TEXT,
-                        weight TEXT,
-                        position TEXT,
-                        birth_date DATETIME,
-                        team_history TEXT,
-                        initial_team TEXT,
-                        fantasy_pos_rk TEXT,
-                        headshot_url TEXT
-                )''')
-    print("New table created.")
-    conn.commit()
     print("Establishing SSL...")
     ssl_context = ssl.create_default_context(cafile=SSL_PATH)
     ssl_context.check_hostname = True
     ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    for team in list(nflTeamTranslator.values()):
+    for team in nflDivisions[division]:
         print(f">>> Getting latest {team} roster...")
         try:
             roster = Roster(team, conn)

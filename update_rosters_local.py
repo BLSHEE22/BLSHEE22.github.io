@@ -415,6 +415,8 @@ class Roster:
 
 
 if __name__ == "__main__":
+    # gather command line argument 
+    division = sys.argv[1]
     # create db
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
@@ -443,7 +445,7 @@ if __name__ == "__main__":
     # ssl_context.check_hostname = True
     # ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    teams_to_fetch = nflDivisions[int(sys.argv[1])]
+    teams_to_fetch = nflDivisions[division]
     for team in teams_to_fetch:
         print(f">>> Getting latest {team} roster...")
         try:
