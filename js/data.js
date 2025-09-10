@@ -191,7 +191,90 @@ export const weekSlateInfo = [{'number': 0,
                                {'number': 2,
                                 'start': '2025-09-09',
                                 'end': '2025-09-15',
-                                'matchups': {}}, 
+                                'matchups': {
+                                        'Thursday, September 11th': [{
+                                            'time': '8:20 PM',
+                                            'awayTeam': 'WAS',
+                                            'homeTeam': 'GNB'
+                                        }],
+                                        'Friday, September 5th': [{
+                                            'time': '8:00 PM',
+                                            'awayTeam': 'KAN',
+                                            'homeTeam': 'LAC'
+                                        }],
+                                        'Sunday, September 7th': [{
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'TAM',
+                                                'homeTeam': 'ATL'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'CIN',
+                                                'homeTeam': 'CLE'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'MIA',
+                                                'homeTeam': 'CLT'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'CRD',
+                                                'homeTeam': 'NOR'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'CAR',
+                                                'homeTeam': 'JAX'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'RAI',
+                                                'homeTeam': 'NE'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'PIT',
+                                                'homeTeam': 'NYJ'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'NYG',
+                                                'homeTeam': 'WAS'
+                                            },
+                                            {
+                                                'time': '4:05 PM',
+                                                'awayTeam': 'TEN',
+                                                'homeTeam': 'DEN'
+                                            },
+                                            {
+                                                'time': '4:05 PM',
+                                                'awayTeam': 'SFO',
+                                                'homeTeam': 'SEA'
+                                            },
+                                            {
+                                                'time': '4:25 PM',
+                                                'awayTeam': 'DET',
+                                                'homeTeam': 'GNB'
+                                            },
+                                            {
+                                                'time': '4:25 PM',
+                                                'awayTeam': 'HTX',
+                                                'homeTeam': 'RAM'
+                                            },
+                                            {
+                                                'time': '8:20 PM',
+                                                'awayTeam': 'RAV',
+                                                'homeTeam': 'BUF'
+                                            }
+
+                                        ],
+                                        'Monday, September 8th': [{
+                                                'time': '8:15 PM',
+                                                'awayTeam': 'MIN',
+                                                'homeTeam': 'CHI'
+                                            }]
+                                    }}, 
                                {'number': 3,
                                 'start': '2025-09-16',
                                 'end': '2025-09-22'},
@@ -206,34 +289,34 @@ export const weekSlateInfo = [{'number': 0,
                                 'end': '2025-10-13'}];
 
 // all matchups from a week slate and the contained player grudges
-export const playerGrudges = {
-        'Thursday, September 4th': [{
-            'time': '8:20 PM',
-            'awayTeam': 'DAL',
-            'homeTeam': 'PHI'
-        }],
-        'Friday, September 5th': [{
-            'time': '8:00 PM',
-            'awayTeam': 'KAN',
-            'homeTeam': 'LAC'
-        }],
-        'Sunday, September 7th': [{
-                'time': '1:00 PM',
-                'awayTeam': 'TAM',
-                'homeTeam': 'ATL'
-            },
-            {
-                'time': '1:00 PM',
-                'awayTeam': 'CIN',
-                'homeTeam': 'CLE'
-            },
-            {
-                'time': '1:00 PM',
-                'awayTeam': 'MIA',
-                'homeTeam': 'CLT'
-            }
-        ]
-    }
+// export const playerGrudges = {
+//         'Thursday, September 4th': [{
+//             'time': '8:20 PM',
+//             'awayTeam': 'DAL',
+//             'homeTeam': 'PHI'
+//         }],
+//         'Friday, September 5th': [{
+//             'time': '8:00 PM',
+//             'awayTeam': 'KAN',
+//             'homeTeam': 'LAC'
+//         }],
+//         'Sunday, September 7th': [{
+//                 'time': '1:00 PM',
+//                 'awayTeam': 'TAM',
+//                 'homeTeam': 'ATL'
+//             },
+//             {
+//                 'time': '1:00 PM',
+//                 'awayTeam': 'CIN',
+//                 'homeTeam': 'CLE'
+//             },
+//             {
+//                 'time': '1:00 PM',
+//                 'awayTeam': 'MIA',
+//                 'homeTeam': 'CLT'
+//             }
+//         ]
+//     }
 
 // export const playerGrudges = { // week 1
 //     'Thursday, September 4th': [{

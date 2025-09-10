@@ -434,7 +434,7 @@ if __name__ == "__main__":
     # ssl_context.check_hostname = True
     # ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    teams_to_fetch = list(nflTeamTranslator.values())[sys.argv[0]:sys.argv[1]]
+    teams_to_fetch = list(nflTeamTranslator.values())[int(sys.argv[1]):int(sys.argv[2])]
     for team in teams_to_fetch:
         print(f">>> Getting latest {team} roster...")
         try:

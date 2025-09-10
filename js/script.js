@@ -42,16 +42,13 @@ document.getElementById('run').addEventListener('click', () => {
 });
 
 // import legacy data
-import {teams, weekSlateInfo, playerGrudges} from './data.js';
+import {teams, weekSlateInfo} from './data.js';
 
 // set default week to 1
 let weekNum = 1;
 
 // total count of grudge matches
 let totalGrudges = 0;
-
-// create div per day in matchup list
-//const days = Object.keys(playerGrudges);
 
 // current date/time
 const now = new Date();
