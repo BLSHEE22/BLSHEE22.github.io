@@ -366,8 +366,8 @@ class Roster:
         cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
                                                 team_history, initial_team, fantasy_pos_rk, headshot_url) 
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", 
-                        [('DAL', 'Miles Sanders', 'SandMi01', '6-7', '104', 'FB', '2002-10-01', "{{'PHI': ['2024'], 'MIN': ['2018', '2019', '2020', '2021', '2022', '2023'], 'WAS': ['2012', '2013', '2014', '2015', '2016', '2017']}}", 'PHI', '1', 'https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg'), 
-                         ('PHI', 'Jakobi Meyers', 'ChriCole00', '5-2', '495', 'WR', '1961-01-05', "{{'DAL': ['2022'], 'MIN': ['2018', '2019', '2020', '2021', '2023', '2024'], 'WAS': ['2012', '2013', '2014', '2015', '2016', '2017']}}", 'DAL', '99', 'https://www.pro-football-reference.com/req/20230307/images/headshots/ChriCo_2024.jpg')])
+                        [('DAL', 'Miles Sanders', 'SandMi01', '6-7', '104', 'FB', '2002-10-01', "{'PHI': ['2024'], 'MIN': ['2018', '2019', '2020', '2021', '2022', '2023'], 'WAS': ['2012', '2013', '2014', '2015', '2016', '2017']}", 'PHI', '1', 'https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg'), 
+                         ('PHI', 'Jakobi Meyers', 'ChriCole00', '5-2', '495', 'WR', '1961-01-05', "{'DAL': ['2022'], 'MIN': ['2018', '2019', '2020', '2021', '2023', '2024'], 'WAS': ['2012', '2013', '2014', '2015', '2016', '2017']}", 'DAL', '99', 'https://www.pro-football-reference.com/req/20230307/images/headshots/ChriCo_2024.jpg')])
 
         # cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
         #                                         team_history, initial_team, fantasy_pos_rk, headshot_url) 
