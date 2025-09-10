@@ -113,12 +113,17 @@ layout: default
     
     /* === Body open/close === */
     .dropdown-table tbody {
-      display: none;
+      /*display: none;*/
+      overflow: hidden; 
+      max-height: 0;
+      display: block;
+      opacity: 0;
       transition: max-height 0.5s ease, opacity 0.5s ease;
     }
     
     .dropdown-table tbody.open {
-      display: table-row-group;
+      /*display: table-row-group;*/
+      opacity: 1;
     }
     
     /* === Logo Styling === */
