@@ -93,6 +93,7 @@ class Roster:
             try:
                 await self.scrape_player(session, player_id)
             finally:
+                await asyncio.sleep(DELAY_BETWEEN)
                 queue.task_done()
 
     async def scrape_player(self, session, player_id):

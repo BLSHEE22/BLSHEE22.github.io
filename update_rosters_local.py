@@ -59,14 +59,16 @@ class Roster:
         self._dbConn = dbConn
         self._coach = None
         self._players = []
-        player_ids = self._get_all_player_ids(year)
-        print(f"Player Ids: {player_ids}")
-        if player_ids:
-            # Run scraping in the context of this instance
-            asyncio.run(self.run_scraping(player_ids))
+        # player_ids = self._get_all_player_ids(year)
+        # print(f"Player Ids: {player_ids}")
+        # if player_ids:
+        #     # Run scraping in the context of this instance
+        #     asyncio.run(self.run_scraping(player_ids))
 
-        if self._players:
-            self._save_to_db()
+        # if self._players:
+        #     self._save_to_db()
+
+        self._save_to_db()
 
     async def run_scraping(self, player_ids):
         """Top-level async runner for fetching all players"""
@@ -93,6 +95,7 @@ class Roster:
             try:
                 await self.scrape_player(session, player_id)
             finally:
+                await asyncio.sleep(DELAY_BETWEEN)
                 queue.task_done()
 
     async def scrape_player(self, session, player_id):
@@ -159,6 +162,7 @@ class Roster:
             return (team_hist_dict, initial_team)
         
         # SCRAPE_PLAYER 
+        # sleep(3)
         print(f"Scraping {player_id} player page...")
         if not player_id:
             return 'no_player_page'
@@ -361,11 +365,17 @@ class Roster:
         # insert each player
         cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
                                                 team_history, initial_team, fantasy_pos_rk, headshot_url) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-                        [(player['team'], player['name'], player['player_id'], player['height'],
-                          player['weight'], player['position'], player['birth_date'], 
-                          str(player['team_history']), player['initial_team'], player['fantasy_pos_rk'],
-                          player['headshot_url']) for player in self._players])
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", 
+                        [('DAL', 'Miles Sanders', 'SandMi01', '6-7', '104', 'FB', '2002-10-01', "{{'PHI': ['2024'], 'MIN': ['2018', '2019', '2020', '2021', '2022', '2023'], 'WAS': ['2012', '2013', '2014', '2015', '2016', '2017']}}", 'PHI', '1', 'https://www.pro-football-reference.com/req/20230307/images/headshots/SandMi01_2025.jpg'), 
+                         ('PHI', 'Jakobi Meyers', 'ChriCole00', '5-2', '495', 'WR', '1961-01-05', "{{'DAL': ['2022'], 'MIN': ['2018', '2019', '2020', '2021', '2023', '2024'], 'WAS': ['2012', '2013', '2014', '2015', '2016', '2017']}}", 'DAL', '99', 'https://www.pro-football-reference.com/req/20230307/images/headshots/ChriCo_2024.jpg')])
+
+        # cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
+        #                                         team_history, initial_team, fantasy_pos_rk, headshot_url) 
+        #                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        #                 [(player['team'], player['name'], player['player_id'], player['height'],
+        #                   player['weight'], player['position'], player['birth_date'], 
+        #                   str(player['team_history']), player['initial_team'], player['fantasy_pos_rk'],
+        #                   player['headshot_url']) for player in self._players])
         # remove duplicate players
         cur.execute('''DELETE FROM players WHERE id NOT IN 
                         (SELECT MAX(id) FROM players GROUP BY player_id)''')
@@ -418,7 +428,7 @@ if __name__ == "__main__":
     # ssl_context.check_hostname = True
     # ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    for team in list(nflTeamTranslator.values())[0]:
+    for team in list(nflTeamTranslator.values())[:1]:
         print(f">>> Getting latest {team} roster...")
         try:
             roster = Roster(team, conn)
