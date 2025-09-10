@@ -114,6 +114,7 @@ layout: default
     /* === Body open/close === */
     .dropdown-table tbody {
       display: none;
+      transition: max-height 0.5s ease, opacity 0.5s ease;
     }
     
     .dropdown-table tbody.open {
@@ -169,13 +170,21 @@ layout: default
     }
 
     /* Trigger hover when mouse is anywhere over the TD cell */
-    td:hover .fade-wrapper img.hover {
+    td img:hover .fade-wrapper img.hover {
+      opacity: 1;
+    }
+
+    td img:hover .fade-wrapper img.normal {
+      opacity: 0;
+    }
+
+    /* td:hover .fade-wrapper img.hover {
       opacity: 1;
     }
 
     td:hover .fade-wrapper img.normal {
       opacity: 0;
-    }
+    } */
 
     /* Grayscale on hover */
     td:hover .fade-wrapper img {
