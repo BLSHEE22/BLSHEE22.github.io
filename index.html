@@ -4,11 +4,18 @@ layout: default
 <head>
   <link rel="icon" type="image/png" href="images/swords2.png">
   <style>
-    /* Data cell pulse animation */
-    @keyframes pulse {
-      0% { box-shadow: 0 0 5px gray; }
-      50% { box-shadow: 0 0 20px gray; }
-      100% { box-shadow: 0 0 5px gray; }
+    /* Data cell border pulse animation for PRIMARY grudge */
+    @keyframes primary-pulse {
+      0%   { box-shadow: 0 0 3px 2px rgba(255, 69, 0, 0.6); }   /* dark orange-red */
+      50%  { box-shadow: 0 0 6px 5px rgba(255, 0, 0, 0.9); }   /* bright hot red */
+      100% { box-shadow: 0 0 3px 2px rgba(255, 69, 0, 0.6); }
+    }
+
+    /* Data cell border pulse animation for SECONDARY grudge */
+    @keyframes secondary-pulse {
+      0%   { box-shadow: 0 0 2px 1px lightgray; }  
+      50%  { box-shadow: 0 0 4px 3px gray; }   
+      100% { box-shadow: 0 0 2px 1px lightgray; }
     }
 
     /* Site background */
@@ -142,24 +149,38 @@ layout: default
     }
 
     /* Data cell hover effect */
-    .dropdown-table td:hover {
-      color: black;
-      /*border: 2px solid gray;*/
+    /* .dropdown-table td.pulse-box:hover { */
+      /* color: black; */
       /* background:
                 radial-gradient(ellipse at top, lightgray, transparent),
                 radial-gradient(ellipse at bottom, beige, transparent); */
-      animation: pulse 5s infinite;
+      /* animation: pulse 5s infinite;
       transform: translateY(-1px);
-      cursor: pointer;
+      cursor: pointer; */
+    /* } */
+
+    .pulse-box-primary:hover {
+      color: black;
+      transform: translateY(-1px);
+      background:
+                radial-gradient(ellipse at top, lightgray, transparent),
+                radial-gradient(ellipse at bottom, beige, transparent);
+      animation: primary-pulse 3s infinite;
     }
 
-    td div:hover {
-      animation: pulse 5s infinite;
+    .pulse-box-secondary:hover {
+      color: black;
+      transform: translateY(-1px);
+      background:
+                radial-gradient(ellipse at top, lightgray, transparent),
+                radial-gradient(ellipse at bottom, beige, transparent);
+      animation: secondary-pulse 3s infinite;
     }
 
     /* Headshot image hover effect */
     .fade-wrapper {
       position: relative;
+      /*padding: 0.5em;*/
       display: inline-block;
       width: 74px;  
       height: 110px;

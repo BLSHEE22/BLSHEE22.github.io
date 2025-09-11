@@ -253,24 +253,42 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
       // Add away team data to left column
       const td1 = document.createElement('td');
       const pulseBox1 = document.createElement('div');
-      pulseBox1.className = "pulse-box";
       if (i < htmlCustomAwayGrudges.length) {
-        td1.innerHTML = htmlCustomAwayGrudges[i];
+        const htmlToAdd = htmlCustomAwayGrudges[i];
+        pulseBox1.innerHTML = htmlToAdd;
+        if (!htmlToAdd.includes('>None<')) {
+          if (htmlToAdd.includes('Primary Grudge')) {
+            pulseBox1.className = "pulse-box-primary";
+          } else {
+            pulseBox1.className = "pulse-box-secondary";
+          }
+        }
       } else {
-        td1.innerHTML = '';
+        pulseBox1.innerHTML = '';
       }
-      td1.style.fontSize = '12px'
-      //td1.append(pulseBox1);
+      td1.style.fontSize = '12px';
+      td1.appendChild(pulseBox1);
       dataRow.appendChild(td1);
 
       // Add home team data to right column
       const td2 = document.createElement('td');
+      const pulseBox2 = document.createElement('div')
+      td2.className = "pulse-box";
       if (i < htmlCustomHomeGrudges.length) {
-        td2.innerHTML = htmlCustomHomeGrudges[i];
+        const htmlToAdd = htmlCustomHomeGrudges[i];
+        pulseBox2.innerHTML = htmlToAdd;
+        if (!htmlToAdd.includes('>None<')) {
+          if (htmlToAdd.includes('Primary Grudge')) {
+            pulseBox2.className = "pulse-box-primary";
+          } else {
+            pulseBox2.className = "pulse-box-secondary";
+          }
+        }
       } else {
-        td2.innerHTML = '';
+        pulseBox2.innerHTML = '';
       }
-      td2.style.fontSize = '12px'
+      td2.style.fontSize = '12px';
+      td2.appendChild(pulseBox2);
       dataRow.appendChild(td2);
       
       // Append row to body
