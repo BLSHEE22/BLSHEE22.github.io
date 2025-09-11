@@ -158,8 +158,10 @@ layout: default
 
     /* Data cell hover effect */
     td:hover {
-      background-color: gold;
-      animation: primary-pulse 5s infinite;
+      background:
+                radial-gradient(ellipse at top, lightgray, transparent),
+                radial-gradient(ellipse at bottom, beige, transparent);
+      animation: secondary-pulse 5s infinite;
     }
 
     /* .dropdown-table td.pulse-box:hover { */
@@ -177,23 +179,21 @@ layout: default
     }
 
     /* Data cell hover effect */
-    .pulse-box-primary:hover {
+    /* .pulse-box-primary:hover {
       color: black;
-      /* transform: translateY(-1px); */
       background:
                 radial-gradient(ellipse at top, lightgray, transparent),
                 radial-gradient(ellipse at bottom, beige, transparent);
       animation: primary-pulse 3s infinite;
-    }
+    } */
 
-    .pulse-box-secondary:hover {
+    /* .pulse-box-secondary:hover {
       color: black;
-      /* transform: translateY(-1px); */
       background:
                 radial-gradient(ellipse at top, lightgray, transparent),
                 radial-gradient(ellipse at bottom, beige, transparent);
       animation: secondary-pulse 3s infinite;
-    }
+    }  */
 
     /* Headshot image hover effect */
     .fade-wrapper {
