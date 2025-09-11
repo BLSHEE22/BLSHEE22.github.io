@@ -258,10 +258,10 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
         pulseBox1.innerHTML = htmlToAdd;
         if (!htmlToAdd.includes('>None<')) {
           if (htmlToAdd.includes('Primary Grudge')) {
-            td1.className = "primary-cell";
+            // td1.className = "primary-cell";
             pulseBox1.className = "pulse-box-primary";
           } else {
-            td1.className = "secondary-cell"
+            // td1.className = "secondary-cell"
             pulseBox1.className = "pulse-box-secondary";
           }
         }
@@ -280,10 +280,10 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
         pulseBox2.innerHTML = htmlToAdd;
         if (!htmlToAdd.includes('>None<')) {
           if (htmlToAdd.includes('Primary Grudge')) {
-            td2.className = "primary-cell";
+            // td2.className = "primary-cell";
             pulseBox2.className = "pulse-box-primary";
           } else {
-            td2.className = "secondary-cell";
+            // td2.className = "secondary-cell";
             pulseBox2.className = "pulse-box-secondary";
           }
         }
