@@ -724,70 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
     catch (err) {
       alumniData.textContent = "Error: " + err.message;
     }
-
-    // make TEAM $ VALUE bar chart
-    //const ctx2 = document.getElementById('teamValueChart').getContext('2d');
-    // const teamValueChart = new Chart(ctx2, {
-    //   type: 'bar',
-    //   data: {
-    //       labels: ['DAL', 'RAM', 'NYG', 'NE', 'SFO', 'PHI', 'MIA', 'NYJ',
-    //                'RAI', 'WAS', 'CHI', 'HTX', 'ATL', 'SEA', 'DEN', 'KAN',
-    //                'PIT', 'GNB', 'TAM', 'MIN', 'LAC', 'TEN', 'CLE', 'RAV',
-    //                'DET', 'BUF', 'CAR', 'CLT', 'CRD', 'NOR', 'JAX', 'CIN'],
-    //       datasets: [{
-    //           label: '$ Billion',
-    //           data: [12.8, 10.43, 10.25, 8.76, 8.6, 8.43, 8.25, 8.11,
-    //                  7.9, 7.47, 7.45, 7.17, 7.05, 6.59, 6.55, 6.53,
-    //                  6.51, 6.48, 6.47, 6.28, 6.21, 6.2, 6.14, 6,
-    //                  5.88, 5.87, 5.76, 5.72, 5.66, 5.63, 5.57, 5.5],
-    //           backgroundColor: 'rgba(128, 239, 128, 0.6)',
-    //           borderColor: 'rgba(0, 100, 0, 1)',
-    //           borderWidth: 1
-    //       }]
-    //   },
-    //   options: {
-    //       responsive: true,
-    //       plugins: {
-    //           legend: {
-    //               display: false
-    //           },
-    //           tooltip: {
-    //               callbacks: {
-    //                   label: function(context) {
-    //                       return `${context.dataset.label}: ${context.parsed.y}`;
-    //                   }
-    //               }
-    //           }
-    //       },
-    //       scales: {
-    //           y: {
-    //               beginAtZero: true,
-    //               title: {
-    //                   display: true,
-    //                   text: 'USD Value (Billions)'
-    //               }
-    //           },
-    //           x: {
-    //               title: {
-    //                   display: true,
-    //                   text: 'Team'
-    //               }
-    //           }
-    //       }
-    //   }
-    // });
+    
   });
-
-  // add hover/click logic to each matchup table
-  // document.querySelectorAll('table').forEach(table => {
-  //   const thead = table.querySelector('thead');
-  //   const tbody = table.querySelector('tbody');
-  //   // open tables at start
-  //   tbody.classList.toggle("open");
-  //   thead.classList.toggle("open"); // flip caret
-  //   table.addEventListener('click', () => {
-  //     tbody.classList.toggle('open');
-  //   });
-  // });
-
+  
 });
