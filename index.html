@@ -6,9 +6,9 @@ layout: default
   <style>
     /* Data cell border pulse animation for PRIMARY grudge */
     @keyframes primary-pulse {
-      0%   { box-shadow: 0 0 5px 2px black; }   /* dark orange-red */
-      50%  { box-shadow: 0 0 10px 6px black; }   /* bright hot red */
-      100% { box-shadow: 0 0 5px 2px black; }
+      0%   { box-shadow: 0 0 5px 2px gold; } 
+      50%  { box-shadow: 0 0 10px 6px gold; }   
+      100% { box-shadow: 0 0 5px 2px goldenrod; }
     }
 
     /* Data cell border pulse animation for SECONDARY grudge */
@@ -86,7 +86,7 @@ layout: default
     }
 
     .dropdown-table td {
-      padding: 0;
+      padding: 0 !important;
       margin: 0;
       text-align: center;
       box-sizing: border-box;
@@ -157,6 +157,11 @@ layout: default
     }
 
     /* Data cell hover effect */
+    td:hover {
+      background-color: gold;
+      animation: primary-pulse 5s infinite;
+    }
+
     /* .dropdown-table td.pulse-box:hover { */
       /* color: black; */
       /* background:
@@ -168,7 +173,7 @@ layout: default
     /* } */
 
     .pulse-box-primary, .pulse-box-secondary {
-      padding: 5px;
+      padding: 5px !important;
     }
 
     /* Data cell hover effect */
