@@ -147,7 +147,7 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
       }
       html += `<strong style="font-size: 18px;">${name}</strong><br/>`;
       // html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
-      html += `${position}<br/>`
+      html += `${position}<br/>`;
       html += `${grudgeType}<br/>`;
       html += `Seasons with ${opposingTeam}: ${seasons}<br/>`;
       html += `Fantasy Position Rank: ${positionRk}<br/><br/>`;
