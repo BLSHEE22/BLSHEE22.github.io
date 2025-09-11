@@ -145,9 +145,9 @@ layout: default
     .dropdown-table td:hover {
       color: black;
       /*border: 2px solid gray;*/
-      background:
+      /* background:
                 radial-gradient(ellipse at top, lightgray, transparent),
-                radial-gradient(ellipse at bottom, beige, transparent);
+                radial-gradient(ellipse at bottom, beige, transparent); */
       animation: pulse 5s infinite;
       transform: translateY(-1px);
       cursor: pointer;
@@ -173,7 +173,7 @@ layout: default
       height: 100%;
       object-fit: cover;
       transition: opacity .1s ease, filter .1s ease;
-      filter: grayscale(15%);
+      filter: grayscale(0%);
     }
 
     .fade-wrapper img.hover {
@@ -186,7 +186,7 @@ layout: default
 
     .fade-wrapper:hover img.hover {
       opacity: 1;
-      filter: grayscale(40%);
+      filter: grayscale(50%);
     }
 
     /* Hide sections until refactor is completed */
