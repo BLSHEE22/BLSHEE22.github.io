@@ -142,7 +142,7 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
                     data-normal="${headshotUrl}_${headshotYear}.jpg",
                     width="74",
                     height="110",
-                    alt=" ">
+                    alt="">
                  <br>`;
       }
       html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
@@ -224,8 +224,8 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
     // Create header row and add to thead
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    [`<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[aTeam]['logo']}.png", width="50", height="50", alt=" ">`,
-     `<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[hTeam]['logo']}.png", width="50", height="50", alt=" ">`].forEach(html => {
+    [`<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[aTeam]['logo']}.png", width="50", height="50", alt="">`,
+     `<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[hTeam]['logo']}.png", width="50", height="50", alt="">`].forEach(html => {
         const th = document.createElement('th');
         th.innerHTML = html;
         headerRow.appendChild(th);
@@ -258,8 +258,10 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
         pulseBox1.innerHTML = htmlToAdd;
         if (!htmlToAdd.includes('>None<')) {
           if (htmlToAdd.includes('Primary Grudge')) {
+            td1.className = "primary-cell";
             pulseBox1.className = "pulse-box-primary";
           } else {
+            td1.className = "secondary-cell"
             pulseBox1.className = "pulse-box-secondary";
           }
         }
@@ -279,8 +281,10 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
         pulseBox2.innerHTML = htmlToAdd;
         if (!htmlToAdd.includes('>None<')) {
           if (htmlToAdd.includes('Primary Grudge')) {
+            td2.className = "primary-cell";
             pulseBox2.className = "pulse-box-primary";
           } else {
+            td2.className = "secondary-cell";
             pulseBox2.className = "pulse-box-secondary";
           }
         }

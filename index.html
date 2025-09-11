@@ -3,6 +3,7 @@ layout: default
 ---
 <head>
   <link rel="icon" type="image/png" href="images/swords2.png">
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
   <style>
     /* Data cell border pulse animation for PRIMARY grudge */
     @keyframes primary-pulse {
@@ -93,6 +94,7 @@ layout: default
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      transition: font-family 0.3s ease, color 0.3s ease;
     }
     
     /* === Caret Styling === */
@@ -157,7 +159,17 @@ layout: default
     }
 
     /* Data cell hover effect */
-    td:hover {
+    .primary-cell:hover {
+      font-family: 'Creepster', cursive; /* scary font */
+      color: darkred;  
+      background:
+                radial-gradient(ellipse at top, lightgray, transparent),
+                radial-gradient(ellipse at bottom, beige, transparent);
+      animation: primary-pulse 5s infinite;
+    }
+
+    .secondary-cell:hover {
+      color: black;
       background:
                 radial-gradient(ellipse at top, lightgray, transparent),
                 radial-gradient(ellipse at bottom, beige, transparent);
