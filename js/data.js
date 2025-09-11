@@ -197,82 +197,82 @@ export const weekSlateInfo = [{'number': 0,
                                             'awayTeam': 'WAS',
                                             'homeTeam': 'GNB'
                                         }],
-                                        'Friday, September 5th': [{
-                                            'time': '8:00 PM',
-                                            'awayTeam': 'KAN',
-                                            'homeTeam': 'LAC'
-                                        }],
-                                        'Sunday, September 7th': [{
+                                        'Sunday, September 14th': [{
                                                 'time': '1:00 PM',
-                                                'awayTeam': 'TAM',
-                                                'homeTeam': 'ATL'
+                                                'awayTeam': 'CLE',
+                                                'homeTeam': 'RAV'
                                             },
                                             {
                                                 'time': '1:00 PM',
-                                                'awayTeam': 'CIN',
-                                                'homeTeam': 'CLE'
-                                            },
-                                            {
-                                                'time': '1:00 PM',
-                                                'awayTeam': 'MIA',
-                                                'homeTeam': 'CLT'
-                                            },
-                                            {
-                                                'time': '1:00 PM',
-                                                'awayTeam': 'CRD',
-                                                'homeTeam': 'NOR'
-                                            },
-                                            {
-                                                'time': '1:00 PM',
-                                                'awayTeam': 'CAR',
-                                                'homeTeam': 'JAX'
-                                            },
-                                            {
-                                                'time': '1:00 PM',
-                                                'awayTeam': 'RAI',
-                                                'homeTeam': 'NE'
-                                            },
-                                            {
-                                                'time': '1:00 PM',
-                                                'awayTeam': 'PIT',
-                                                'homeTeam': 'NYJ'
+                                                'awayTeam': 'JAX',
+                                                'homeTeam': 'CIN'
                                             },
                                             {
                                                 'time': '1:00 PM',
                                                 'awayTeam': 'NYG',
-                                                'homeTeam': 'WAS'
+                                                'homeTeam': 'DAL'
                                             },
                                             {
-                                                'time': '4:05 PM',
-                                                'awayTeam': 'TEN',
-                                                'homeTeam': 'DEN'
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'CHI',
+                                                'homeTeam': 'DET'
                                             },
                                             {
-                                                'time': '4:05 PM',
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'NE',
+                                                'homeTeam': 'MIA'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
                                                 'awayTeam': 'SFO',
-                                                'homeTeam': 'SEA'
+                                                'homeTeam': 'NOR'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'BUF',
+                                                'homeTeam': 'NYJ'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'SEA',
+                                                'homeTeam': 'PIT'
+                                            },
+                                            {
+                                                'time': '1:00 PM',
+                                                'awayTeam': 'RAM',
+                                                'homeTeam': 'TEN'
+                                            },
+                                            {
+                                                'time': '4:05 PM',
+                                                'awayTeam': 'CAR',
+                                                'homeTeam': 'CRD'
+                                            },
+                                            {
+                                                'time': '4:05 PM',
+                                                'awayTeam': 'DEN',
+                                                'homeTeam': 'CLT'
                                             },
                                             {
                                                 'time': '4:25 PM',
-                                                'awayTeam': 'DET',
-                                                'homeTeam': 'GNB'
-                                            },
-                                            {
-                                                'time': '4:25 PM',
-                                                'awayTeam': 'HTX',
-                                                'homeTeam': 'RAM'
+                                                'awayTeam': 'PHI',
+                                                'homeTeam': 'KAN'
                                             },
                                             {
                                                 'time': '8:20 PM',
-                                                'awayTeam': 'RAV',
-                                                'homeTeam': 'BUF'
+                                                'awayTeam': 'ATL',
+                                                'homeTeam': 'MIN'
                                             }
 
                                         ],
-                                        'Monday, September 8th': [{
-                                                'time': '8:15 PM',
-                                                'awayTeam': 'MIN',
-                                                'homeTeam': 'CHI'
+                                        'Monday, September 15th': [{
+                                                'time': '7:00 PM',
+                                                'awayTeam': 'TAM',
+                                                'homeTeam': 'HTX'
+                                            },
+                                            {
+                                                'time': '10:00 PM',
+                                                'awayTeam': 'LAC',
+                                                'homeTeam': 'RAI'
                                             }]
                                     }}, 
                                {'number': 3,

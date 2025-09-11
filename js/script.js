@@ -275,7 +275,6 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
       // Add home team data to right column
       const td2 = document.createElement('td');
       const pulseBox2 = document.createElement('div')
-      td2.className = "pulse-box";
       if (i < htmlCustomHomeGrudges.length) {
         const htmlToAdd = htmlCustomHomeGrudges[i];
         pulseBox2.innerHTML = htmlToAdd;
@@ -427,6 +426,9 @@ function updateWeekSlate() {
   document.querySelectorAll('table').forEach(table => {
     const thead = table.querySelector('thead');
     const tbody = table.querySelector('tbody');
+    // START WITH TABLES OPEN
+    tbody.classList.toggle("open");
+    thead.classList.toggle("open");
     thead.addEventListener('click', () => {
       tbody.classList.toggle("open");
       thead.classList.toggle("open"); // flip caret
@@ -487,8 +489,6 @@ for (let week of weekSlateInfo) {
   }
   console.log("---");
 }
-
-weekNum = 1;
 
 // Collect all matchups in week
 const matchupsInWeek = weekSlateInfo[weekNum]['matchups'];
@@ -774,11 +774,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // add hover/click logic to each matchup table
-  document.querySelectorAll('table').forEach(table => {
-    table.addEventListener('click', () => {
-      const tbody = table.querySelector('tbody');
-      tbody.classList.toggle('open');
-    });
-  });
+  // document.querySelectorAll('table').forEach(table => {
+  //   const thead = table.querySelector('thead');
+  //   const tbody = table.querySelector('tbody');
+  //   // open tables at start
+  //   tbody.classList.toggle("open");
+  //   thead.classList.toggle("open"); // flip caret
+  //   table.addEventListener('click', () => {
+  //     tbody.classList.toggle('open');
+  //   });
+  // });
 
 });
