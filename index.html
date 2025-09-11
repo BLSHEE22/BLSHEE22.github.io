@@ -108,23 +108,22 @@ layout: default
       top: 50%;
       width: 8px;
       height: 8px;
-      border-right: 2px solid #666;
-      border-bottom: 2px solid #666;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
       transform: translate(-50%, -50%) rotate(45deg); /* points down */
       transition: transform 0.2s ease, border-color 0.2s ease;
       pointer-events: none;
     }
 
     /* NEW style for mouse-over theader*/
-    .dropdown-table thead:hover {
+    /* .dropdown-table thead:hover {
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       transform: translateY(-1px);
-
-    }
+    } */
     
-    .dropdown-table thead.open .caret {
-      transform: translate(-50%, -50%) rotate(-135deg); /* flip vertically */
-    }
+    /* .dropdown-table thead.open .caret {
+      transform: translate(-50%, -50%) rotate(-135deg); /* flip vertically
+    } */
     
     /* === Body open/close === */
     .dropdown-table tbody {
@@ -156,22 +155,30 @@ layout: default
       border-left: 0; /* remove left border of second TH */
     }
 
+    .primary-cell {
+      color: black;
+    }
+
+    .secondary-cell {
+      color: black;
+    }
+
     /* Data cell hover effect */
-    .primary-cell:hover {
+    /* .primary-cell:hover {
       color: black;
       background:
                 radial-gradient(ellipse at top, lightgray, transparent),
                 radial-gradient(ellipse at bottom, beige, transparent);
       animation: primary-pulse 5s infinite;
-    }
+    } */
 
-    .secondary-cell:hover {
+    /* .secondary-cell:hover {
       color: black;
       background:
                 radial-gradient(ellipse at top, lightgray, transparent),
                 radial-gradient(ellipse at bottom, beige, transparent);
       animation: secondary-pulse 5s infinite;
-    }
+    } */
 
     /* .dropdown-table td.pulse-box:hover { */
       /* color: black; */

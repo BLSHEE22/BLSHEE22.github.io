@@ -313,6 +313,9 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
     responseArea.querySelectorAll('table').forEach(table => {
       const thead = table.querySelector('thead');
       const tbody = table.querySelector('tbody');
+      // START OPEN
+      tbody.classList.toggle("open");
+      thead.classList.toggle("open"); // flip caret
       thead.addEventListener('click', () => {
         tbody.classList.toggle("open");
         thead.classList.toggle("open"); // flip caret
