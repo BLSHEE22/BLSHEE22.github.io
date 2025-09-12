@@ -1,3 +1,5 @@
+import {teams, weekLengthInfo} from './data.js';
+
 let db = null;
 
 // Initialize SQL.js
@@ -41,9 +43,6 @@ document.getElementById('run').addEventListener('click', () => {
   }
 });
 
-// import legacy data
-import {teams, weekSlateInfo} from './data.js';
-
 // set default week to 1
 let weekNum = 1;
 
@@ -53,11 +52,11 @@ let totalGrudges = 0;
 // current date/time
 const now = new Date();
 
-// translate certain teams from their irl id to database id
-const team_name_map = {'LAC': 'SDG', 'TEN': 'OTI', 'NE':  'NWE'};
+// translate modern team id to database id
+const team_name_map = {'LAC': 'SDG', 'TEN': 'OTI', 'NE': 'NWE'};
 
-// translate certain teams from the db_id to common sense id
-const team_db_name_to_irl_name = {'SDG': 'LAC', 'OTI': 'TEN', 'NWE':  'NE'};
+// translate database id to modern team id
+const team_db_name_to_irl_name = {'SDG': 'LAC', 'OTI': 'TEN', 'NWE': 'NE'};
 
 // define position order for use in tables
 const position_order = {"QB": 0, // fantasy
@@ -85,7 +84,6 @@ const position_order = {"QB": 0, // fantasy
                         "P": 22,
                         "Unknown": 1000}
 
-
 /**
  * Upate matchup table content.
  *
@@ -94,8 +92,7 @@ const position_order = {"QB": 0, // fantasy
  * @param {Object} responseArea - HTML element where table will be placed
  * @void
  */
-function updateResponse(aTeam, hTeam, responseArea, custom=false) {
-
+function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
 
   /**
    * Format query information into HTML code to be displayed in a table.
@@ -110,6 +107,7 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
     const columnNames = result['columns'];
     const players = result['values'];
     const sortedPlayers = players.sort((a, b) => position_order[a[2].trim()] - position_order[b[2].trim()]);
+    console.log(`Sorted list of grudged players on ${currTeam}:`)
     console.log(sortedPlayers);
     for (let player of sortedPlayers) {
       let html = "";
@@ -128,7 +126,6 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
       if (seasons.length > 1) {
         seasons = seasons.join(", ");
       }
-      console.log(seasons)
       // if player has no fantasy position rank, mark as 'N/A'
       let positionRk = player[columnNames.indexOf('fantasy_pos_rk')];
       if (positionRk == null) {
@@ -157,9 +154,9 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
         totalGrudges++;
       } 
     }
+    console.log("Added players to table.")
     return htmlList;
   }
-
 
   /**
    * Find all players on 'currTeam' who have previously played for 'opposingTeam'.
@@ -209,20 +206,17 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
     responseArea.innerHTML = ``;
   }
 
-  // Deprecate as part of refactor
-  //const aTeam = awayTeamSelect.value;
-  //const hTeam = homeTeamSelect.value;
-
   // Update content if both options selected AND selected teams are different
   if ((aTeam && hTeam) && (aTeam != hTeam)) {
     // Create table
+    console.log(`Creating table for ${aTeam} @ ${hTeam}...`);
     const customTable = document.createElement('table');
     customTable.className = "dropdown-table";
     customTable.innerHTML += `<colgroup>
                                 <col>
                                 <col>
                               </colgroup>`;
-
+    
     // Create header row and add to thead
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
@@ -240,15 +234,15 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
     customTable.appendChild(thead);
 
     // Look for player grudges on each side
-    console.log(aTeam);
-    console.log(hTeam);
+    console.log(`Away Team: ${aTeam}`);
+    console.log(`Home Team: ${hTeam}`);
     let htmlCustomAwayGrudges = getGrudges(aTeam, hTeam, custom);
     let htmlCustomHomeGrudges = getGrudges(hTeam, aTeam, custom);
   
     // Create body row(s)
     const tbody = document.createElement('tbody');
-    console.log(htmlCustomAwayGrudges.length);
-    console.log(htmlCustomHomeGrudges.length);
+    console.log(`Away rows: ${htmlCustomAwayGrudges.length}`);
+    console.log(`Home rows: ${htmlCustomHomeGrudges.length}`);
     for (let i = 0; i < Math.max(htmlCustomAwayGrudges.length, htmlCustomHomeGrudges.length); i++) {
       const dataRow = document.createElement('tr');
 
@@ -305,6 +299,7 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
 
     // Add table to response area
     responseArea.appendChild(customTable);
+    console.log(`Added table to document.`)
 
   } else {
     responseArea.innerHTML = "Please select two different teams.";
@@ -364,10 +359,15 @@ function updateResponse(aTeam, hTeam, responseArea, custom=false) {
 } 
 
 /**
- * TODO: Refactor into function/s!
- * - Table creation/injection for current week's matchup slate
+ * Create table per matchup in slate.
+ *
+ * @param {JSON} weekSlate - all matchups in week keyed by date
+ * @void
  */
-function updateWeekSlate() {
+function createWeekSlateTables(weekSlate) {
+  console.log(`Games in week ${weekNum}:`);
+  console.log(weekSlate);
+  const days = Object.keys(weekSlate);
   for (let day of days) {
       // create day element
       const dayAbbr = day.slice(0, 3);
@@ -378,11 +378,12 @@ function updateWeekSlate() {
       dayHeader.innerHTML = `<h3><center>${day}`;
       dayElement.appendChild(dayHeader);
 
-      const matchups = matchupsInWeek[day];
+      const matchups = weekSlate[day];
       console.log("---");
-      console.log(day)
+      console.log("Day:");
+      console.log(day);
+      console.log("Matchups:");
       console.log(matchups);
-      console.log('---');
 
       if (matchups.length === 0) {
         const noGamesHeader = document.createElement('p');
@@ -408,7 +409,7 @@ function updateWeekSlate() {
           dayElement.appendChild(matchupHeader);
 
           // Create table and add to element
-          updateResponse(awayTeam, homeTeam, dayElement); 
+          updateMatchupTable(awayTeam, homeTeam, dayElement); 
 
           // Add spacing after table
           let postTableBr = document.createElement('br');
@@ -477,29 +478,28 @@ function updateWeekSlate() {
   });
 }
 
+
 // Get current week
 console.log('Getting current week...')
-for (let week of weekSlateInfo) {
-  let weekI = week['number'];
-  let weekStart = new Date(week['start']);
-  let weekEnd = new Date(week['end']);
+for (let weekI in weekLengthInfo) {
+  let weekStart = new Date(weekLengthInfo[weekI]['start']);
+  let weekEnd = new Date(weekLengthInfo[weekI]['end']);
   console.log(`Trying week ${weekI}....`);
   console.log(`Start: ${weekStart}`);
   console.log(`End: ${weekEnd}`);
   console.log(`Current Date: ${now}`);
   if (now >= weekStart && now <= weekEnd) {
-    weekNum = week['number'];
+    weekNum = weekI;
     console.log(`The week number is ${weekNum}.`);
     break;
   }
   console.log("---");
 }
 
-// Collect all matchups in week
-const matchupsInWeek = weekSlateInfo[weekNum]['matchups'];
-const days = Object.keys(matchupsInWeek);
+// DEBUG
+//weekNum = 1;
 
-// Create element to contain all matchups for the current week
+// Create element to contain all matchup tables
 const weekElement = document.getElementById('weekSlate');
 
 // Add week slate header
@@ -512,16 +512,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // Wait for DB to load
   document.addEventListener("db-ready", () => {
 
-    // start creating tables per matchup in week slate
-    updateWeekSlate();
+    // Get current week's matchup slate from database
+    const weekSlate = db.exec(`SELECT matchups FROM schedule WHERE week == '${weekNum}';`);
+    const jsonWeekSlate = JSON.parse(weekSlate[0].values[0]);
+
+    // start creating tables per matchup
+    createWeekSlateTables(jsonWeekSlate);
 
     // Log total number of player grudge matches
     console.log(`Total number of player grudge matches in week ${weekNum}: ${totalGrudges}`);
 
     // Create intro block with total number of player grudge matches now counted
     let weekObj = document.getElementById('what-week-is-it');
-    let weekObjHeader = document.getElementById('weekSlateHeader');
 
+    // if season has started, print the count of grudge matches in current week, else create countdown clock
     if (weekNum > 0) {
         weekObj.innerHTML = `
           <p>Yes, there are <strong>${totalGrudges}</strong> grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>.</p>`;
@@ -603,12 +607,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen to both team select dropdowns and update resulting table upon change
     awayTeamSelect.addEventListener('change', () => {
-      updateResponse(awayTeamSelect.value, homeTeamSelect.value, resultingTable, true);
+      updateMatchupTable(awayTeamSelect.value, homeTeamSelect.value, resultingTable, true);
     });
     homeTeamSelect.addEventListener('change', () => {
-      updateResponse(awayTeamSelect.value, homeTeamSelect.value, resultingTable, true);
+      updateMatchupTable(awayTeamSelect.value, homeTeamSelect.value, resultingTable, true);
     });
 
+    // create bar graph displaying the most grudged-against teams from highest to lowest count
     const alumniData = document.getElementById("teamAlumniData");
     const alumniQuery = `SELECT 
                           t.team AS Team,
