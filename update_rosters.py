@@ -106,7 +106,7 @@ class Roster:
             try:
                 await self.scrape_player(session, player_id)
             finally:
-                await asyncio.sleep(DELAY_BETWEEN)
+                await asyncio.sleep(DELAY_BETWEEN*2)
                 queue.task_done()
 
     async def scrape_player(self, session, player_id):
@@ -429,7 +429,7 @@ if __name__ == "__main__":
     ssl_context.check_hostname = True
     ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    for team in nflDivisions[division]:
+    for team in ['DET']:#nflDivisions[division]:
         print(f">>> Getting latest {team} roster...")
         try:
             roster = Roster(team, conn)
