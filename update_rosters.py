@@ -75,8 +75,8 @@ class Roster:
             # Run scraping in the context of this instance
             asyncio.run(self.run_scraping(player_ids))
 
-        #if self._players:
-            #self._save_to_db()
+        if self._players:
+            self._save_to_db()
 
         # DEBUGGING
         # self._save_to_db()
