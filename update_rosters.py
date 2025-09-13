@@ -2,6 +2,7 @@ import os
 import re
 import ssl
 import sys
+import random
 import asyncio
 import sqlite3
 import utils
@@ -106,7 +107,7 @@ class Roster:
             try:
                 await self.scrape_player(session, player_id)
             finally:
-                await asyncio.sleep(DELAY_BETWEEN*2)
+                await asyncio.sleep(random.randrange(DELAY_BETWEEN*2, DELAY_BETWEEN*3))
                 queue.task_done()
 
     async def scrape_player(self, session, player_id):
