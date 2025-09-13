@@ -244,10 +244,16 @@ class Roster:
                 player_info['initial_team'] = initial_team
                 # fantasy_pos_rk
                 value = None
-                fantasy_element = 'td[data-stat="fantasy_rank_pos"]'
+                fantasy_element = 'div[class="p1"] p'
                 fantasy_pos_rk_field = [item.text() for item in soup(fantasy_element).items()]
                 if fantasy_pos_rk_field:
-                    value = fantasy_pos_rk_field[-2]
+                    if "-" in fantasy_pos_rk_field:
+                        startI = fantasy_pos_rk_field.index("-")
+                        value = fantasy_pos_rk_field[startI+1]
+                    elif len(fantasy_pos_rk_field) > 1:
+                        value = fantasy_pos_rk_field[1]
+                if value == '':
+                    value = None
                 player_info['fantasy_pos_rk'] = value
                 # headshot_url
                 value = None
@@ -295,6 +301,7 @@ class Roster:
         if not player_ids:
             player_ids = PLAYER_IDS
         return player_ids
+        #return ['JeudJe00']
     
 
     def _create_url(self, year):
@@ -445,11 +452,12 @@ if __name__ == "__main__":
     # ssl_context.check_hostname = True
     # ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    teams_to_fetch = nflDivisions[division]
+    teams_to_fetch = ['MIA'] #nflDivisions[division]
     for team in teams_to_fetch:
         print(f">>> Getting latest {team} roster...")
         try:
             roster = Roster(team, conn)
+            print
             print(f">>>Successfully updated {team} roster!")
             sleep(10)
         except Exception as e:

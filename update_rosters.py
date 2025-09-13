@@ -75,8 +75,8 @@ class Roster:
             # Run scraping in the context of this instance
             asyncio.run(self.run_scraping(player_ids))
 
-        if self._players:
-            self._save_to_db()
+        #if self._players:
+            #self._save_to_db()
 
         # DEBUGGING
         # self._save_to_db()
@@ -242,10 +242,16 @@ class Roster:
                 player_info['initial_team'] = initial_team
                 # fantasy_pos_rk
                 value = None
-                fantasy_element = 'td[data-stat="fantasy_rank_pos"]'
+                fantasy_element = 'div[class="p1"] p'
                 fantasy_pos_rk_field = [item.text() for item in soup(fantasy_element).items()]
                 if fantasy_pos_rk_field:
-                    value = fantasy_pos_rk_field[-2]
+                    if "-" in fantasy_pos_rk_field:
+                        startI = fantasy_pos_rk_field.index("-")
+                        value = fantasy_pos_rk_field[startI+1]
+                    elif len(fantasy_pos_rk_field) > 1:
+                        value = fantasy_pos_rk_field[1]
+                if value == '':
+                    value = None
                 player_info['fantasy_pos_rk'] = value
                 # headshot_url
                 value = None

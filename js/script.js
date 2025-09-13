@@ -106,6 +106,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
     let htmlList = [];
     const columnNames = result['columns'];
     const players = result['values'];
+    // sort by career av instead of position!
     const sortedPlayers = players.sort((a, b) => position_order[a[2].trim()] - position_order[b[2].trim()]);
     console.log(`Sorted list of grudged players on ${currTeam}:`)
     console.log(sortedPlayers);
@@ -119,7 +120,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
       // if opposing team is player's original team, mark the grudge primary
       let grudgeType = 'Secondary Grudge';
       if (player[columnNames.indexOf('initial_team')] == opposingTeam) {
-          grudgeType = 'Primary Grudge';
+          grudgeType = '<span>Primary Grudge 🔥</span>';
       }
       // store only relevant player team history
       let seasons = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'))[opposingTeam];
@@ -128,6 +129,17 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
       }
       // if player has no fantasy position rank, mark as 'N/A'
       let positionRk = player[columnNames.indexOf('fantasy_pos_rk')];
+      if (positionRk >= 50) {
+        if (positionRk >= 75) {
+          if (positionRk >= 100) {
+            positionRk += " 🏆"
+          } else {
+            positionRk += " 🌟"
+          } 
+        } else {
+          positionRk += " ⭐"
+        }
+      }
       if (positionRk == null) {
         positionRk = 'N/A';
       }
@@ -147,7 +159,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
       html += `${position}<br/>`;
       html += `${grudgeType}<br/>`;
       html += `Seasons with ${opposingTeam}: ${seasons}<br/>`;
-      html += `Fantasy Position Rank: ${positionRk}<br/><br/>`;
+      html += `Career AV: ${positionRk}<br/><br/>`;
       htmlList.push(html);
       console.log(`Converted ${name} player information to HTML.`);
       if (!custom) {
