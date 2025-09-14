@@ -49,6 +49,9 @@ let weekNum = 1;
 // total count of grudge matches
 let totalGrudges = 0;
 
+// list of all notable (career AV >= 30) grudge matches in current week
+let notableGrudges = [];
+
 // current date/time
 const now = new Date();
 
@@ -107,7 +110,8 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
     const columnNames = result['columns'];
     const players = result['values'];
     // sort by career av instead of position!
-    const sortedPlayers = players.sort((a, b) => position_order[a[2].trim()] - position_order[b[2].trim()]);
+    //const sortedPlayers = players.sort((a, b) => position_order[a[2].trim()] - position_order[b[2].trim()]);
+    const sortedPlayers = players.sort((a, b) => b[6] - a[6]);
     console.log(`Sorted list of grudged players on ${currTeam}:`)
     console.log(sortedPlayers);
     for (let player of sortedPlayers) {
@@ -127,19 +131,25 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
       if (seasons.length > 1) {
         seasons = seasons.join(", ");
       }
-      // if player has no fantasy position rank, mark as 'N/A'
+      // add emojis based on player career AV
+      let playerCareerValue = "";
       let positionRk = player[columnNames.indexOf('fantasy_pos_rk')];
-      if (positionRk >= 50) {
-        if (positionRk >= 75) {
-          if (positionRk >= 100) {
-            positionRk += " 🏆"
+      if (positionRk >= 30) {
+        if (positionRk >= 50) {
+          if (positionRk >= 75) {
+            if (positionRk >= 100) {
+              playerCareerValue = " ⭐⭐⭐⭐";
+            } else {
+              playerCareerValue = " ⭐⭐⭐";
+            } 
           } else {
-            positionRk += " 🌟"
-          } 
+            playerCareerValue = " ⭐⭐";
+          }
         } else {
-          positionRk += " ⭐"
+          playerCareerValue = " ⭐";
         }
       }
+      // if player has no fantasy position rank, mark as 'N/A'
       if (positionRk == null) {
         positionRk = 'N/A';
       }
@@ -155,14 +165,30 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
                  <br>`;
       }
       html += `<strong style="font-size: 18px;">${name}</strong><br/>`;
-      // html += `<strong style="font-size: 18px;">${name} (${position}, ${currTeam})</strong><br/>`;
       html += `${position}<br/>`;
       html += `${grudgeType}<br/>`;
-      html += `Seasons with ${opposingTeam}: ${seasons}<br/>`;
-      html += `Career AV: ${positionRk}<br/><br/>`;
+      console.log(`Opposing Team: ${opposingTeam}`);
+      let currTeamTranslated = currTeam;
+      if (['SDG', 'OTI', 'NWE'].includes(currTeam)) {
+        currTeamTranslated = team_db_name_to_irl_name[currTeam];
+      }
+      let opposingTeamTranslated = opposingTeam;
+      if (['SDG', 'OTI', 'NWE'].includes(opposingTeam)) {
+        opposingTeamTranslated = team_db_name_to_irl_name[opposingTeam];
+      }
+      html += `Seasons with ${opposingTeamTranslated}: ${seasons}<br/>`;
+      html += `Career AV: ${positionRk}${playerCareerValue}<br/><br/>`;
       htmlList.push(html);
       console.log(`Converted ${name} player information to HTML.`);
       if (!custom) {
+        if (positionRk != 'N/A') {
+          let numericPositionRk = parseInt(positionRk, 10);
+          // if player career AV >= 30, add to notable grudges
+          if (numericPositionRk >= 30) {
+            const notableGrudgeObj = [[name, playerCareerValue, position, currTeamTranslated, opposingTeamTranslated], numericPositionRk]
+            notableGrudges.push(notableGrudgeObj);
+          }
+        }
         totalGrudges++;
       } 
     }
@@ -540,11 +566,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // if season has started, print the count of grudge matches in current week, else create countdown clock
     if (weekNum > 0) {
         weekObj.innerHTML = `
-          <p>There are ${totalGrudges} grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>, most notably:</p>
-          <ul><li><strong>Joe Flacco</strong> (primary) against the Baltimore Ravens</li>
-          <li><strong>Khalil Mack</strong> (primary) against the Las Vegas Raiders</li>
-          <li><strong>Kirk Cousins</strong> (secondary) against the Minnesota Vikings</li>
-          <li><strong>Matthew Judon</strong> (secondary) against the New England Patriots</li>`;
+          <p>There are ${totalGrudges} grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>, most notably:</p><ul>`;
+          notableGrudges = notableGrudges.sort((a, b) => b[1] - a[1]);
+          // maximum of 10 notable players
+          if (notableGrudges.length > 10) {
+            notableGrudges = notableGrudges.slice(0, 10);
+          }
+          for (let grudgeObj of notableGrudges) {
+            // unpack content
+            const grudgeContent = grudgeObj[0];
+            const name = grudgeContent[0];
+            const playerCareerValue = grudgeContent[1];
+            const position = grudgeContent[2];
+            let currTeam = grudgeContent[3];
+            let opposingTeam = grudgeContent[4];
+            // add html to document
+            weekObj.innerHTML += `<li><strong>${name}${playerCareerValue}</strong> (${position}, ${currTeam}) against the ${teams[opposingTeam]['name']}</li><br>`;
+          }
+          weekObj.innerHTML += '</ul>'
     }
     else {
         weekObj.innerHTML = `No, the regular season has not started yet.<br><br>
