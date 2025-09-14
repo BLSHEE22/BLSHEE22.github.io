@@ -1,8 +1,8 @@
 name: Update NFC West
 
 on:
-  schedule:
-   - cron: "0 10 * * 3,6"   # Wed and Sat at 10 AM UTC
+  #schedule:
+   #- cron: "0 10 * * 3,6"   # Wed and Sat at 10 AM UTC
   workflow_dispatch:        # manual run option
 
 jobs:
