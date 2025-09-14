@@ -456,7 +456,7 @@ if __name__ == "__main__":
     ssl_context.check_hostname = True
     ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    for team in ['BUF']:#nflDivisions[division]:
+    for team in ['ATL']:#nflDivisions[division]:
         print(f">>> Getting latest {team} roster...")
         try:
             roster = Roster(team, conn)
