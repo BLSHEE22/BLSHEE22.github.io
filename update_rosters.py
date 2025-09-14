@@ -2,12 +2,14 @@ import os
 import re
 import ssl
 import sys
+import ast
 import random
 import asyncio
 import sqlite3
 import utils
 import aiohttp
 import requests
+from time import sleep
 from pyquery import PyQuery as pq
 from urllib.error import HTTPError
 
@@ -23,7 +25,7 @@ PLAYER_IDS = ['MayeDr00']
 
 # constants for web scraping
 WORKER_COUNT = 1          # how many workers run at once
-DELAY_BETWEEN = 3         # seconds between requests (per worker)
+DELAY_BETWEEN = 10        # seconds between requests (per worker)
 REQUEST_TIMEOUT = 15   
 username = os.environ.get('BD_USER')
 password = os.environ.get('BD_PASS')
@@ -70,17 +72,26 @@ class Roster:
         self._dbConn = dbConn
         self._coach = None
         self._players = []
-        player_ids = self._get_all_player_ids(year)
-        print(f"Player Ids: {player_ids}")
-        if player_ids:
+        self._player_ids = set(self._get_all_player_ids(year))
+        cur.execute(f"SELECT playerList FROM rosters WHERE team == '{team}';""")
+        player_ids_db = cur.fetchone()
+        player_ids_db = set(ast.literal_eval(player_ids_db[0]))
+        player_ids_to_add = list(self._player_ids.difference(player_ids_db))
+        player_ids_to_delete = list(player_ids_db.difference(self._player_ids))
+        print(f"Players to Add: {player_ids_to_add}")
+        print(f"Players to Delete: {player_ids_to_delete}")
+
+        if player_ids_to_delete:
+            cur.executemany("DELETE FROM players WHERE player_id = ?", [(player_id,) for player_id in player_ids_to_delete])
+
+        if player_ids_to_add:
             # Run scraping in the context of this instance
-            asyncio.run(self.run_scraping(player_ids))
+            asyncio.run(self.run_scraping(player_ids_to_add))
+            self._save_players_to_db()
 
-        if self._players:
-            self._save_to_db()
+        if player_ids_to_delete or player_ids_to_add:
+            self._save_roster_to_db()
 
-        # DEBUGGING
-        # self._save_to_db()
 
     async def run_scraping(self, player_ids):
         """Top-level async runner for fetching all players"""
@@ -370,16 +381,17 @@ class Roster:
         return re.sub(r'\.htm.*', '', name)
 
 
-    def _save_to_db(self):
+    def _save_players_to_db(self):
         """
-        Store all player information in database.
+        Save new player information to database.
 
-        1. Insert all player objects from self._players
-        2. Delete duplicates
+        1. Delete current player entries for $team
+        2. Insert all new player entries from $self._players
+        3. Delete duplicate player objects favoring the higher ID
         """
-        print(f"Storing new {self._team} roster in database...")
-        cur = self._dbConn.cursor()
-        cur.execute(f"DELETE FROM players WHERE team = ?", (self._team,))
+        print(f"Saving all {self._team} player information to database...")
+        #cur = self._dbConn.cursor()
+        cur.execute("DELETE FROM players WHERE team = ?", (self._team,))
 
         # DEBUGGING
         # cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
@@ -399,6 +411,20 @@ class Roster:
         # remove duplicate players
         cur.execute('''DELETE FROM players WHERE id NOT IN 
                         (SELECT MAX(id) FROM players GROUP BY player_id)''')
+        self._dbConn.commit()
+        print("Done.")
+
+    def _save_roster_to_db(self):
+        """
+        Save new roster to database.
+
+        1. Delete current roster entry for $team
+        2. Insert new roster entry for $team
+        """
+        # update roster entry
+        print(f"Saving new {self._team} roster to database...")
+        cur.execute(f"DELETE FROM rosters WHERE team = ?", (self._team,))
+        cur.execute("""INSERT INTO rosters (team, playerList) VALUES (?, ?)""", (self._team, str(set(self._player_ids))))
         self._dbConn.commit()
         print("Done.")
 
@@ -430,7 +456,7 @@ if __name__ == "__main__":
     ssl_context.check_hostname = True
     ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    for team in nflDivisions[division]:
+    for team in ['BUF']:#nflDivisions[division]:
         print(f">>> Getting latest {team} roster...")
         try:
             roster = Roster(team, conn)

@@ -2,6 +2,7 @@ import os
 import re
 import ssl
 import sys
+import ast
 import asyncio
 import sqlite3
 import utils
@@ -70,17 +71,26 @@ class Roster:
         self._dbConn = dbConn
         self._coach = None
         self._players = []
-        player_ids = self._get_all_player_ids(year)
-        print(f"Player Ids: {player_ids}")
-        if player_ids:
+        self._player_ids = set(self._get_all_player_ids(year))
+        cur.execute(f"SELECT playerList FROM rosters WHERE team == '{team}';""")
+        player_ids_db = cur.fetchone()
+        player_ids_db = set(ast.literal_eval(player_ids_db[0]))
+        player_ids_to_add = list(self._player_ids.difference(player_ids_db))
+        player_ids_to_delete = list(player_ids_db.difference(self._player_ids))
+        print(f"Players to Add: {player_ids_to_add}")
+        print(f"Players to Delete: {player_ids_to_delete}")
+
+        if player_ids_to_delete:
+            cur.executemany("DELETE FROM players WHERE player_id = ?", [(player_id,) for player_id in player_ids_to_delete])
+
+        if player_ids_to_add:
             # Run scraping in the context of this instance
-            asyncio.run(self.run_scraping(player_ids))
+            asyncio.run(self.run_scraping(player_ids_to_add))
+            self._save_players_to_db()
 
-        if self._players:
-            self._save_to_db()
+        if player_ids_to_delete or player_ids_to_add:
+            self._save_roster_to_db()
 
-        # DEBUGGING
-        # self._save_to_db()
 
     async def run_scraping(self, player_ids):
         """Top-level async runner for fetching all players"""
@@ -372,16 +382,17 @@ class Roster:
         return re.sub(r'\.htm.*', '', name)
 
 
-    def _save_to_db(self):
+    def _save_players_to_db(self):
         """
-        Store all player information in database.
+        Save new player information to database.
 
-        1. Insert all player objects from self._players
-        2. Delete duplicates
+        1. Delete current player entries for $team
+        2. Insert all new player entries from $self._players
+        3. Delete duplicate player objects favoring the higher ID
         """
-        print(f"Storing new {self._team} roster in database...")
-        cur = self._dbConn.cursor()
-        cur.execute(f"DELETE FROM players WHERE team = ?", (self._team,))
+        print(f"Saving all {self._team} player information to database...")
+        #cur = self._dbConn.cursor()
+        cur.execute("DELETE FROM players WHERE team = ?", (self._team,))
 
         # DEBUGGING
         # cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
@@ -401,6 +412,20 @@ class Roster:
         # remove duplicate players
         cur.execute('''DELETE FROM players WHERE id NOT IN 
                         (SELECT MAX(id) FROM players GROUP BY player_id)''')
+        self._dbConn.commit()
+        print("Done.")
+
+    def _save_roster_to_db(self):
+        """
+        Save new roster to database.
+
+        1. Delete current roster entry for $team
+        2. Insert new roster entry for $team
+        """
+        # update roster entry
+        print(f"Saving new {self._team} roster to database...")
+        cur.execute(f"DELETE FROM rosters WHERE team = ?", (self._team,))
+        cur.execute("""INSERT INTO rosters (team, playerList) VALUES (?, ?)""", (self._team, str(set(self._player_ids))))
         self._dbConn.commit()
         print("Done.")
 
@@ -446,13 +471,19 @@ if __name__ == "__main__":
     #                     headshot_url TEXT
     #             )''')
     # print("New table created.")
-    conn.commit()
+    #cur.execute('''INSERT INTO rosters (team, playerList) VALUES (?, ?)''', ('ATL', "{'AgneJa00', 'AlfoDe00', 'AllgTy00', 'BateJe00', 'BergMa00', 'BertJD00', 'BowmBi01', 'BrooNa01', 'CartNa00', 'CousKi00', 'DeabDi00', 'DorlBr00', 'EbikAr00', 'ElliKa00', 'FloyLe00', 'FordMi01', 'FranFe00', 'FullJo01', 'GwynJo00', 'HarrZa00', 'HellDe00', 'HintKy00', 'HodgKh00', 'HughMi00', 'JerrMi00', 'KooxYo00', 'LindCh00', 'LondDr00', 'LondLa00', 'MaloDe00', 'MattJa00', 'McClRa00', 'McCuLi00', 'MoonDa00', 'NelsJa01', 'NeuzRy00', 'OnyeDa00', 'OrhoRu00', 'PearJa00', 'PeniMi00', 'PhilCl00', 'PiniBr00', 'PittKy00', 'QuitTe00', 'RobeSa00', 'RobiBi01', 'TerrAJ00', 'WalkJa02', 'WashCa01', 'WattXa00', 'WilkEl00', 'WoerCh00', 'WoodJo02', 'AndeTr00', 'VerdMa00', 'GrahTa00', 'NortSt00', 'JoneEm01', 'McGaKa00', 'TricBr00', 'WheaTy01'}"))
+    # cur.execute("""SELECT playerList FROM rosters WHERE team == 'ATL';""")
+    # playerList = cur.fetchone()
+    # playerList = ast.literal_eval(playerList[0])
+    # print(type(playerList))
+    # print(playerList)
+    # conn.commit()
     print("Establishing SSL...")
     # ssl_context = ssl.create_default_context(cafile=SSL_PATH)
     # ssl_context.check_hostname = True
     # ssl_context.verify_mode = ssl.CERT_REQUIRED
     print("SSL established.")
-    teams_to_fetch = ['MIA'] #nflDivisions[division]
+    teams_to_fetch = ['BUF'] #nflTeamTranslator.values() #nflDivisions[division]
     for team in teams_to_fetch:
         print(f">>> Getting latest {team} roster...")
         try:
