@@ -120,7 +120,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
       // if opposing team is player's original team, mark the grudge primary
       let grudgeType = 'Secondary Grudge';
       if (player[columnNames.indexOf('initial_team')] == opposingTeam) {
-          grudgeType = '<span>Primary Grudge 🔥</span>';
+          grudgeType = '<span><u>Primary Grudge</u></span>';
       }
       // store only relevant player team history
       let seasons = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'))[opposingTeam];
@@ -540,7 +540,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // if season has started, print the count of grudge matches in current week, else create countdown clock
     if (weekNum > 0) {
         weekObj.innerHTML = `
-          <p>Yes, there are <strong>${totalGrudges}</strong> grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>.</p>`;
+          <p>There are ${totalGrudges} grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>, most notably:</p>
+          <ul><li><strong>Joe Flacco</strong> (primary) against the Baltimore Ravens</li>
+          <li><strong>Khalil Mack</strong> (primary) against the Las Vegas Raiders</li>
+          <li><strong>Kirk Cousins</strong> (secondary) against the Minnesota Vikings</li>
+          <li><strong>Matthew Judon</strong> (secondary) against the New England Patriots</li>`;
     }
     else {
         weekObj.innerHTML = `No, the regular season has not started yet.<br><br>
