@@ -565,8 +565,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // if season has started, print the count of grudge matches in current week, else create countdown clock
     if (weekNum > 0) {
-        weekObj.innerHTML = `
-          <p>There are ${totalGrudges} grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>, most notably:</p><ul>`;
+        let notableContent = `
+          <p>There are ${totalGrudges} grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>, most notably:</p><ol>`;
           notableGrudges = notableGrudges.sort((a, b) => b[1] - a[1]);
           // maximum of 10 notable players
           if (notableGrudges.length > 10) {
@@ -580,10 +580,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const position = grudgeContent[2];
             let currTeam = grudgeContent[3];
             let opposingTeam = grudgeContent[4];
-            // add html to document
-            weekObj.innerHTML += `<li><strong>${name}${playerCareerValue}</strong> (${position}, ${currTeam}) against the ${teams[opposingTeam]['name']}</li><br>`;
+            notableContent += `<li><strong>${name}${playerCareerValue}</strong> (${position}, ${currTeam}) against the ${teams[opposingTeam]['name']}</li><br>`;
           }
-          weekObj.innerHTML += '</ul>'
+          notableContent += `</ol>`;
+          weekObj.innerHTML += notableContent;
     }
     else {
         weekObj.innerHTML = `No, the regular season has not started yet.<br><br>
