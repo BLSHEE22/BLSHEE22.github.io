@@ -184,7 +184,6 @@ class Roster:
             return (team_hist_dict, initial_team)
         
         # SCRAPE_PLAYER 
-        # sleep(3)
         print(f"Scraping {player_id} player page...")
         if not player_id:
             return 'no_player_page'
@@ -210,11 +209,13 @@ class Roster:
                             'headshot_url': None}
                 # name
                 player_info['name'] = soup("h1").text().strip()
-                # team
-                narrowedSoup = [item.text().strip() for item in soup('#meta div a').items()]
-                if narrowedSoup:
-                    if narrowedSoup[0] in nflTeamTranslator.keys():
-                        player_info['team'] = str(nflTeamTranslator[narrowedSoup[0]])
+                # team (LEGACY)
+                # narrowedSoup = [item.text().strip() for item in soup('#meta div a').items()]
+                # if narrowedSoup:
+                #     if narrowedSoup[0] in nflTeamTranslator.keys():
+                #         player_info['team'] = str(nflTeamTranslator[narrowedSoup[0]])
+                # set player team to current roster
+                player_info['team'] = self._team
                 # height, weight
                 for field in ['height', 'weight']:
                     value = None
@@ -386,13 +387,12 @@ class Roster:
         """
         Save new player information to database.
 
-        1. Delete current player entries for $team
-        2. Insert all new player entries from $self._players
-        3. Delete duplicate player objects favoring the higher ID
+        1. Insert all new player entries from $self._players
+        2. Delete duplicate player objects favoring the higher ID
         """
         print(f"Saving all {self._team} player information to database...")
         #cur = self._dbConn.cursor()
-        cur.execute("DELETE FROM players WHERE team = ?", (self._team,))
+        #cur.execute("DELETE FROM players WHERE team = ?", (self._team,))
 
         # DEBUGGING
         # cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
@@ -405,7 +405,7 @@ class Roster:
         cur.executemany("""INSERT INTO players (team, name, player_id, height, weight, position, birth_date, 
                                                 team_history, initial_team, fantasy_pos_rk, headshot_url) 
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-                        [(player['team'], player['name'], player['player_id'], player['height'],
+                        [(self._team, player['name'], player['player_id'], player['height'],
                           player['weight'], player['position'], player['birth_date'], 
                           str(player['team_history']), player['initial_team'], player['fantasy_pos_rk'],
                           player['headshot_url']) for player in self._players])
@@ -490,7 +490,7 @@ if __name__ == "__main__":
             roster = Roster(team, conn)
             print
             print(f">>>Successfully updated {team} roster!")
-            sleep(10)
+            sleep(DELAY_BETWEEN)
         except Exception as e:
             import traceback
             print(f">>> Failed to create {team} roster: {e}")
