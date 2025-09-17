@@ -373,6 +373,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
         // Clone hover image
         const hoverImg = img.cloneNode();
         hoverImg.src = hoverSrc;
+        hoverImg.alt = "";
         hoverImg.classList.add("hover");
     
         // Prepare normal image
