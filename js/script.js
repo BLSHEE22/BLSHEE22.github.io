@@ -482,6 +482,7 @@ function createWeekSlateTables(weekSlate) {
   // add headshot image hover effect
   document.querySelectorAll("td img").forEach(img => {
     const normalSrc = img.dataset.normal || img.src;
+    img.alt = "";
     const hoverSrc  = img.dataset.hover;
   
     // Preload hover image
