@@ -161,7 +161,8 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
                     data-normal="${headshotUrl}_${headshotYear}.jpg",
                     width="74",
                     height="110",
-                    alt="">
+                    alt="",
+                    onerror="this.style.display='none'">
                  <br>`;
       }
       html += `<strong style="font-size: 18px;">${name}</strong><br/>`;
@@ -373,7 +374,6 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
         // Clone hover image
         const hoverImg = img.cloneNode();
         hoverImg.src = hoverSrc;
-        hoverImg.alt = "";
         hoverImg.classList.add("hover");
     
         // Prepare normal image
@@ -482,7 +482,6 @@ function createWeekSlateTables(weekSlate) {
   // add headshot image hover effect
   document.querySelectorAll("td img").forEach(img => {
     const normalSrc = img.dataset.normal || img.src;
-    img.alt = "";
     const hoverSrc  = img.dataset.hover;
   
     // Preload hover image
