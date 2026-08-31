@@ -528,6 +528,28 @@ function createWeekSlateTables(weekSlate) {
   });
 }
 
+/**
+ * Populate table beneath bar chart.
+ * 
+ * @param {string} team - NFL team abbreviation
+ * @param {string} grudgeType - Primary/Secondary
+ */
+function showTeamDetails(team, grudgeType) {
+  const details = document.getElementById('teamDetails');
+
+  details.innerHTML = `
+        <h2>${team}</h2>
+        <div class="player-grid">
+        <table>
+        <td>
+        <th>Header Row</th>
+        <tr><td>Test1</td></tr>
+        <tr><td>Test2</td?</tr>
+        </table>
+        </div>
+    `;
+
+}
 
 // Get current week
 console.log('Getting current week...')
@@ -773,6 +795,26 @@ document.addEventListener('DOMContentLoaded', () => {
           },
           options: {
               responsive: true,
+
+              onClick: function(event, elements) {
+                if (!elements.length) {
+                    return;
+                }
+
+                const element = elements[0];
+
+                // Team corresponding to the clicked bar
+                const team = this.data.labels[element.index];
+
+                // Dataset that was clicked
+                const datasetIndex = element.datasetIndex;
+
+                console.log("Clicked team:", team);
+                console.log("Dataset:", datasetIndex);
+
+                showTeamDetails(team, datasetIndex);
+              },
+
               plugins: {
                   legend: {
                       display: false
