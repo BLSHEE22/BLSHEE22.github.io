@@ -1,8 +1,8 @@
 name: Update Rosters
 
 on:
-  #schedule:
-   #- cron: "0 22 * * 2,5"   # Tue and Fri at 10 PM UTC
+  schedule:
+   - cron: "0 5 * * *"   # Every morning at 5 AM UTC
   workflow_dispatch:        # manual run option
 
 jobs:
