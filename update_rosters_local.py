@@ -13,7 +13,7 @@ from pyquery import PyQuery as pq
 from urllib.error import HTTPError
 
 # path to database
-DB_PATH = "data/players.db"
+DB_PATH = "data/nfl.db"
 
 # format for roster/player page urls
 ROSTER_URL = 'https://www.pro-football-reference.com/teams/%s/%s_roster.htm'
@@ -307,8 +307,11 @@ class Roster:
             raise ValueError(output)
         
         # get all player ids from roster table
+        print(page)
         print("Getting all players from roster table...")
+        sleep(5)
         player_ids = [self._get_player_id(player) for player in page('table#roster tbody tr').items()]
+        print(player_ids)
         if not player_ids:
             player_ids = PLAYER_IDS
         return player_ids

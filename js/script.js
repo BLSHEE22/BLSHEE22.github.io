@@ -7,7 +7,7 @@ initSqlJs({
   locateFile: file => `https://sql.js.org/dist/${file}` // Point to wasm file
 }).then(async SQL => {
   // Fetch the pre-hosted .db file
-  const response = await fetch('/data/players.db');
+  const response = await fetch('/data/nfl.db');
   const buffer = await response.arrayBuffer();
 
   // Load the database from the buffer
@@ -116,15 +116,17 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
     console.log(sortedPlayers);
     for (let player of sortedPlayers) {
       let html = "";
-      //const headshotUrl = player[columnNames.indexOf('headshot_url')];
-      const headshotUrl = `https://www.pro-football-reference.com/req/20230307/images/headshots/${player[columnNames.indexOf('player_id')]}`;
-      const headshotYear = '2025';
+      const headshotUrl = JSON.parse(player[columnNames.indexOf('headshot_url')].replace(/'/g, '"'))[currTeam];
+      const grudgeHeadshotUrl = JSON.parse(player[columnNames.indexOf('headshot_url')].replace(/'/g, '"'))[opposingTeam]
+      console.log(grudgeHeadshotUrl)
+      //const headshotUrl = `https://www.pro-football-reference.com/req/20230307/images/headshots/${player[columnNames.indexOf('player_id')]}`;
+      //const headshotYear = '2025';
       const name = player[columnNames.indexOf('name')];
       const position = player[columnNames.indexOf('position')];
       // if opposing team is player's original team, mark the grudge primary
       let grudgeType = 'Secondary Grudge';
       if (player[columnNames.indexOf('initial_team')] == opposingTeam) {
-          grudgeType = '<span><u>Primary Grudge</u></span>';
+          grudgeType = '<span><u>Homegrown</u></span>';
       }
       // store only relevant player team history
       let seasons = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'))[opposingTeam];
@@ -156,9 +158,19 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
       // start splicing together data with html code
       if (headshotUrl != null) {
         const first_grudge_season = seasons.slice(0, 4);
-        html += `<img src="${headshotUrl}_${headshotYear}.jpg", 
-                    data-hover="${headshotUrl}_${first_grudge_season}.jpg",
-                    data-normal="${headshotUrl}_${headshotYear}.jpg",
+        console.log("Grudge Season: ")
+        console.log(first_grudge_season)
+        // html += `<img src="${headshotUrl}_${headshotYear}.jpg", 
+        //             data-hover="${headshotUrl}_${first_grudge_season}.jpg",
+        //             data-normal="${headshotUrl}_${headshotYear}.jpg",
+        //             width="74",
+        //             height="110",
+        //             alt="",
+        //             onerror="this.style.display='none'">
+        //          <br>`;
+        html += `<img src="${headshotUrl}", 
+                    data-hover="${grudgeHeadshotUrl}",
+                    data-normal="${headshotUrl}",
                     width="74",
                     height="110",
                     alt="",
@@ -214,8 +226,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
     }
     // form query
     try {
-      const query = `SELECT player_id, name, position, team, team_history, initial_team, 
-                    fantasy_pos_rk, headshot_url FROM players WHERE team == '${currTeam}' AND 
+      const query = `SELECT gsis_id, name, position, team, team_history, initial_team, headshot_url FROM players WHERE team == '${currTeam}' AND 
                     instr(team_history, '${opposingTeam}') > 0;`;
       // const query = document.getElementById('query').value;
       document.getElementById('query').textContent = query;
@@ -707,7 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // write superlative team to header
         const full_team_name = teams[formatted_teams[0]]['name']
-        document.getElementById('activeGrudgeHeader').innerHTML = `The <strong>${full_team_name}</strong> are the most grudged team among active players this season.`;
+        document.getElementById('activeGrudgeHeader').innerHTML = `The <strong>${full_team_name}</strong> have the most active alumni this season.`;
 
         // setup bar chart colors
         const teamConferences = {
@@ -746,14 +757,14 @@ document.addEventListener('DOMContentLoaded', () => {
           data: {
               labels: formatted_teams,
               datasets: [{
-                label: 'Primary Grudges',
+                label: 'Started Career With Team',
                 data: primaryCounts,
                 backgroundColor: primaryColors,
                 borderColor: primaryBorderColors,
                 borderWidth: 1
               },
               {
-                label: 'Secondary Grudges',
+                label: 'Did Not Start Career With Team',
                 data: nonPrimaryCounts,
                 backgroundColor: colors,
                 borderColor: borderColors,
@@ -776,7 +787,7 @@ document.addEventListener('DOMContentLoaded', () => {
               },
               scales: {
                 x: { stacked: true, title: { display: true, text: 'Team' } },
-                y: { stacked: true, beginAtZero: true, title: { display: true, text: 'Number of Grudges Against' } }
+                y: { stacked: true, beginAtZero: true, title: { display: true, text: 'Number of Active Alumni' } }
               }
           }
         });
