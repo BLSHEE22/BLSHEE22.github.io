@@ -124,22 +124,28 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
       const name = player[columnNames.indexOf('name')];
       const position = player[columnNames.indexOf('position')];
       // if opposing team is player's original team, mark the grudge primary
-      let grudgeType = 'Secondary Grudge';
+      let grudgeType = 'Formerly on the ' + teams[opposingTeam]["name"];
       if (player[columnNames.indexOf('initial_team')] == opposingTeam) {
-          grudgeType = '<span><u>Homegrown</u></span>';
+          grudgeType = '<span><u>Started with the ' + teams[opposingTeam]["name"] + '</u></span>';
       }
       // store only relevant player team history
       let seasons = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'))[opposingTeam];
+      let grudge_season_count = seasons.length
       if (seasons.length > 1) {
         seasons = seasons.join(", ");
       }
       // add emojis based on player career AV
       let playerCareerValue = "";
-      let positionRk = player[columnNames.indexOf('fantasy_pos_rk')];
-      if (positionRk >= 30) {
-        if (positionRk >= 50) {
-          if (positionRk >= 75) {
-            if (positionRk >= 100) {
+      //let positionRk = player[columnNames.indexOf('years_exp')];
+      let positionRk = grudge_season_count
+      console.log("POS RK")
+      console.log(player)
+      console.log(seasons)
+      console.log(positionRk)
+      if (positionRk >= 5) {
+        if (positionRk >= 6) {
+          if (positionRk >= 7) {
+            if (positionRk >= 8) {
               playerCareerValue = " ⭐⭐⭐⭐";
             } else {
               playerCareerValue = " ⭐⭐⭐";
@@ -152,7 +158,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
         }
       }
       // if player has no fantasy position rank, mark as 'N/A'
-      if (positionRk == null) {
+      if (positionRk == 0 || positionRk == null) {
         positionRk = 'N/A';
       }
       // start splicing together data with html code
@@ -190,14 +196,14 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
         opposingTeamTranslated = team_db_name_to_irl_name[opposingTeam];
       }
       html += `Seasons with ${opposingTeamTranslated}: ${seasons}<br/>`;
-      html += `Career AV: ${positionRk}${playerCareerValue}<br/><br/>`;
+      html += `Years Spent: ${positionRk}${playerCareerValue}<br/><br/>`;
       htmlList.push(html);
       console.log(`Converted ${name} player information to HTML.`);
       if (!custom) {
         if (positionRk != 'N/A') {
           let numericPositionRk = parseInt(positionRk, 10);
           // if player career AV >= 30, add to notable grudges
-          if (numericPositionRk >= 30) {
+          if (numericPositionRk >= 3) {
             const notableGrudgeObj = [[name, playerCareerValue, position, currTeamTranslated, opposingTeamTranslated], numericPositionRk]
             notableGrudges.push(notableGrudgeObj);
           }
@@ -226,7 +232,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
     }
     // form query
     try {
-      const query = `SELECT gsis_id, name, position, team, team_history, initial_team, headshot_url FROM players WHERE team == '${currTeam}' AND 
+      const query = `SELECT gsis_id, name, position, team, team_history, initial_team, years_exp, headshot_url FROM players WHERE team == '${currTeam}' AND 
                     instr(team_history, '${opposingTeam}') > 0;`;
       // const query = document.getElementById('query').value;
       document.getElementById('query').textContent = query;
@@ -740,7 +746,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // write superlative team to header
         const full_team_name = teams[formatted_teams[0]]['name']
-        document.getElementById('activeGrudgeHeader').innerHTML = `The <strong>${full_team_name}</strong> have the most active alumni this season.`;
+        document.getElementById('activeGrudgeHeader').innerHTML = `The <strong>${full_team_name}</strong> have the greatest number of active alumni this season.`;
 
         // setup bar chart colors
         const teamConferences = {

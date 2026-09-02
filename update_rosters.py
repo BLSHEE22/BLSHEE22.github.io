@@ -10,6 +10,9 @@ DB_PATH = "data/nfl.db"
 # flag to enable creating new roster table
 create_new_roster_table = False
 
+# current NFL season
+current_season = 2026
+
 
 def get_historical_rosters(start_season=2002, end_season=2026):
     """
@@ -69,23 +72,25 @@ def get_player_history(player_id, player_name, start_season=2000, end_season=202
         SELECT DISTINCT team, season, headshot_url
         FROM rosters
         WHERE gsis_id = ?
+          AND full_name = ?
           AND season BETWEEN ? AND ?
         ORDER BY season
     """
 
     rows = conn2.execute(
         query,
-        (player_id, start_season, end_season)
+        (player_id, player_name, start_season, end_season)
     ).fetchall()
 
     conn2.close()
 
     season_history = defaultdict(list)
     #print(season_history)
-    headshot_history = defaultdict(list)
+    headshot_history = defaultdict(str)
     #print(headshot_history)
 
     for team, season, headshot_url in rows:
+
         #print(team)
         #print(season)
         #print(headshot_url)
@@ -140,15 +145,21 @@ def format_bday(birth_date):
     return birth_date.strftime("%Y-%m-%d")
 
 
+def format_years_exp(yrs):
+    """
+    Translate player's years of experience to integer format.
+    """
+    # if player bday is unknown, mark as 'Unknown'
+    if pd.isna(yrs):
+        return 0
+    return int(yrs)
+
+
 ### MAIN ###
 
 # setup sqlite connection
 conn = sqlite3.connect(DB_PATH)
 cur = conn.cursor()
-
-#create_table()
-
-#quit()
 
 # get rosters
 if create_new_roster_table:
@@ -156,31 +167,40 @@ if create_new_roster_table:
 else:
     rosters = get_rosters()
 
-player_data = []
+#print(rosters)
+#print(rosters.columns.tolist())
+#rosters_db_to_df = pd.read_sql_query("SELECT * FROM players", conn)
 
 # get latest rosters for each team
-teams = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE",
-         "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC", "LA", "LAC",
-         "LV", "MIA", "MIN", "NE", "NO", "NYG", "NYJ", "PHI", "PIT",
-         "SEA", "SF", "TB", "TEN", "WAS"]
+curr_teams = sorted(rosters["team"].unique())
+#print(rosters["draft_club"].unique())
+#print(curr_teams)
 
-# ARI->CRD, GB->GNB, HST->HOU, IND->CLT, KC->KAN, LA->RAM, LV->LVR, NE->NWE, NO->NOR, OAK->LVR, SD->LAC, SF->SFO, SL->RAM, TB->TAM
-team_align = {"ARI": "CRD", "BAL": "RAV", "GB": "GNB", "HST": "HTX", "HOU": "HTX", "IND": "CLT", "KC": "KAN", "LA": "RAM", "LV": "RAI", 
-              "LVR": "RAI", "NE": "NWE", "NO": "NOR", "OAK": "LVR", "SD": "SDG", "SF": "SFO", "SL": "RAM", "TB": "TAM", "TEN": "OTI"}
+# curr_teams = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE",
+#          "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC", "LA", "LAC",
+#          "LV", "MIA", "MIN", "NE", "NO", "NYG", "NYJ", "PHI", "PIT",
+#          "SEA", "SF", "TB", "TEN", "WAS"]
 
-for team_abbrv in teams:
+# ARI->CRD, ARZ->CRD, GB->GNB, HST->HOU, IND->CLT, KC->KAN, LA->RAM, LV->LVR, NO->NOR, OAK->LVR, SD->LAC, SF->SFO, SL->RAM, STL->RAM, TB->TAM
+team_align = {"ARI": "CRD", "ARZ": "CRD", "AZ":"CRD", "BAL": "RAV", "GB": "GNB", "HST": "HTX", "HOU": "HTX", "IND": "CLT", "KC": "KAN", 
+              "LA": "RAM", "LAR": "RAM", "LV": "RAI", "LVR": "RAI", "NE": "NWE", "NO": "NOR", "OAK": "LVR", "SD": "SDG", "SF": "SFO", "SL": "RAM", 
+              "STL":"RAM", "TB": "TAM", "TEN": "OTI"}
+
+player_data = []
+
+for team_abbrv in curr_teams:
     team = rosters[
         rosters["team"] == team_abbrv
     ].copy()
 
-    team_info = team[['season', 'team', 'position', 'full_name', 'gsis_id', 'status', 'height', 'weight', 'birth_date', 'draft_club', 'headshot_url']]
-    players_2026 = list(team_info.loc[team_info['season'] == 2026, 
-                                      ['team', 'full_name', 'gsis_id', 'height', 'weight', 'position', 'birth_date', 'draft_club', 'headshot_url']].itertuples(index=False, name=None))
-
-    # print(players_2026)
+    team_info = team[['season', 'team', 'position', 'full_name', 'gsis_id', 'status', 'height', 
+                      'weight', 'birth_date', 'draft_club', 'years_exp', 'headshot_url']]
+    players_2026 = list(team_info.loc[(team_info['season'] == 2026) & (team_info['status'] == 'ACT'), 
+                                      ['team', 'full_name', 'gsis_id', 'height', 'weight', 'position', 
+                                       'birth_date', 'draft_club', 'years_exp', 'headshot_url']].itertuples(index=False, name=None))
 
     # get all individual data per player on latest roster
-    for player_team, player_name, player_id, player_ht, player_wt, player_pos, player_bday, player_init_team, player_headshot in players_2026:
+    for player_team, player_name, player_id, player_ht, player_wt, player_pos, player_bday, player_init_team, player_exp, player_headshot in players_2026:
         player_dict = dict()
         if player_team in team_align.keys():
             player_team = team_align[player_team]
@@ -197,13 +217,21 @@ for team_abbrv in teams:
             headshot_history = {}
         else:
             season_history, headshot_history = get_player_history(player_id, player_name)
+            # add current season and headshot
+            if player_team in season_history.keys():
+                season_history[player_team].append(str(current_season))
+            else:
+                season_history[player_team] = {str(current_season)}
+            headshot_history[player_team] = player_headshot
             # if draft club not found, calculate initial team from season history
             if pd.isna(player_init_team):
                 player_init_team = min(season_history, key=lambda team: int(season_history[team][0]))
-                if player_init_team in team_align.keys():
-                    player_init_team = team_align[player_init_team]
+            if player_init_team in team_align.keys():
+                player_init_team = team_align[player_init_team]
         player_dict["team_history"] = season_history            
         player_dict["initial_team"] = player_init_team
+        # add years of experience
+        player_dict["years_exp"] = format_years_exp(player_exp)
         # add current headshot url for player to photo dict
         headshot_history[player_team] = player_headshot
         player_dict["headshot_url"] = headshot_history
@@ -251,15 +279,16 @@ cur.execute('''CREATE TABLE players (
                     birth_date DATETIME,
                     team_history TEXT,
                     initial_team TEXT,
+                    years_exp INTEGER,
                     headshot_url TEXT
             )''')
 print("New table created.")
 # insert each player
 cur.executemany("""INSERT INTO players (team, name, gsis_id, height, weight, position, birth_date, 
-                                        team_history, initial_team, headshot_url) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                                        team_history, initial_team, years_exp, headshot_url) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                 [(p["team"], p['name'], p['gsis_id'], p['height'], p['weight'], p['position'], 
-                    p['birth_date'], str(p["team_history"]), p['initial_team'], str(p['headshot_url'])) for p in player_data])
+                    p['birth_date'], str(p["team_history"]), p['initial_team'], p['years_exp'], str(p['headshot_url'])) for p in player_data])
 # remove duplicate players
 cur.execute('''DELETE FROM players WHERE id NOT IN 
                 (SELECT MAX(id) FROM players GROUP BY gsis_id)''')
