@@ -544,7 +544,7 @@ function showTeamDetails(team, grudgeType) {
   const details = document.getElementById('teamDetails');
 
   details.innerHTML = `
-        <h2>${team}</h2>
+        <h2>Active Alumni of the ${teams[team]["name"]}</h2>
         <div class="player-grid">
         <table>
         <td>
