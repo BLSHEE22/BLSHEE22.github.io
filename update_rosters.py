@@ -221,7 +221,7 @@ for team_abbrv in curr_teams:
             if player_team in season_history.keys():
                 season_history[player_team].append(str(current_season))
             else:
-                season_history[player_team] = {str(current_season)}
+                season_history[player_team] = [str(current_season)]
             headshot_history[player_team] = player_headshot
             # if draft club not found, calculate initial team from season history
             if pd.isna(player_init_team):
