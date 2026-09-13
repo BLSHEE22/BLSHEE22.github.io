@@ -424,7 +424,22 @@ function createWeekSlateTables(weekSlate) {
   console.log(`Games in week ${weekNum}:`);
   console.log(weekSlate);
   const days = Object.keys(weekSlate);
+  const seasonYear = now.getFullYear();
+
+  function getScheduledDate(day, time) {
+    const dayWithoutOrdinal = day.replace(/(\d+)(st|nd|rd|th)/, '$1');
+    return new Date(`${dayWithoutOrdinal}, ${seasonYear} ${time} GMT-0400`);
+  }
+
   for (let day of days) {
+      const upcomingMatchups = weekSlate[day].filter(matchup =>
+        getScheduledDate(day, matchup['time']) > now
+      );
+
+      if (upcomingMatchups.length === 0) {
+        continue;
+      }
+
       // create day element
       const dayAbbr = day.slice(0, 3);
       const dayElement = document.createElement(dayAbbr);
@@ -434,7 +449,7 @@ function createWeekSlateTables(weekSlate) {
       dayHeader.innerHTML = `<h3><center>${day}`;
       dayElement.appendChild(dayHeader);
 
-      const matchups = weekSlate[day];
+      const matchups = upcomingMatchups;
       console.log("---");
       console.log("Day:");
       console.log(day);
