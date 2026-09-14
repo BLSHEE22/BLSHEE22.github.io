@@ -557,6 +557,7 @@ function createWeekSlateTables(weekSlate) {
  */
 function showTeamDetails(team, grudgeType, queryResults) {
   const details = document.getElementById('teamDetails');
+  const queryTeam = team_name_map[team] || team;
 
   const sortedPlayers = [...queryResults].sort((playerA, playerB) => {
     const yearsA = Number(playerA.years_exp);
@@ -572,7 +573,7 @@ function showTeamDetails(team, grudgeType, queryResults) {
     try {
       const headshots = JSON.parse(player.headshot_url.replace(/'/g, '"'));
       headshotUrl = headshots[player['team']] || '';
-      grudgeHeadshotUrl = headshots[team] || '';
+      grudgeHeadshotUrl = headshots[queryTeam] || '';
     } catch (error) {
       console.warn(`Could not parse headshot for ${player.name}:`, error);
     }
@@ -889,6 +890,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("Dataset:", datasetIndex);
 
                 try {
+                  const queryTeam = team_name_map[team] || team;
 
                     async function findActiveAlumni(team, datasetIndex) {
 
@@ -914,7 +916,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     // Wait for the query to finish
-                    const queryInfo = await findActiveAlumni(team, datasetIndex);
+                    const queryInfo = await findActiveAlumni(queryTeam, datasetIndex);
                     
                     // Unpack query results
                     const activeAlumni = queryInfo[0].values.map(row => ({
