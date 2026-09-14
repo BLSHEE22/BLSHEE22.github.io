@@ -555,7 +555,7 @@ function createWeekSlateTables(weekSlate) {
  * @param {string} team - NFL team abbreviation
  * @param {string} grudgeType - Primary/Secondary
  */
-function showTeamDetails(team, grudgeType) {
+function showTeamDetails(team, grudgeType, queryResults) {
   const details = document.getElementById('teamDetails');
 
   details.innerHTML = `
@@ -564,7 +564,7 @@ function showTeamDetails(team, grudgeType) {
         <table>
         <td>
         <th>Header Row</th>
-        <tr><td>Test1</td></tr>
+        <tr><td>${queryResults}</td></tr>
         <tr><td>Test2</td?</tr>
         </table>
         </div>
@@ -817,7 +817,7 @@ document.addEventListener('DOMContentLoaded', () => {
           options: {
               responsive: true,
 
-              onClick: function(event, elements) {
+              onClick: async function(event, elements) {
                 if (!elements.length) {
                     return;
                 }
@@ -833,7 +833,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("Clicked team:", team);
                 console.log("Dataset:", datasetIndex);
 
-                showTeamDetails(team, datasetIndex);
+                try {
+
+                    async function findActiveAlumni(team, datasetIndex) {
+
+                      const activeAlumniQuery =
+                        `SELECT gsis_id, name, position, team, team_history, initial_team, years_exp,
+                         headshot_url FROM players WHERE team != '${team}' AND 
+                         instr(team_history, '${team}') > 0;`;
+                      const results = db.exec(activeAlumniQuery);
+                      if (results.length === 0) {
+                        document.getElementById('results').textContent = "Query executed successfully. No rows returned.";
+                      } else {
+                        const output = results.map(res => {
+                          const headers = res.columns.join('\t');
+                          const rows = res.values.map(row => row.join('\t')).join('\n');
+                          return headers + '\n' + rows;
+                        }).join('\n\n');
+
+                        document.getElementById('results').textContent = output;
+                      }
+
+                      console.log(results);
+                      return results;
+                    }
+
+                    // Wait for the query to finish
+                    const queryInfo = await findActiveAlumni(team, datasetIndex);
+                    
+                    // Unpack query results
+                    const activeAlumni = queryInfo[0].values.map(row => ({
+                        gsis_id: row[0],
+                        name: row[1],
+                        position: row[2],
+                        team: row[3],
+                        team_history: row[4],
+                        initial_team: row[5],
+                        years_exp: row[6],
+                        headshot_url: row[7]
+                    }));
+
+                    for (let alumnus of activeAlumni) {
+                        console.log(`Alumnus: ${alumnus.name}, Team: ${alumnus.team}, Initial Team: ${alumnus.initial_team}`);
+                    }
+                    console.log("Query results:", activeAlumni);
+
+                    // Now pass the actual results to your function
+                    let alumNames = [];
+                    for (let alumObj of activeAlumni) {
+                        alumNames.push((alumObj['name'], alumObj['position'], alumObj['team'], alumObj['initial_team']));
+                    }
+                    showTeamDetails(team, datasetIndex, alumNames);
+
+                } catch (error) {
+                    console.error("Error running query:", error);
+                }
               },
 
               plugins: {
