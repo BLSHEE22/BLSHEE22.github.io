@@ -12,3 +12,36 @@
   max-height: 500px; /* adjust based on content */
   opacity: 1;
 }
+
+.team-details-table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.team-details-table th,
+.team-details-table td {
+  border-bottom: 1px solid #d8d8d8;
+  padding: 0.6rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.team-details-table th {
+  background: #f2f2f2;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.team-details-photo-cell {
+  padding: 0.35rem !important;
+  text-align: center !important;
+  width: 74px;
+}
+
+.team-details-photo {
+  display: block;
+  height: 110px;
+  object-fit: cover;
+  width: 74px;
+}

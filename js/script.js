@@ -558,17 +558,62 @@ function createWeekSlateTables(weekSlate) {
 function showTeamDetails(team, grudgeType, queryResults) {
   const details = document.getElementById('teamDetails');
 
+  const playerRows = queryResults.map(player => {
+    let headshotUrl = '';
+    let grudgeHeadshotUrl = '';
+    try {
+      const headshots = JSON.parse(player.headshot_url.replace(/'/g, '"'));
+      headshotUrl = headshots[player['team']] || '';
+      grudgeHeadshotUrl = headshots[team] || '';
+    } catch (error) {
+      console.warn(`Could not parse headshot for ${player.name}:`, error);
+    }
+
+    return `<tr>
+              <td class="team-details-photo-cell">
+                ${headshotUrl ? `<img class="team-details-photo" src="${headshotUrl}" data-hover="${grudgeHeadshotUrl}" data-normal="${headshotUrl}" alt="${player.name} headshot" onerror="this.style.display='none'">` : 'N/A'}
+              </td>
+              <td><strong>${player.name}</strong></td>
+              <td>${player.position || 'N/A'}</td>
+              <td>${player.team || 'N/A'}</td>
+            </tr>`;
+  }).join('');
+
   details.innerHTML = `
         <h2>Active Alumni of the ${teams[team]["name"]}</h2>
         <div class="player-grid">
-        <table>
-        <td>
-        <th>Header Row</th>
-        <tr><td>${queryResults}</td></tr>
-        <tr><td>Test2</td?</tr>
+        <table class="team-details-table">
+          <thead>
+            <tr>
+              <th>Headshot</th>
+              <th>Player</th>
+              <th>Position</th>
+              <th>Team</th>
+            </tr>
+          </thead>
+          <tbody>${playerRows || '<tr><td colspan="4">No active alumni found.</td></tr>'}</tbody>
         </table>
-        </div>
-    `;
+        </div>`;
+
+  details.querySelectorAll('.team-details-photo').forEach(img => {
+    const hoverSrc = img.dataset.hover;
+    if (!hoverSrc || hoverSrc === img.src) {
+      return;
+    }
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'fade-wrapper';
+    const parent = img.parentNode;
+
+    const hoverImg = img.cloneNode();
+    hoverImg.src = hoverSrc;
+    hoverImg.className = 'hover';
+
+    img.className = 'normal';
+    parent.replaceChild(wrapper, img);
+    wrapper.appendChild(img);
+    wrapper.appendChild(hoverImg);
+  });
 
 }
 
@@ -873,17 +918,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         headshot_url: row[7]
                     }));
 
-                    for (let alumnus of activeAlumni) {
-                        console.log(`Alumnus: ${alumnus.name}, Team: ${alumnus.team}, Initial Team: ${alumnus.initial_team}`);
-                    }
-                    console.log("Query results:", activeAlumni);
+                    console.log("Active Alumni for team:", activeAlumni);
 
                     // Now pass the actual results to your function
-                    let alumNames = [];
-                    for (let alumObj of activeAlumni) {
-                        alumNames.push((alumObj['name'], alumObj['position'], alumObj['team'], alumObj['initial_team']));
-                    }
-                    showTeamDetails(team, datasetIndex, alumNames);
+                    showTeamDetails(team, datasetIndex, activeAlumni);
 
                 } catch (error) {
                     console.error("Error running query:", error);
