@@ -558,7 +558,15 @@ function createWeekSlateTables(weekSlate) {
 function showTeamDetails(team, grudgeType, queryResults) {
   const details = document.getElementById('teamDetails');
 
-  const playerRows = queryResults.map(player => {
+  const sortedPlayers = [...queryResults].sort((playerA, playerB) => {
+    const yearsA = Number(playerA.years_exp);
+    const yearsB = Number(playerB.years_exp);
+    const sortableYearsA = Number.isFinite(yearsA) ? yearsA : -1;
+    const sortableYearsB = Number.isFinite(yearsB) ? yearsB : -1;
+    return sortableYearsB - sortableYearsA;
+  });
+
+  const playerRows = sortedPlayers.map(player => {
     let headshotUrl = '';
     let grudgeHeadshotUrl = '';
     try {
@@ -576,6 +584,7 @@ function showTeamDetails(team, grudgeType, queryResults) {
               <td><strong>${player.name}</strong></td>
               <td>${player.position || 'N/A'}</td>
               <td>${player.team || 'N/A'}</td>
+              <td>${player.years_exp ?? 'N/A'}</td>
             </tr>`;
   }).join('');
 
@@ -588,10 +597,11 @@ function showTeamDetails(team, grudgeType, queryResults) {
               <th>Headshot</th>
               <th>Player</th>
               <th>Position</th>
-              <th>Team</th>
+              <th>Current Team</th>
+              <th>Years Exp.</th>
             </tr>
           </thead>
-          <tbody>${playerRows || '<tr><td colspan="4">No active alumni found.</td></tr>'}</tbody>
+          <tbody>${playerRows || '<tr><td colspan="5">No active alumni found.</td></tr>'}</tbody>
         </table>
         </div>`;
 
