@@ -142,10 +142,10 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
       console.log(player)
       console.log(seasons)
       console.log(positionRk)
-      if (positionRk >= 5) {
-        if (positionRk >= 6) {
-          if (positionRk >= 7) {
-            if (positionRk >= 8) {
+      if (positionRk >= 3) {
+        if (positionRk >= 5) {
+          if (positionRk >= 6) {
+            if (positionRk >= 7) {
               playerCareerValue = " ⭐⭐⭐⭐";
             } else {
               playerCareerValue = " ⭐⭐⭐";
