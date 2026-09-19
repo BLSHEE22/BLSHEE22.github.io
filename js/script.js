@@ -52,6 +52,9 @@ let totalGrudges = 0;
 // list of all notable (career AV >= 30) grudge matches in current week
 let notableGrudges = [];
 
+// Keep the clicked team visible when the pointer leaves the chart.
+let selectedAlumniTeam = null;
+
 // current date/time
 const now = new Date();
 
@@ -635,6 +638,113 @@ function showTeamDetails(team, grudgeType, queryResults) {
 
 }
 
+/**
+ * Render active players against every team they previously played for.
+ * Primary relationships are darker; experience and shape distinguish veterans.
+ *
+ * @param {Array<Object>} players - Active player records from the database
+ * @param {Array<string>} displayTeams - Team abbreviations in chart order
+ */
+function renderAlumniHeatmap(players, displayTeams) {
+  const heatmap = document.getElementById('alumniHeatmap');
+  const teamColors = {
+    ATL: ['#a71930', '#fff'], BUF: ['#00338d', '#fff'], CAR: ['#0085ca', '#fff'],
+    CHI: ['#0b162a', '#fff'], CIN: ['#fb4f14', '#111'], CLE: ['#311d00', '#fff'],
+    CLT: ['#002c5f', '#fff'], CRD: ['#97233f', '#fff'], DAL: ['#041e42', '#fff'],
+    DEN: ['#fb4f14', '#111'], DET: ['#0076b6', '#fff'], GNB: ['#203731', '#fff'],
+    HTX: ['#03202f', '#fff'], JAX: ['#006778', '#fff'], KAN: ['#e31837', '#fff'],
+    LAC: ['#0080c6', '#fff'], MIA: ['#008e97', '#fff'], MIN: ['#4f2683', '#fff'],
+    NE: ['#002244', '#fff'], NOR: ['#d3bc8d', '#111'], NYG: ['#0b2265', '#fff'],
+    NYJ: ['#125740', '#fff'], PHI: ['#004c54', '#fff'], PIT: ['#ffb81c', '#111'],
+    RAI: ['#a5acaf', '#111'], RAM: ['#003594', '#fff'], RAV: ['#241773', '#fff'],
+    SEA: ['#002244', '#fff'], SFO: ['#aa0000', '#fff'], TAM: ['#d50a0a', '#fff'],
+    TEN: ['#0c2340', '#fff'], WAS: ['#5a1414', '#fff']
+  };
+  const teamColumns = displayTeams.map(team => ({
+    code: team,
+    name: teams[team]?.name || team,
+    databaseCode: team_name_map[team] || team,
+    color: teamColors[team]?.[0] || '#333',
+    textColor: teamColors[team]?.[1] || '#fff'
+  }));
+
+  const alumni = players.map(player => {
+    let history = {};
+    try {
+      history = JSON.parse((player.team_history || '{}').replace(/'/g, '"'));
+    } catch (error) {
+      console.warn(`Could not parse team history for ${player.name}:`, error);
+    }
+
+    const formerTeams = new Set(Object.keys(history));
+    const hasAlumniRelationship = teamColumns.some(column => formerTeams.has(column.databaseCode));
+    return { ...player, history, hasAlumniRelationship };
+  }).filter(player => player.hasAlumniRelationship)
+    .sort((playerA, playerB) => playerA.name.localeCompare(playerB.name));
+
+  const teamTiles = teamColumns.map(column => {
+    const currentTeamPlayers = alumni.filter(player => player.team === column.databaseCode);
+    const markers = currentTeamPlayers.flatMap(player => teamColumns
+      .filter(formerTeam => formerTeam.databaseCode !== column.databaseCode
+        && Object.prototype.hasOwnProperty.call(player.history, formerTeam.databaseCode))
+      .map(formerTeam => {
+      const years = Number(player.years_exp);
+      const veteran = Number.isFinite(years) && years >= 5;
+      const primary = player.initial_team === formerTeam.databaseCode;
+      const markerShape = veteran ? 'star' : 'circle';
+      const relationship = primary ? 'primary' : 'secondary';
+      const label = `${player.name}: ${primary ? 'primary' : 'secondary'} alumni of ${formerTeam.name}`;
+      return `<span class="alumni-player ${relationship} ${markerShape}" data-player="${player.gsis_id}" data-team="${formerTeam.code}" title="${label}" aria-label="${label}"><span>${player.name}</span></span>`;
+      })).join('');
+
+    return `<section class="alumni-team-tile" data-team="${column.code}" style="--team-color: ${column.color}; --team-text-color: ${column.textColor}">
+      <div class="alumni-team-tile-header">
+        <strong>${column.code}</strong>
+        <span class="alumni-visible-count">0 visible</span>
+      </div>
+      <div class="alumni-team-players">${markers || '<span class="alumni-team-empty">No former-team links</span>'}</div>
+    </section>`;
+  }).join('');
+
+  heatmap.innerHTML = `
+    <div class="alumni-heatmap-heading">
+      <div>
+        <h3>Active Alumni Map</h3>
+        <p>Each tile represents a former team. Hover a chart bar to trace its alumni across the board.</p>
+      </div>
+      <div class="alumni-heatmap-legend" aria-label="Heat map legend">
+        <span><i class="legend-marker circle primary"></i> Primary</span>
+        <span><i class="legend-marker circle secondary"></i> Secondary</span>
+        <span><i class="legend-marker star primary"></i> Veteran (5+ yrs)</span>
+      </div>
+    </div>
+    <div class="alumni-team-board">
+      ${teamTiles || '<p class="alumni-heatmap-empty">No active alumni relationships found.</p>'}
+    </div>`;
+}
+
+function highlightAlumniHeatmap(team) {
+  const heatmap = document.getElementById('alumniHeatmap');
+  if (!heatmap) return;
+
+  const visibleTeam = team || selectedAlumniTeam;
+  heatmap.querySelectorAll('.alumni-team-tile').forEach(tile => {
+    tile.classList.remove('highlighted');
+    tile.querySelector('.alumni-visible-count').textContent = '0 visible';
+  });
+  heatmap.querySelectorAll('.alumni-player').forEach(player => {
+    const isSelected = Boolean(visibleTeam && player.dataset.team === visibleTeam);
+    player.classList.toggle('highlighted', isSelected);
+    if (isSelected) {
+      player.closest('.alumni-team-tile').classList.add('highlighted');
+    }
+  });
+  heatmap.querySelectorAll('.alumni-team-tile').forEach(tile => {
+    const visibleCount = tile.querySelectorAll('.alumni-player.highlighted').length;
+    tile.querySelector('.alumni-visible-count').textContent = `${visibleCount} visible`;
+  });
+}
+
 // Get current week
 console.log('Getting current week...')
 for (let weekI in weekLengthInfo) {
@@ -858,6 +968,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // make bar chart
         const ctx = document.getElementById('alumniChart').getContext('2d');
+        const allActiveAlumni = db.exec(`SELECT gsis_id, name, position, team, team_history, initial_team, years_exp, headshot_url FROM players;`)[0]?.values.map(row => ({
+          gsis_id: row[0], name: row[1], position: row[2], team: row[3], team_history: row[4],
+          initial_team: row[5], years_exp: row[6], headshot_url: row[7]
+        })) || [];
+        renderAlumniHeatmap(allActiveAlumni, formatted_teams);
+
         const alumniChart = new Chart(ctx, {
           type: 'bar',
           data: {
@@ -880,6 +996,12 @@ document.addEventListener('DOMContentLoaded', () => {
           options: {
               responsive: true,
 
+              onHover: function(event, elements) {
+                const team = elements.length ? this.data.labels[elements[0].index] : null;
+                highlightAlumniHeatmap(team);
+                event.native.target.style.cursor = elements.length ? 'pointer' : 'default';
+              },
+
               onClick: async function(event, elements) {
                 if (!elements.length) {
                     return;
@@ -889,6 +1011,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Team corresponding to the clicked bar
                 const team = this.data.labels[element.index];
+                selectedAlumniTeam = team;
+                highlightAlumniHeatmap(team);
 
                 // Dataset that was clicked
                 const datasetIndex = element.datasetIndex;
