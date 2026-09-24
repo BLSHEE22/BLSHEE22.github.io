@@ -537,6 +537,19 @@
   position: relative;
 }
 
+.alumni-count-column {
+  cursor: pointer;
+}
+
+.alumni-count-column:hover,
+.alumni-count-column:focus-visible {
+  filter: brightness(1.15);
+}
+
+.alumni-count-column.selected-bar .alumni-count-bar {
+  box-shadow: 0 0 0 3px #f5c45d, 0 0 16px rgba(245, 196, 93, 0.65);
+}
+
 .alumni-count-value {
   color: #f5c45d;
   font-size: 0.7rem;

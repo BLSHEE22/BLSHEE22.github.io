@@ -20,13 +20,21 @@ function parseJson(value) {
   }
 }
 
-function renderCountChart(alumni, columns, originFilter, selectedCode, chartMetric) {
+function renderCountChart(alumni, columns, originFilter, selectedCode, chartMetric, highlightedTeam = null) {
   const chart = document.getElementById('alumniCountBars');
+  const chartTitle = document.getElementById('alumniCountChartTitle');
   const allCounts = getTeamCounts(alumni, columns, originFilter, chartMetric);
   const counts = selectedCode === 'all'
     ? allCounts
     : allCounts.filter(column => column.code === selectedCode);
   const metricLabel = chartMetric === 'experience' ? 'Total experience years' : 'Active ex-players';
+  if (originFilter === 'started') {
+    chartTitle.textContent = 'Which Teams Are Most Responsible for League-Wide Talent?';
+  } else if (originFilter === 'later') {
+    chartTitle.textContent = 'Which Teams Have the Most Non-Homegrown Alumni?';
+  } else {
+    chartTitle.textContent = 'Most Well-Represented Teams';
+  }
   const maxValue = Math.max(...counts.map(team => getMetricValue(team, chartMetric)), 1);
   const tickStep = Math.max(1, Math.ceil(maxValue / 5));
   const ticks = Array.from({length: Math.ceil(maxValue / tickStep) + 1}, (_, index) => index * tickStep).reverse();
@@ -38,7 +46,7 @@ function renderCountChart(alumni, columns, originFilter, selectedCode, chartMetr
       <div class="alumni-chart-columns">${counts.map(column => {
     const logo = `https://cdn.ssref.net/req/202508011/tlogo/pfr/${column.logo}.png`;
     const primaryValue = getMetricValue(column, chartMetric);
-    return `<div class="alumni-count-column" title="${column.name}: ${column.count} active ex-players, ${column.experienceYears} total league seasons">
+    return `<div class="alumni-count-column ${column.code === highlightedTeam ? 'selected-bar' : ''}" data-team="${column.code}" role="button" tabindex="0" aria-label="Select ${column.name}" title="${column.name}: ${column.count} active ex-players, ${column.experienceYears} total league seasons">
       <strong class="alumni-count-value">${primaryValue}</strong>
       <div class="alumni-count-bar" style="height: ${Math.round((primaryValue / maxValue) * 100)}%; background: ${column.color}"></div>
       <div class="alumni-count-category"><img src="${logo}" alt="${column.name} logo" loading="lazy"><span>${column.code}</span></div>
@@ -86,17 +94,18 @@ function renderMap(players) {
     headshots: parseJson(player.headshot_url)
   }));
   const selector = document.getElementById('alumniTeamSelect');
+  const chartContainer = document.getElementById('alumniCountBars');
   const originButtons = document.querySelectorAll('[data-origin-filter]');
   const metricButtons = document.querySelectorAll('[data-chart-metric]');
   let originFilter = 'all';
   let chartMetric = 'count';
   let playerSort = 'tenure';
   const updateTeamOptions = () => {
-    const currentTeam = selector.value;
+    const currentTeam = selector.value || 'all';
     const sortedTeams = getTeamCounts(alumni, columns, originFilter, chartMetric);
     selector.innerHTML = `<option value="all">All teams</option>${sortedTeams.map(column => `<option value="${column.code}">${column.name}</option>`).join('')}`;
     selector.value = currentTeam === 'all' || sortedTeams.some(column => column.code === currentTeam)
-      ? currentTeam || 'all'
+      ? currentTeam
       : sortedTeams[0].code;
   };
   updateTeamOptions();
@@ -156,6 +165,22 @@ function renderMap(players) {
     </div>`;
   };
 
+  const selectChartTeam = event => {
+    const bar = event.target.closest('[data-team]');
+    if (!bar || !chartContainer.contains(bar)) return;
+    selector.value = bar.dataset.team;
+    renderCountChart(alumni, columns, originFilter, 'all', chartMetric, selector.value);
+    renderSelectedTeam(selector.value);
+  };
+
+  chartContainer.addEventListener('click', selectChartTeam);
+  chartContainer.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      selectChartTeam(event);
+    }
+  });
+
   selector.addEventListener('change', event => {
     renderCountChart(alumni, columns, originFilter, event.target.value, chartMetric);
     renderSelectedTeam(event.target.value);
@@ -165,7 +190,7 @@ function renderMap(players) {
       originFilter = button.dataset.originFilter;
       originButtons.forEach(filterButton => filterButton.classList.toggle('active', filterButton === button));
       updateTeamOptions();
-      renderCountChart(alumni, columns, originFilter, selector.value, chartMetric);
+      renderCountChart(alumni, columns, originFilter, 'all', chartMetric, selector.value);
       renderSelectedTeam(selector.value);
     });
   });
@@ -174,7 +199,7 @@ function renderMap(players) {
       chartMetric = button.dataset.chartMetric;
       metricButtons.forEach(metricButton => metricButton.classList.toggle('active', metricButton === button));
       updateTeamOptions();
-      renderCountChart(alumni, columns, originFilter, selector.value, chartMetric);
+      renderCountChart(alumni, columns, originFilter, 'all', chartMetric, selector.value);
       renderSelectedTeam(selector.value);
     });
   });
