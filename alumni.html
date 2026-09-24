@@ -33,7 +33,13 @@
           <span>League overview</span>
           <h2 id="alumniCountChartTitle">Active ex-players by former team</h2>
         </div>
-        <p>Counts update with the player origin filter.</p>
+        <div class="alumni-chart-metric-filter" role="group" aria-label="Chart metric">
+          <span>Measure</span>
+          <div class="alumni-origin-filter-buttons">
+            <button type="button" class="active" data-chart-metric="count">Ex-players</button>
+            <button type="button" data-chart-metric="experience">Total experience years</button>
+          </div>
+        </div>
       </div>
       <div id="alumniCountBars" class="alumni-count-bars"></div>
     </section>
