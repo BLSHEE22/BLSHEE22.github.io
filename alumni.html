@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Active Alumni Map | NFL Grudge Match Detector</title>
+  <link rel="icon" type="image/png" href="images/swords2.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="alumni-page">
+  <main class="alumni-map-shell">
+    <header class="alumni-map-header">
+      <div>
+        <a class="back-link" href="index.html">Back to Grudge Matches</a>
+        <h1>Active Alumni Map</h1>
+        <p>Choose a team to see its active ex-players. Players currently on the selected team are excluded.</p>
+      </div>
+      <label class="alumni-team-selector" for="alumniTeamSelect">Former team
+        <select id="alumniTeamSelect"></select>
+      </label>
+      <div class="alumni-origin-filter" role="group" aria-label="Filter alumni by origin">
+        <span>Player origin</span>
+        <div class="alumni-origin-filter-buttons">
+          <button type="button" class="active" data-origin-filter="all">All</button>
+          <button type="button" data-origin-filter="started">Started w/team</button>
+          <button type="button" data-origin-filter="later">Joined later</button>
+        </div>
+      </div>
+    </header>
+    <section class="alumni-count-chart" aria-labelledby="alumniCountChartTitle">
+      <div class="alumni-count-chart-heading">
+        <div>
+          <span>League overview</span>
+          <h2 id="alumniCountChartTitle">Active ex-players by former team</h2>
+        </div>
+        <p>Counts update with the player origin filter.</p>
+      </div>
+      <div id="alumniCountBars" class="alumni-count-bars"></div>
+    </section>
+    <div id="alumniHeatmap" class="alumni-heatmap" aria-label="Active alumni by former team"></div>
+  </main>
+  <script src="https://sql.js.org/dist/sql-wasm.js"></script>
+  <script type="module" src="js/alumni.js"></script>
+</body>
+</html>

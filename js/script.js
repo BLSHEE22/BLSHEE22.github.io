@@ -647,6 +647,7 @@ function showTeamDetails(team, grudgeType, queryResults) {
  */
 function renderAlumniHeatmap(players, displayTeams) {
   const heatmap = document.getElementById('alumniHeatmap');
+  if (!heatmap) return;
   const teamColors = {
     ATL: ['#a71930', '#fff'], BUF: ['#00338d', '#fff'], CAR: ['#0085ca', '#fff'],
     CHI: ['#0b162a', '#fff'], CIN: ['#fb4f14', '#111'], CLE: ['#311d00', '#fff'],
