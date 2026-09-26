@@ -20,6 +20,18 @@ function parseJson(value) {
   }
 }
 
+function getTeamHistoryCodes(team) {
+  return [...new Set([team.code, team.databaseCode])];
+}
+
+function hasTeamHistory(player, team) {
+  return getTeamHistoryCodes(team).some(code => Object.hasOwn(player.history, code));
+}
+
+function getTeamSeasons(player, team) {
+  return getTeamHistoryCodes(team).reduce((seasons, code) => seasons.concat(player.history[code] || []), []);
+}
+
 function renderCountChart(alumni, columns, originFilter, selectedCode, chartMetric, highlightedTeam = null) {
   const chart = document.getElementById('alumniCountBars');
   const chartTitle = document.getElementById('alumniCountChartTitle');
@@ -64,11 +76,12 @@ function getMetricValue(team, chartMetric) {
 function getTeamCounts(alumni, columns, originFilter, chartMetric = 'count') {
   return columns.map(column => ({
     ...column,
-    matchingPlayers: alumni.filter(player => player.team !== column.databaseCode
-      && Object.hasOwn(player.history, column.databaseCode)
+    matchingPlayers: alumni.filter(player => player.team !== column.code
+      && player.team !== column.databaseCode
+      && hasTeamHistory(player, column)
       && (originFilter === 'all'
-        || (originFilter === 'started' && player.initial_team === column.databaseCode)
-        || (originFilter === 'later' && player.initial_team !== column.databaseCode))),
+        || (originFilter === 'started' && getTeamHistoryCodes(column).includes(player.initial_team))
+        || (originFilter === 'later' && !getTeamHistoryCodes(column).includes(player.initial_team)))),
   })).map(column => ({
     ...column,
     count: column.matchingPlayers.length,
@@ -112,21 +125,21 @@ function renderMap(players) {
   renderCountChart(alumni, columns, originFilter, selector.value, chartMetric);
 
   const getCurrentTeam = player => {
-    const currentCode = Object.keys(teams).find(code => (teamNameMap[code] || code) === player.team) || player.team;
+    const currentCode = Object.keys(teams).find(code => [code, teamNameMap[code] || code].includes(player.team)) || player.team;
     return columns.find(column => column.code === currentCode);
   };
 
   const renderPlayerCard = (player, selected, maxSeasons) => {
     const currentTeam = getCurrentTeam(player);
     const headshot = player.headshots[player.team] || '';
-    const tenure = selected ? player.history[selected.databaseCode]?.length || 0 : 0;
+    const tenure = selected ? getTeamSeasons(player, selected).length : 0;
     const overallExperience = Number(player.years_exp) || 0;
     const shadeValue = playerSort === 'experience' ? overallExperience : tenure;
     const shadeClass = playerSort === 'experience'
       ? (shadeValue >= 15 ? 'tenure-long' : shadeValue >= 10 ? 'tenure-mid' : 'tenure-short')
       : (shadeValue >= 5 ? 'tenure-long' : shadeValue >= 3 ? 'tenure-mid' : 'tenure-short');
-    const startedHere = selected && player.initial_team === selected.databaseCode;
-    const formerTeams = columns.filter(column => Object.hasOwn(player.history, column.databaseCode));
+    const startedHere = selected && getTeamHistoryCodes(selected).includes(player.initial_team);
+    const formerTeams = columns.filter(column => hasTeamHistory(player, column));
     return `<article class="alumni-player-card ${shadeClass} ${startedHere ? 'started-here' : 'joined-later'}">
       ${headshot ? `<img class="alumni-player-photo" src="${headshot}" alt="${player.name}" loading="lazy" onerror="this.style.display='none'">` : '<div class="alumni-player-photo alumni-player-photo-empty">?</div>'}
       <div class="alumni-player-card-info"><div class="alumni-player-name-row"><h3>${player.name}</h3>${selected ? `<span class="alumni-origin-badge">${startedHere ? 'Started here' : 'Joined later'}</span>` : ''}</div><p>${player.position || 'Position unknown'} · Now with ${currentTeam?.name || player.team}</p>
@@ -143,13 +156,14 @@ function renderMap(players) {
     const selected = columns.find(column => column.code === rosterTeamCode);
     if (!selected) return;
     const exPlayers = alumni.filter(player => player.team !== selected.databaseCode
-      && Object.hasOwn(player.history, selected.databaseCode)
+      && player.team !== selected.code
+      && hasTeamHistory(player, selected)
       && (originFilter === 'all'
-        || (originFilter === 'started' && player.initial_team === selected.databaseCode)
-        || (originFilter === 'later' && player.initial_team !== selected.databaseCode)))
+        || (originFilter === 'started' && getTeamHistoryCodes(selected).includes(player.initial_team))
+        || (originFilter === 'later' && !getTeamHistoryCodes(selected).includes(player.initial_team))))
       .map(player => ({
         ...player,
-        seasonsWithSelectedTeam: player.history[selected.databaseCode].length
+        seasonsWithSelectedTeam: getTeamSeasons(player, selected).length
       }))
       .sort((playerA, playerB) => {
         const valueA = playerSort === 'experience' ? Number(playerA.years_exp) || 0 : playerA.seasonsWithSelectedTeam;

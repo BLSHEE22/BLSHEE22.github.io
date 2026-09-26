@@ -1025,11 +1025,14 @@ document.addEventListener('DOMContentLoaded', () => {
                   const queryTeam = team_name_map[team] || team;
 
                     async function findActiveAlumni(team, datasetIndex) {
+                      const teamCodes = [...new Set([team, team_db_name_to_irl_name[team] || team])];
+                      const currentTeamClause = teamCodes.map(code => `team != '${code}'`).join(' AND ');
+                      const historyClause = teamCodes.map(code => `instr(team_history, '${code}') > 0`).join(' OR ');
 
                       const activeAlumniQuery =
                         `SELECT gsis_id, name, position, team, team_history, initial_team, years_exp,
-                         headshot_url FROM players WHERE team != '${team}' AND 
-                         instr(team_history, '${team}') > 0;`;
+                         headshot_url FROM players WHERE ${currentTeamClause} AND
+                         (${historyClause});`;
                       const results = db.exec(activeAlumniQuery);
                       if (results.length === 0) {
                         document.getElementById('results').textContent = "Query executed successfully. No rows returned.";
