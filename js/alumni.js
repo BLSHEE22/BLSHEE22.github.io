@@ -174,7 +174,7 @@ function renderMap(players) {
     const selectedLogo = `https://cdn.ssref.net/req/202508011/tlogo/pfr/${selected.logo}.png`;
     const cards = exPlayers.map(player => renderPlayerCard(player, selected, maxSeasons)).join('');
     heatmap.innerHTML = `<div class="alumni-selected-team" style="--team-color: ${selected.color}; --team-text-color: ${selected.textColor}">
-      <div class="alumni-selected-team-heading"><img src="${selectedLogo}" alt="${selected.name} logo"><div><span>Ex-players of</span><h2>${selected.name}</h2><p>${exPlayers.length} active ${exPlayers.length === 1 ? 'ex-player' : 'ex-players'} · Sorted by ${playerSort === 'experience' ? 'overall experience' : 'time spent with this team'}</p></div><div class="alumni-player-sort" role="group" aria-label="Sort players"><span>Sort By:</span><div class="alumni-origin-filter-buttons"><button type="button" class="${playerSort === 'tenure' ? 'active' : ''}" data-player-sort="tenure">Seasons with team</button><button type="button" class="${playerSort === 'experience' ? 'active' : ''}" data-player-sort="experience">Overall experience years</button></div></div></div>
+      <div class="alumni-selected-team-heading"><img src="${selectedLogo}" alt="${selected.name} logo"><div><span>Ex-players of</span><h2>${selected.name}</h2><p>${exPlayers.length} active ${exPlayers.length === 1 ? 'ex-player' : 'ex-players'} · Sorted by ${playerSort === 'experience' ? 'overall experience' : 'time spent with this team'}</p></div><div class="alumni-player-sort" role="group" aria-label="Sort players"><span>Sort By:</span><div class="alumni-origin-filter-buttons"><button type="button" class="${playerSort === 'tenure' ? 'active' : ''}" data-player-sort="tenure">Seasons with team</button><button type="button" class="${playerSort === 'experience' ? 'active' : ''}" data-player-sort="experience">Overall experience</button></div></div></div>
       <div class="alumni-player-grid">${cards || '<p class="alumni-heatmap-empty">No active ex-players found for this team.</p>'}</div>
     </div>`;
   };
@@ -196,7 +196,7 @@ function renderMap(players) {
   });
 
   selector.addEventListener('change', event => {
-    renderCountChart(alumni, columns, originFilter, event.target.value, chartMetric);
+    renderCountChart(alumni, columns, originFilter, 'all', chartMetric, event.target.value);
     renderSelectedTeam(event.target.value);
   });
   originButtons.forEach(button => {

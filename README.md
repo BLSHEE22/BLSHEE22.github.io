@@ -1,8 +1,8 @@
-# NFL Grudge Match Detector
-What is a grudge match?
-- A “grudge match” occurs when a player faces off against his former team.
+# NFL Revenge Game Finder
+What is a revenge game?
+- A “revenge game” occurs when a player faces off against his former team.
 
-Types of Grudge Matches
+Types of Revenge Games
 - Primary → Against the team where the player played their first snap
 - Secondary → Against any other team the player played for previously
 

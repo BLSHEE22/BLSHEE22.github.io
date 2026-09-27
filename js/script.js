@@ -49,8 +49,10 @@ let weekNum = 1;
 // total count of grudge matches
 let totalGrudges = 0;
 
-// list of all notable (career AV >= 30) grudge matches in current week
-let notableGrudges = [];
+let fantasyGrudges = [];
+let nonFantasyGrudges = [];
+
+const fantasyPositions = ['QB', 'RB', 'WR', 'TE', 'K'];
 
 // Keep the clicked team visible when the pointer leaves the chart.
 let selectedAlumniTeam = null;
@@ -108,7 +110,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
    * @param {string} opposingTeam - Abbreviation of the opposing team.
    * @returns {list[string]} - List of HTML strings representing each player.
    */
-  function formatQueryData(result, currTeam, opposingTeam) {
+  function formatQueryData(result, currTeam, opposingTeam, opposingTeamCodes) {
     let htmlList = [];
     const columnNames = result['columns'];
     const players = result['values'];
@@ -119,8 +121,11 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
     console.log(sortedPlayers);
     for (let player of sortedPlayers) {
       let html = "";
-      const headshotUrl = JSON.parse(player[columnNames.indexOf('headshot_url')].replace(/'/g, '"'))[currTeam];
-      const grudgeHeadshotUrl = JSON.parse(player[columnNames.indexOf('headshot_url')].replace(/'/g, '"'))[opposingTeam]
+      const playerHistory = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'));
+      const headshots = JSON.parse(player[columnNames.indexOf('headshot_url')].replace(/'/g, '"'));
+      const opposingHistoryCode = opposingTeamCodes.find(code => Object.hasOwn(playerHistory, code));
+      const headshotUrl = headshots[player[columnNames.indexOf('team')]];
+      const grudgeHeadshotUrl = opposingHistoryCode ? headshots[opposingHistoryCode] : null;
       console.log(grudgeHeadshotUrl)
       //const headshotUrl = `https://www.pro-football-reference.com/req/20230307/images/headshots/${player[columnNames.indexOf('player_id')]}`;
       //const headshotYear = '2025';
@@ -128,11 +133,12 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
       const position = player[columnNames.indexOf('position')];
       // if opposing team is player's original team, mark the grudge primary
       let grudgeType = 'Formerly on the ' + teams[opposingTeam]["name"];
-      if (player[columnNames.indexOf('initial_team')] == opposingTeam) {
+      if (opposingTeamCodes.includes(player[columnNames.indexOf('initial_team')])) {
           grudgeType = '<span><u>Started with the ' + teams[opposingTeam]["name"] + '</u></span>';
       }
       // store only relevant player team history
-      let seasons = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'))[opposingTeam];
+      const grudgeSeasons = opposingHistoryCode ? [...new Set(playerHistory[opposingHistoryCode])] : [];
+      let seasons = [...grudgeSeasons];
       let grudge_season_count = seasons.length
       if (seasons.length > 1) {
         seasons = seasons.join(", ");
@@ -190,25 +196,27 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
       html += `${position}<br/>`;
       html += `${grudgeType}<br/>`;
       console.log(`Opposing Team: ${opposingTeam}`);
-      let currTeamTranslated = currTeam;
-      if (['SDG', 'OTI', 'NWE'].includes(currTeam)) {
-        currTeamTranslated = team_db_name_to_irl_name[currTeam];
-      }
-      let opposingTeamTranslated = opposingTeam;
-      if (['SDG', 'OTI', 'NWE'].includes(opposingTeam)) {
-        opposingTeamTranslated = team_db_name_to_irl_name[opposingTeam];
-      }
+      const currTeamTranslated = team_db_name_to_irl_name[currTeam] || currTeam;
+      const opposingTeamTranslated = team_db_name_to_irl_name[opposingTeam] || opposingTeam;
       html += `Seasons with ${opposingTeamTranslated}: ${seasons}<br/>`;
       html += `Years Spent: ${positionRk}${playerCareerValue}<br/><br/>`;
       htmlList.push(html);
       console.log(`Converted ${name} player information to HTML.`);
       if (!custom) {
-        if (positionRk != 'N/A') {
-          let numericPositionRk = parseInt(positionRk, 10);
-          // if player career AV >= 30, add to notable grudges
-          if (numericPositionRk >= 3) {
-            const notableGrudgeObj = [[name, playerCareerValue, position, currTeamTranslated, opposingTeamTranslated], numericPositionRk]
-            notableGrudges.push(notableGrudgeObj);
+        if (position && position !== 'Unknown') {
+          const grudge = {
+            name,
+            position,
+            currentTeam: currTeamTranslated,
+            opposingTeam: opposingTeamTranslated,
+            seasons: grudgeSeasons,
+            primary: opposingTeamCodes.includes(player[columnNames.indexOf('initial_team')]),
+            headshotUrl
+          };
+          if (fantasyPositions.includes(position)) {
+            fantasyGrudges.push(grudge);
+          } else {
+            nonFantasyGrudges.push(grudge);
           }
         }
         totalGrudges++;
@@ -227,16 +235,15 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
    */
   function getGrudges(currTeam, opposingTeam, custom) {
     let grudges = [];
-    if (currTeam in team_name_map) {
-        currTeam = team_name_map[currTeam];
-    }
-    if (opposingTeam in team_name_map) {
-      opposingTeam = team_name_map[opposingTeam];
-    }
+    const currentTeamCode = currTeam === 'LAC' ? currTeam : team_name_map[currTeam] || currTeam;
+    const opposingTeamCodes = opposingTeam === 'LAC'
+      ? ['LAC', team_name_map[opposingTeam]]
+      : [team_name_map[opposingTeam] || opposingTeam];
     // form query
     try {
-      const query = `SELECT gsis_id, name, position, team, team_history, initial_team, years_exp, headshot_url FROM players WHERE team == '${currTeam}' AND 
-                    instr(team_history, '${opposingTeam}') > 0;`;
+      const historyConditions = opposingTeamCodes.map(code => `instr(team_history, '${code}') > 0`).join(' OR ');
+      const query = `SELECT gsis_id, name, position, team, team_history, initial_team, years_exp, headshot_url FROM players WHERE team == '${currentTeamCode}' AND
+                    (${historyConditions});`;
       // const query = document.getElementById('query').value;
       document.getElementById('query').textContent = query;
       const results = db.exec(query);
@@ -248,7 +255,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
         //   const rows = res.values.map(row => row.join('\t')).join('\n');
         //   return headers + '\n' + rows;
         // }).join('\n\n');
-        let formattedPlayers = formatQueryData(results[0], currTeam, opposingTeam, custom);
+        let formattedPlayers = formatQueryData(results[0], currTeam, opposingTeam, opposingTeamCodes, custom);
         for (let player of formattedPlayers) {
           grudges.push(player);
         }
@@ -792,27 +799,52 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create intro block with total number of player grudge matches now counted
     let weekObj = document.getElementById('what-week-is-it');
 
+    if (weekNum > 0) {
+      const fantasyPlayers = [...fantasyGrudges].sort((playerA, playerB) =>
+        Number(playerB.primary) - Number(playerA.primary)
+        || playerB.seasons.length - playerA.seasons.length
+        || fantasyPositions.indexOf(playerA.position) - fantasyPositions.indexOf(playerB.position)
+        || playerA.name.localeCompare(playerB.name));
+      const otherPositionPlayers = [...nonFantasyGrudges].sort((playerA, playerB) =>
+        Number(playerB.primary) - Number(playerA.primary)
+        || playerB.seasons.length - playerA.seasons.length
+        || (position_order[playerA.position] ?? 999) - (position_order[playerB.position] ?? 999)
+        || playerA.name.localeCompare(playerB.name));
+      const fantasySection = document.getElementById('fantasyGrudgeSection');
+      const fantasyList = document.getElementById('fantasyGrudgeList');
+      const nonFantasySection = document.getElementById('nonFantasyGrudgeSection');
+      const nonFantasyList = document.getElementById('nonFantasyGrudgeList');
+      const nonFantasyToggle = document.getElementById('nonFantasyGrudgeToggle');
+      const renderGrudgeCards = (players, emptyMessage) => players.length
+        ? players.map(player => {
+            const seasons = player.primary
+              ? `<span class="rookie-season">${player.seasons[0]}</span><span class="rookie-year-note"></span>${player.seasons.length > 1 ? `, ${player.seasons.slice(1).join(', ')}` : ''}`
+              : player.seasons.join(', ');
+            return `<li class="fantasy-grudge-item ${player.primary ? 'primary-grudge' : ''}">
+              <span class="fantasy-player-photo">${player.headshotUrl ? `<img src="${player.headshotUrl}" alt="${player.name}" loading="lazy" onerror="this.style.display='none'">` : ''}</span>
+              <span class="fantasy-position">${player.position}</span>
+              <div class="fantasy-player-info"><strong>${player.name}</strong><span>${teams[player.currentTeam]?.name || player.currentTeam} vs. ${teams[player.opposingTeam]?.name || player.opposingTeam}</span><div class="fantasy-grudge-meta"><small>${player.seasons.length} ${player.seasons.length === 1 ? 'season' : 'seasons'} with opponent · ${seasons}</small>${player.primary ? `<small class="primary-origin">Started with ${teams[player.opposingTeam]?.name || player.opposingTeam}</small>` : ''}</div></div>
+            </li>`;
+          }).join('')
+        : `<li class="fantasy-grudge-empty">${emptyMessage}</li>`;
+      document.getElementById('fantasyGrudgeCount').textContent = `${fantasyPlayers.length} eligible ${fantasyPlayers.length === 1 ? 'player' : 'players'}`;
+      fantasyList.innerHTML = renderGrudgeCards(fantasyPlayers, 'No QB, RB, WR, TE, or K grudge matchups this week.');
+      fantasySection.hidden = false;
+      document.getElementById('nonFantasyGrudgeCount').textContent = `${otherPositionPlayers.length} eligible ${otherPositionPlayers.length === 1 ? 'player' : 'players'}`;
+      nonFantasyList.innerHTML = renderGrudgeCards(otherPositionPlayers, 'No other position grudge matchups this week.');
+      nonFantasySection.hidden = false;
+      nonFantasyToggle.hidden = otherPositionPlayers.length <= 9;
+      nonFantasyToggle.textContent = `Show all ${otherPositionPlayers.length} players`;
+      nonFantasyToggle.addEventListener('click', () => {
+        const expanded = nonFantasyList.classList.toggle('expanded');
+        nonFantasyToggle.setAttribute('aria-expanded', String(expanded));
+        nonFantasyToggle.textContent = expanded ? 'Show fewer players' : `Show all ${otherPositionPlayers.length} players`;
+      });
+    }
+
     // if season has started, print the count of grudge matches in current week, else create countdown clock
     if (weekNum > 0) {
-        let notableContent = `
-          <p>There are ${totalGrudges} grudge matches taking place in <a href=#upcoming-week> week ${weekNum}</a>, most notably:</p><ol>`;
-          notableGrudges = notableGrudges.sort((a, b) => b[1] - a[1]);
-          // maximum of 10 notable players
-          if (notableGrudges.length > 10) {
-            notableGrudges = notableGrudges.slice(0, 10);
-          }
-          for (let grudgeObj of notableGrudges) {
-            // unpack content
-            const grudgeContent = grudgeObj[0];
-            const name = grudgeContent[0];
-            const playerCareerValue = grudgeContent[1];
-            const position = grudgeContent[2];
-            let currTeam = grudgeContent[3];
-            let opposingTeam = grudgeContent[4];
-            notableContent += `<li><strong>${name}${playerCareerValue}</strong> (${position}, ${currTeam}) against the ${teams[opposingTeam]['name']}</li><br>`;
-          }
-          notableContent += `</ol>`;
-          weekObj.innerHTML += notableContent;
+      weekObj.innerHTML = `<p>${totalGrudges}</p>`;
     }
     else {
         weekObj.innerHTML = `No, the regular season has not started yet.<br><br>
@@ -935,7 +967,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // write superlative team to header
         const full_team_name = teams[formatted_teams[0]]['name']
-        document.getElementById('activeGrudgeHeader').innerHTML = `The <strong>${full_team_name}</strong> have the greatest number of active alumni this season.`;
+        document.getElementById('activeGrudgeHeader').innerHTML = `The <strong>${full_team_name}</strong> have the greatest number of active alumni at the moment.`;
 
         // setup bar chart colors
         const teamConferences = {

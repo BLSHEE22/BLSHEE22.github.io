@@ -955,3 +955,623 @@
     width: 100%;
   }
 }
+
+.home-shell {
+  margin: 0 auto;
+  max-width: 1920px;
+}
+
+.home-header {
+  align-items: center;
+  border-bottom: 1px solid #2d4059;
+  margin-bottom: 0;
+  padding-bottom: 1.5rem;
+}
+
+.home-header h1 {
+  font-size: 3rem;
+  line-height: 1;
+  margin: 0.65rem 0;
+}
+
+.home-header p {
+  color: #b9c5d6;
+  margin: 0;
+}
+
+.home-eyebrow,
+.home-section-heading > div > span {
+  color: #82c8ff;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.home-page .alumni-map-link {
+  background: #f5c45d;
+  border-radius: 4px;
+  color: #101827;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.home-page .alumni-map-link:hover,
+.home-page .alumni-map-link:focus-visible {
+  background: #ffd77a;
+}
+
+.home-featured {
+  align-items: center;
+  display: grid;
+  gap: 3rem;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.85fr);
+  margin: 2.5rem auto 3rem;
+  max-width: 1800px;
+}
+
+.home-featured-copy h2 {
+  font-size: 2.4rem;
+  line-height: 1.08;
+  margin: 0.65rem 0 1rem;
+}
+
+.home-cover {
+  aspect-ratio: 16 / 9;
+  display: block;
+  height: auto;
+  max-height: 370px;
+  object-fit: cover;
+  width: 100%;
+}
+
+#what-week-is-it {
+  color: #d5e0ee;
+  max-width: 760px;
+}
+
+#what-week-is-it > p {
+  color: #b9c5d6;
+  margin: 0 0 0.8rem;
+}
+
+#what-week-is-it a {
+  color: #82c8ff;
+}
+
+.home-section {
+  background: #111c2c;
+  border: 1px solid #2d4059;
+  margin: 0 auto 1.5rem;
+  max-width: 1800px;
+  padding: clamp(1rem, 2vw, 1.6rem);
+}
+
+.home-section-heading {
+  align-items: end;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.home-section-heading h2 {
+  font-size: 1.6rem;
+  margin: 0.25rem 0 0;
+}
+
+.home-section-heading #weekSlateHeader {
+  color: #b9c5d6;
+  text-align: right;
+}
+
+.home-section-heading #weekSlateHeader h2 {
+  color: #f4f7fb;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.home-section-heading #weekSlateHeader p {
+  font-size: 0.72rem;
+  margin: 0.25rem 0 0;
+}
+
+.home-week-grid {
+  display: grid;
+  gap: 1rem 2rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.home-week-grid > * {
+  border-top: 1px solid #2d4059;
+  display: block;
+  min-width: 0;
+  padding-top: 1rem;
+}
+
+.home-week-grid h3 {
+  color: #f5c45d;
+  font-size: 1rem;
+  margin: 0 0 0.7rem;
+}
+
+.home-week-grid center {
+  text-align: left;
+}
+
+.home-week-grid > * > p {
+  color: #d5e0ee;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  margin: 0.6rem 0;
+}
+
+.home-week-grid > * > p strong {
+  color: #f4f7fb;
+}
+
+.home-page #matchupSelector {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  text-align: left;
+}
+
+.home-page .input-box {
+  background: #0b1524;
+  border: 1px solid #40556d;
+  border-radius: 4px;
+  box-shadow: none;
+  color: #b9c5d6;
+  padding: 1rem;
+}
+
+.home-page .input-box label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.home-page select {
+  background: #f4f7fb;
+  border: 0;
+  border-radius: 4px;
+  color: #101827;
+  font: inherit;
+  margin-top: 0.55rem;
+  padding: 0.75rem;
+  width: 100%;
+}
+
+#response-area {
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.home-page .dropdown-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  cursor: pointer;
+  display: table !important;
+  margin: 0;
+  overflow: hidden;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.home-page .dropdown-table th {
+  background: #20354f;
+  border-bottom: 1px solid #40556d;
+  box-sizing: border-box;
+  padding: 0.65rem;
+  position: relative;
+  text-align: center;
+}
+
+.home-page .dropdown-table th img {
+  background: #f4f7fb;
+  border-radius: 50%;
+  height: 42px;
+  object-fit: contain;
+  padding: 0.2rem;
+  vertical-align: middle;
+  width: 42px;
+}
+
+.home-page .dropdown-table td {
+  background: #0b1524;
+  border-bottom: 1px solid #2d4059;
+  box-sizing: border-box;
+  color: #d5e0ee;
+  padding: 0.75rem !important;
+  text-align: center;
+  vertical-align: top;
+  white-space: normal;
+}
+
+.home-page .dropdown-table tbody {
+  display: none;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.home-page .dropdown-table tbody.open {
+  display: table-row-group;
+  max-height: 2000px;
+  opacity: 1;
+}
+
+.home-page .caret {
+  border-color: #f5c45d;
+  height: 8px;
+  left: auto;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-65%) rotate(45deg);
+  width: 8px;
+}
+
+.home-page .dropdown-table thead.open .caret {
+  transform: translateY(-25%) rotate(225deg);
+}
+
+.home-page .pulse-box-primary,
+.home-page .pulse-box-secondary {
+  min-height: 1px;
+  padding: 0.4rem !important;
+}
+
+.home-page .pulse-box-primary {
+  border-left: 3px solid #f5c45d;
+}
+
+.home-page .pulse-box-secondary {
+  border-left: 3px solid #82c8ff;
+}
+
+.home-page .fade-wrapper {
+  margin-bottom: 0.4rem;
+}
+
+.home-stat-highlight {
+  color: #d5e0ee;
+  margin: 0 0 0.75rem;
+}
+
+.fantasy-grudge-section .home-section-heading p {
+  color: #b9c5d6;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.fantasy-grudge-list {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fantasy-grudge-item {
+  align-items: center;
+  background: #0b1524;
+  border: 1px solid #2d4059;
+  border-left: 3px solid #2d4059;
+  border-radius: 4px;
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: 72px 34px minmax(0, 1fr);
+  min-height: 106px;
+  min-width: 0;
+  padding: 0.6rem;
+}
+
+.fantasy-grudge-item.primary-grudge {
+  border-left-color: red;
+}
+
+.fantasy-player-photo {
+  background: #20354f;
+  border-radius: 4px;
+  height: 94px;
+  overflow: hidden;
+  width: 72px;
+}
+
+.fantasy-position {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  height: 34px;
+  justify-content: center;
+  width: 34px;
+}
+
+.fantasy-player-photo img {
+  border-radius: 3px;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+#fantasyGrudgeList .fantasy-grudge-item {
+  grid-template-columns: 78px 34px minmax(0, 1fr);
+}
+
+#fantasyGrudgeList .fantasy-player-photo {
+  height: 100px;
+  width: 78px;
+}
+
+.fantasy-position {
+  background: #f5c45d;
+  border-radius: 4px;
+  color: #101827;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.fantasy-player-info {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.fantasy-player-info strong,
+.fantasy-player-info span,
+.fantasy-player-info small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fantasy-player-info strong {
+  color: #f4f7fb;
+  font-size: 0.92rem;
+}
+
+#fantasyGrudgeList .fantasy-player-info > strong {
+  font-size: 1rem;
+}
+
+.fantasy-player-info span {
+  color: #d5e0ee;
+  font-size: 0.78rem;
+}
+
+.fantasy-player-info small {
+  color: #b9c5d6;
+  font-size: 0.68rem;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.fantasy-grudge-meta {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.fantasy-player-info small .rookie-season {
+  color: inherit;
+  font-size: inherit;
+}
+
+.rookie-year-note {
+  color: #f4f7fb;
+  font-size: 0.64rem;
+  font-weight: 700;
+}
+
+.fantasy-grudge-meta small {
+  flex: 1 1 100%;
+}
+
+.fantasy-grudge-meta .primary-origin {
+  color: #b9c5d6;
+  font-size: 0.55rem;
+}
+
+.fantasy-grudge-empty {
+  color: #b9c5d6;
+  grid-column: 1 / -1;
+  padding: 0.5rem 0;
+}
+
+#nonFantasyGrudgeList:not(.expanded) > .fantasy-grudge-item:nth-child(n + 10) {
+  display: none;
+}
+
+.grudge-list-toggle {
+  background: #1b293b;
+  border: 1px solid #40556d;
+  border-radius: 4px;
+  color: #d5e0ee;
+  cursor: pointer;
+  font: inherit;
+  margin-top: 0.85rem;
+  padding: 0.55rem 0.75rem;
+}
+
+.grudge-list-toggle:hover,
+.grudge-list-toggle:focus-visible {
+  background: #263c56;
+}
+
+.grudge-list-toggle[hidden] {
+  display: none;
+}
+
+.home-stat-highlight strong {
+  color: #f5c45d;
+}
+
+#teamAlumniData {
+  max-width: 1100px;
+}
+
+#teamAlumniData canvas {
+  max-height: 400px;
+  max-width: 100%;
+}
+
+.home-page .team-details-table {
+  color: #d5e0ee;
+}
+
+.home-page .team-details-table th {
+  background: #20354f;
+  color: #f4f7fb;
+}
+
+.home-page .team-details-table td {
+  background: #0b1524;
+}
+
+.home-page .team-details-table th,
+.home-page .team-details-table td {
+  border-bottom-color: #2d4059;
+}
+
+.home-query-tools {
+  color: #b9c5d6;
+  margin: 1rem auto;
+  max-width: 1800px;
+}
+
+.home-query-tools summary {
+  cursor: pointer;
+  padding: 0.5rem 0;
+}
+
+.home-query-tools label,
+.home-query-tools textarea,
+.home-query-tools button {
+  display: block;
+  margin-top: 0.6rem;
+}
+
+.home-query-tools textarea {
+  box-sizing: border-box;
+  min-height: 5rem;
+  width: 100%;
+}
+
+.home-query-tools button {
+  background: #f5c45d;
+  border: 0;
+  border-radius: 4px;
+  color: #101827;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.6rem 0.9rem;
+}
+
+.home-query-tools pre {
+  color: #d5e0ee;
+  max-height: 18rem;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 760px) {
+  .home-header {
+    align-items: flex-start;
+  }
+
+  .home-header h1 {
+    font-size: 2.35rem;
+  }
+
+  .home-featured {
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr);
+    margin: 1.8rem auto;
+  }
+
+  .home-featured-copy h2 {
+    font-size: 1.9rem;
+  }
+
+  .home-featured-copy {
+    order: 1;
+  }
+
+  .home-cover {
+    max-height: 280px;
+    order: 0;
+  }
+
+  #what-week-is-it ol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-week-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fantasy-grudge-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .home-header {
+    display: block;
+  }
+
+  .home-page .alumni-map-link {
+    display: inline-block;
+    margin-top: 1rem;
+  }
+
+  .home-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .home-section-heading #weekSlateHeader {
+    text-align: left;
+  }
+
+  .home-page #matchupSelector {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-page .dropdown-table th img {
+    height: 34px;
+    width: 34px;
+  }
+
+  .home-page .dropdown-table td {
+    font-size: 0.75rem !important;
+    padding: 0.45rem !important;
+  }
+
+  .fantasy-grudge-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fantasy-grudge-item {
+    gap: 0.4rem;
+    grid-template-columns: 56px 34px minmax(0, 1fr);
+  }
+
+  .fantasy-player-photo {
+    height: 74px;
+    width: 56px;
+  }
+
+  #fantasyGrudgeList .fantasy-grudge-item {
+    grid-template-columns: 60px 34px minmax(0, 1fr);
+  }
+
+  #fantasyGrudgeList .fantasy-player-photo {
+    height: 80px;
+    width: 60px;
+  }
+}

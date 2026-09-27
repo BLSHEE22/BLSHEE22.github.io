@@ -1,7 +1,9 @@
----
-layout: default
----
+<!doctype html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NFL Revenge Game Finder</title>
   <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="images/swords2.png">
   <style>
@@ -180,71 +182,102 @@ layout: default
 
     .fade-wrapper:hover img.hover {
       opacity: 1;
-      background-color: white;
+      background-color: #0b1524;
       filter: grayscale(50%);
     }
 
   </style>
 <link rel="stylesheet" href="styles.css">
 </head>
-<!-- COVER PHOTO -->
-<center>
-  <img src="images/ricoIMG.png" width="720" height="405" alt="Cover Photo">
-</center>
-<br/><br/>
-<!-- CENTER DIV -->
-<div class="centered-div">
-  <div class="intro">
-    <h2>Background</h2>
-    <p>Players hold grudges against their former teams.</p>
-      <h3>Types of Grudges</h3>
-      <ul>
-        <li><strong>Primary</strong> → Against the player's first team</li><br>
-        <li><strong>Secondary</strong> → Against any other team the player played for afterwards</li>
-      </ul>
-      <h3>Examples</h3>
-      <ul>
-        <li>Saquon Barkley holds a primary grudge against the New York Giants and does not hold any secondary grudges.</li><br>
-        <li>JuJu Smith-Schuster holds a primary grudge against the Pittsburgh Steelers and a secondary grudge against the New England Patriots.</li><br>
-        <li>Sam Darnold holds a primary grudge against the New York Jets and secondary grudges against the Carolina Panthers, San Francisco 49ers, and Minnesota Vikings.</li><br>
-      </ul>
-      A <strong>grudge match</strong> is an opportunity for a player to face off against his former team.
-      <br><br>
-      <p style="font-size: 14px;">Note: In this context, the word "grudge" <u>does not indicate resentment</u> or otherwise, as the context behind each player/team relationship is unknown.</p>
-    <hr>
-    <h2>Notable Grudge Matches This Week</h2>
-      <!-- WHAT WEEK IS IT -->
-      <!--<div id="clock">date/time clock</div>-->
-      <div id="what-week-is-it"></div>
-      <br>
-  </div>
-  <hr>
-  <!-- WEEK SLATE -->
-  <div id="weekSlateHeader"></div>
-  <div id="weekSlate"></div>
-  <!-- MATCHUP SELECTOR -->
-  <hr>
-  <h2>Find Grudge Matches</h2><br>
-  <div id="matchupSelector"></div><br>
-  <div id="response-area"></div>
-  <br><hr>
-  <!-- GRUDGE STATISTICS -->
-  <h2>Statistics</h2>
-  <h3>Most Well-Represented Teams</h3>
-  <div id="activeGrudgeHeader"></div><br>
-  <div id="teamAlumniData">
-    <canvas id="alumniChart" width="800" height="400"></canvas>
-  </div><br>
-  <p><a class="alumni-map-link" href="alumni.html">View Alumni Statistics</a></p>
-  <br>
-  <div id="teamDetails" class="team-details"></div>
-</div><br>
-<!-- IMPORT DB -->
-<textarea id="query">SELECT * FROM players;</textarea>
-<button id="run">Run Query</button>
-<br><br>
-<pre id="results", style="color: black;"></pre>
-<!-- SCRIPTS -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://sql.js.org/dist/sql-wasm.js"></script>
-<script type="module" src="js/script.js"></script>
+<body class="alumni-page home-page">
+  <main class="alumni-map-shell home-shell">
+    <header class="alumni-map-header home-header">
+      <div>
+        <span class="home-eyebrow">2026-27 Season</span>
+        <h1>NFL Revenge Game Finder</h1>
+        <p><i>They weren't buckled up. <br><br>   - Rico Dowdle</i></p>
+      </div>
+      <a class="alumni-map-link" href="alumni.html">Alumni Statistics</a>
+    </header>
+
+    <section class="home-featured" aria-labelledby="homeFeaturedTitle">
+      <div class="home-featured-copy">
+        <span class="home-eyebrow">Revenge Games This Week</span>
+        <h2 id="homeFeaturedTitle">
+        <div id="what-week-is-it"></div></h2>
+      </div>
+      <img class="home-cover" src="images/ricoIMG.png" alt="Football player illustration" width="720" height="405">
+    </section>
+
+    <section id="fantasyGrudgeSection" class="home-section fantasy-grudge-section" aria-labelledby="fantasyGrudgeTitle" hidden>
+      <div class="home-section-heading">
+        <div>
+          <span>Revenge Games</span>
+          <h2 id="fantasyGrudgeTitle">Fantasy</h2>
+        </div>
+        <p id="fantasyGrudgeCount"></p>
+      </div>
+      <ul id="fantasyGrudgeList" class="fantasy-grudge-list"></ul>
+    </section>
+
+    <section id="nonFantasyGrudgeSection" class="home-section fantasy-grudge-section" aria-labelledby="nonFantasyGrudgeTitle" hidden>
+      <div class="home-section-heading">
+        <div>
+          <span>Revenge Games</span>
+          <h2 id="nonFantasyGrudgeTitle">Other</h2>
+        </div>
+        <p id="nonFantasyGrudgeCount"></p>
+      </div>
+      <ul id="nonFantasyGrudgeList" class="fantasy-grudge-list"></ul>
+      <button id="nonFantasyGrudgeToggle" class="grudge-list-toggle" type="button" aria-controls="nonFantasyGrudgeList" aria-expanded="false" hidden></button>
+    </section>
+
+    <section class="home-section" aria-labelledby="homeSlateTitle">
+      <div class="home-section-heading">
+        <div>
+          <span>Schedule</span>
+          <h2 id="homeSlateTitle">Upcoming Matchups</h2>
+        </div>
+        <div id="weekSlateHeader"></div>
+      </div>
+      <div id="weekSlate" class="home-week-grid"></div>
+    </section>
+
+    <section class="home-section" aria-labelledby="homeMatchupTitle">
+      <div class="home-section-heading">
+        <div>
+          <span>Head to Head</span>
+          <h2 id="homeMatchupTitle">Find a Matchup</h2>
+        </div>
+      </div>
+      <div id="matchupSelector"></div>
+      <div id="response-area" aria-live="polite"></div>
+    </section>
+
+    <section class="home-section" aria-labelledby="homeStatsTitle" hidden>
+      <div class="home-section-heading">
+        <div>
+          <span>League Overview</span>
+          <h2 id="homeStatsTitle">Most Well-Represented Teams</h2>
+        </div>
+      </div>
+      <p id="activeGrudgeHeader" class="home-stat-highlight"></p>
+      <div id="teamAlumniData">
+        <canvas id="alumniChart" width="800" height="400"></canvas>
+      </div>
+      <div id="teamDetails" class="team-details"></div>
+    </section>
+
+    <details class="home-query-tools">
+      <summary>Database query</summary>
+      <label for="query">SQL query</label>
+      <textarea id="query" rows="3">SELECT * FROM players;</textarea>
+      <button id="run" type="button">Run Query</button>
+      <pre id="results" aria-live="polite"></pre>
+    </details>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://sql.js.org/dist/sql-wasm.js"></script>
+  <script type="module" src="js/script.js"></script>
+</body>
+</html>
