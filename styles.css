@@ -676,6 +676,68 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.alumni-page .alumni-pie-filter-status {
+  align-items: center;
+  background: #0b1524;
+  border: 1px solid #2d4059;
+  border-radius: 4px;
+  color: #b9c5d6;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  gap: 0.75rem;
+  justify-content: flex-start;
+  margin-top: 5rem;
+  padding: 0.7rem 0.85rem;
+}
+
+.alumni-page .alumni-pie-filter-status > span:nth-child(2) {
+  flex: 1 1 16rem;
+}
+
+.alumni-page .alumni-pie-filter-indicator {
+  background: #8f9daf;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(143, 157, 175, 0.15);
+  flex: 0 0 8px;
+  height: 8px;
+}
+
+.alumni-page .alumni-pie-filter-status.filters-active {
+  border-color: #82c8ff;
+  color: #f4f7fb;
+}
+
+.alumni-page .alumni-pie-filter-status.filters-active .alumni-pie-filter-indicator {
+  background: #82c8ff;
+  box-shadow: 0 0 0 3px rgba(130, 200, 255, 0.18);
+}
+
+.alumni-page .alumni-pie-filter-status[data-filter-kind="position"].filters-active {
+  border-color: #f5c45d;
+}
+
+.alumni-page .alumni-pie-filter-status[data-filter-kind="position"].filters-active .alumni-pie-filter-indicator {
+  background: #f5c45d;
+  box-shadow: 0 0 0 3px rgba(245, 196, 93, 0.18);
+}
+
+.alumni-page .alumni-pie-filter-status button {
+  background: #1b293b;
+  border: 1px solid #40556d;
+  border-radius: 4px;
+  color: #d5e0ee;
+  cursor: pointer;
+  font: inherit;
+  padding: 0.4rem 0.65rem;
+  margin-left: auto;
+}
+
+.alumni-page .alumni-pie-filter-status button:hover,
+.alumni-page .alumni-pie-filter-status button:focus-visible {
+  background: #263c56;
+}
+
 .alumni-page .alumni-pie-chart {
   margin: 0;
   min-width: 0;

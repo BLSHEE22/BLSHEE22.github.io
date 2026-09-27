@@ -138,6 +138,7 @@ function renderMap(players) {
   let chartMetric = 'count';
   let playerSort = 'tenure';
   let distributionCharts = [];
+  let activePieFilters = {currentTeam: null, position: null};
   const distributionResizeObserver = new ResizeObserver(entries => {
     entries.forEach(entry => {
       const chartCanvas = entry.target.querySelector('canvas');
@@ -211,18 +212,28 @@ function renderMap(players) {
       });
     const maxSeasons = Math.max(...exPlayers.map(player => player.seasonsWithSelectedTeam), 1);
     const selectedLogo = `https://cdn.ssref.net/req/202508011/tlogo/pfr/${selected.logo}.png`;
-    const cards = exPlayers.map(player => renderPlayerCard(player, selected, maxSeasons)).join('');
+    const visiblePlayers = exPlayers.filter(player =>
+      (!activePieFilters.currentTeam || (getCurrentTeam(player)?.name || player.team) === activePieFilters.currentTeam)
+      && (!activePieFilters.position || (player.position || 'Unknown') === activePieFilters.position));
+    const cards = visiblePlayers.map(player => renderPlayerCard(player, selected, maxSeasons)).join('');
     heatmap.innerHTML = `<div class="alumni-selected-team" style="--team-color: ${selected.color}; --team-text-color: ${selected.textColor}">
       <div class="alumni-selected-team-heading"><img src="${selectedLogo}" alt="${selected.name} logo"><div><span>Ex-players of</span><h2>${selected.name}</h2><p>${exPlayers.length} active ${exPlayers.length === 1 ? 'ex-player' : 'ex-players'} · Sorted by ${playerSort === 'experience' ? 'overall experience' : 'time spent with this team'}</p></div><div class="alumni-player-sort" role="group" aria-label="Sort players"><span>Sort By:</span><div class="alumni-origin-filter-buttons"><button type="button" class="${playerSort === 'tenure' ? 'active' : ''}" data-player-sort="tenure">Seasons with team</button><button type="button" class="${playerSort === 'experience' ? 'active' : ''}" data-player-sort="experience">Overall experience</button></div></div></div>
-      <div class="alumni-player-grid">${cards || '<p class="alumni-heatmap-empty">No active ex-players found for this team.</p>'}</div>
+      <div class="alumni-player-grid">${cards || '<p class="alumni-heatmap-empty">No active ex-players match these filters.</p>'}</div>
       ${exPlayers.length ? `<section class="alumni-distribution" aria-label="Alumni distribution">
-        <h3>Alumni distribution</h3>
+        <h3>Alumni Profile</h3>
         <div class="alumni-distribution-grid">
-          <figure class="alumni-pie-chart"><figcaption>Current teams</figcaption><div class="alumni-pie-canvas"><canvas id="alumniCurrentTeamsChart" role="img" aria-label="Distribution of alumni by current team"></canvas></div></figure>
-          <figure class="alumni-pie-chart"><figcaption>Positions</figcaption><div class="alumni-pie-canvas"><canvas id="alumniPositionsChart" role="img" aria-label="Distribution of alumni by position"></canvas></div></figure>
+          <figure class="alumni-pie-chart"><figcaption>Which Teams Have the Most Ex-${selected.name}?</figcaption><div class="alumni-pie-canvas"><canvas id="alumniCurrentTeamsChart" role="img" aria-label="Distribution of alumni by current team"></canvas></div><div class="alumni-pie-filter-status ${activePieFilters.currentTeam ? 'filters-active' : 'filters-inactive'}" data-filter-kind="currentTeam" role="status" aria-live="polite"><span class="alumni-pie-filter-indicator" aria-hidden="true"></span><span>${activePieFilters.currentTeam ? `Current team filter: ${activePieFilters.currentTeam}` : 'No current team filter'}</span>${activePieFilters.currentTeam ? '<button type="button" data-clear-pie-filter="currentTeam">Clear</button>' : ''}</div></figure>
+          <figure class="alumni-pie-chart"><figcaption>What Positions Are Most Common Among Ex-${selected.name}?</figcaption><div class="alumni-pie-canvas"><canvas id="alumniPositionsChart" role="img" aria-label="Distribution of alumni by position"></canvas></div><div class="alumni-pie-filter-status ${activePieFilters.position ? 'filters-active' : 'filters-inactive'}" data-filter-kind="position" role="status" aria-live="polite"><span class="alumni-pie-filter-indicator" aria-hidden="true"></span><span>${activePieFilters.position ? `Position filter: ${activePieFilters.position}` : 'No position filter'}</span>${activePieFilters.position ? '<button type="button" data-clear-pie-filter="position">Clear</button>' : ''}</div></figure>
         </div>
       </section>` : ''}
     </div>`;
+
+    heatmap.querySelectorAll('[data-clear-pie-filter]').forEach(button => {
+      button.addEventListener('click', () => {
+        activePieFilters[button.dataset.clearPieFilter] = null;
+        renderSelectedTeam(selector.value);
+      });
+    });
 
     if (exPlayers.length) {
       const getDistribution = getLabel => {
@@ -236,7 +247,7 @@ function renderMap(players) {
       const currentTeamDistribution = getDistribution(player => getCurrentTeam(player)?.name || player.team || 'Unknown');
       const positionDistribution = getDistribution(player => player.position || 'Unknown');
       const positionColors = ['#e76f51', '#2a9d8f', '#e9c46a', '#457b9d', '#9b5de5', '#f15bb5', '#00bbf9', '#8ac926', '#ffca3a', '#1982c4', '#6a4c93', '#ff595e', '#42a5f5', '#ab47bc', '#26a69a'];
-      const renderPieChart = (canvasId, distribution, colors) => {
+      const renderPieChart = (canvasId, distribution, colors, filterKey) => {
         const total = distribution.reduce((sum, entry) => sum + entry[1], 0);
         const chart = new Chart(document.getElementById(canvasId), {
           type: 'pie',
@@ -246,12 +257,19 @@ function renderMap(players) {
               data: distribution.map(entry => entry[1]),
               backgroundColor: colors,
               borderColor: '#111c2c',
-              borderWidth: 2
+              borderWidth: 2,
+              offset: distribution.map(([label]) => activePieFilters[filterKey] === label ? 10 : 0)
             }]
           },
           options: {
             maintainAspectRatio: false,
             responsive: true,
+            onClick: (event, elements) => {
+              if (!elements.length) return;
+              const clickedLabel = distribution[elements[0].index][0];
+              activePieFilters[filterKey] = activePieFilters[filterKey] === clickedLabel ? null : clickedLabel;
+              renderSelectedTeam(selector.value);
+            },
             plugins: {
               legend: {
                 labels: {color: '#d5e0ee', padding: 12, usePointStyle: true, boxWidth: 10}
@@ -268,14 +286,15 @@ function renderMap(players) {
         distributionResizeObserver.observe(chart.canvas.parentElement);
       };
       const currentTeamColors = currentTeamDistribution.map(([teamName]) => columns.find(column => column.name === teamName)?.color || '#708090');
-      renderPieChart('alumniCurrentTeamsChart', currentTeamDistribution, currentTeamColors);
-      renderPieChart('alumniPositionsChart', positionDistribution, positionColors);
+      renderPieChart('alumniCurrentTeamsChart', currentTeamDistribution, currentTeamColors, 'currentTeam');
+      renderPieChart('alumniPositionsChart', positionDistribution, positionColors, 'position');
     }
   };
 
   const selectChartTeam = event => {
     const bar = event.target.closest('[data-team]');
     if (!bar || !chartContainer.contains(bar)) return;
+    activePieFilters = {currentTeam: null, position: null};
     selector.value = bar.dataset.team;
     renderCountChart(alumni, columns, originFilter, 'all', chartMetric, selector.value);
     renderSelectedTeam(selector.value);
@@ -290,12 +309,14 @@ function renderMap(players) {
   });
 
   selector.addEventListener('change', event => {
+    activePieFilters = {currentTeam: null, position: null};
     renderCountChart(alumni, columns, originFilter, 'all', chartMetric, event.target.value);
     renderSelectedTeam(event.target.value);
   });
   originButtons.forEach(button => {
     button.addEventListener('click', () => {
       originFilter = button.dataset.originFilter;
+      activePieFilters = {currentTeam: null, position: null};
       originButtons.forEach(filterButton => filterButton.classList.toggle('active', filterButton === button));
       updateTeamOptions();
       renderCountChart(alumni, columns, originFilter, 'all', chartMetric, selector.value);
@@ -305,6 +326,7 @@ function renderMap(players) {
   metricButtons.forEach(button => {
     button.addEventListener('click', () => {
       chartMetric = button.dataset.chartMetric;
+      activePieFilters = {currentTeam: null, position: null};
       metricButtons.forEach(metricButton => metricButton.classList.toggle('active', metricButton === button));
       updateTeamOptions();
       renderCountChart(alumni, columns, originFilter, 'all', chartMetric, selector.value);
