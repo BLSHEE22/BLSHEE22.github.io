@@ -474,12 +474,13 @@ function createWeekSlateTables(weekSlate) {
       }
 
       // create day element
-      const dayAbbr = day.slice(0, 3);
-      const dayElement = document.createElement(dayAbbr);
+      const dayElement = document.createElement('section');
+      dayElement.className = 'matchup-day';
 
       // update day header
-      const dayHeader = document.createElement(dayAbbr + "Header");
-      dayHeader.innerHTML = `<h3><center>${day}`;
+      const dayHeader = document.createElement('header');
+      dayHeader.className = 'matchup-day-header';
+      dayHeader.innerHTML = `<h3>${day}</h3><span>${upcomingMatchups.length} ${upcomingMatchups.length === 1 ? 'game' : 'games'}</span>`;
       dayElement.appendChild(dayHeader);
 
       const matchups = upcomingMatchups;
@@ -501,33 +502,19 @@ function createWeekSlateTables(weekSlate) {
           const awayTeam = matchup['awayTeam'];
           const homeTeam = matchup['homeTeam'];
 
-          // Create matchup header
-          const matchupHeader = document.createElement('p');
-          let htmlString = `<center><strong>${matchup['time']} - ${teams[awayTeam]['name']} @ ${teams[homeTeam]['name']}</strong>`;
-          if (teams[awayTeam]['division'] == teams[homeTeam]['division']) {
-              htmlString += '<br>Divisional Matchup';
-          }
-          // Add inner html to header object
-          matchupHeader.innerHTML = htmlString + '<br>';
-          // Add header object to DOM
-          dayElement.appendChild(matchupHeader);
+          const matchupCard = document.createElement('article');
+          matchupCard.className = 'matchup-card';
+          const matchupHeader = document.createElement('div');
+          matchupHeader.className = 'matchup-game-heading';
+          const divisionalLabel = teams[awayTeam]['division'] === teams[homeTeam]['division']
+          ? '<span class="matchup-division">Divisional</span>'
+          : '';
+          matchupHeader.innerHTML = `<span class="matchup-kickoff">${matchup['time']}</span><strong>${teams[awayTeam]['name']} <span class="matchup-at">@</span> ${teams[homeTeam]['name']}</strong>${divisionalLabel}`;
+          matchupCard.appendChild(matchupHeader);
 
-          // Create table and add to element
-          updateMatchupTable(awayTeam, homeTeam, dayElement); 
-
-          // Add spacing after table
-          let postTableBr = document.createElement('br');
-          let postTableBr2 = document.createElement('br');
-          dayElement.appendChild(postTableBr);
-          dayElement.appendChild(postTableBr2);
-
+          updateMatchupTable(awayTeam, homeTeam, matchupCard);
+          dayElement.appendChild(matchupCard);
       }
-
-      // Add spacing after day
-      let postDayBr = document.createElement('br');
-      let postDayBr2 = document.createElement('br');
-      dayElement.appendChild(postDayBr);
-      dayElement.appendChild(postDayBr2);
 
       // Add day element to week element
       weekElement.appendChild(dayElement);

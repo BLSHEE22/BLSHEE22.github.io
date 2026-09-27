@@ -658,6 +658,47 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.alumni-page .alumni-distribution {
+  border-top: 1px solid #2d4059;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+}
+
+.alumni-page .alumni-distribution h3 {
+  color: #f4f7fb;
+  font-size: 1.2rem;
+  margin: 0 0 1rem;
+}
+
+.alumni-page .alumni-distribution-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.alumni-page .alumni-pie-chart {
+  margin: 0;
+  min-width: 0;
+}
+
+.alumni-page .alumni-pie-chart figcaption {
+  color: #b9c5d6;
+  font-size: 0.85rem;
+  margin-bottom: 0.35rem;
+  text-align: center;
+}
+
+.alumni-page .alumni-pie-canvas {
+  height: 390px;
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  .alumni-page .alumni-distribution-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .alumni-page .alumni-player-card {
   align-items: center;
   background: #1b293b;
@@ -1088,30 +1129,78 @@
 
 .home-week-grid > * {
   border-top: 1px solid #2d4059;
-  display: block;
   min-width: 0;
   padding-top: 1rem;
 }
 
-.home-week-grid h3 {
+.matchup-day {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.matchup-day-header {
+  align-items: baseline;
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 0.2rem;
+}
+
+.matchup-day-header h3 {
   color: #f5c45d;
   font-size: 1rem;
-  margin: 0 0 0.7rem;
+  margin: 0;
 }
 
-.home-week-grid center {
-  text-align: left;
+.matchup-day-header span {
+  color: #8f9daf;
+  font-size: 0.72rem;
 }
 
-.home-week-grid > * > p {
-  color: #d5e0ee;
-  font-size: 0.88rem;
-  line-height: 1.45;
-  margin: 0.6rem 0;
+.matchup-card {
+  background: #0b1524;
+  border: 1px solid #2d4059;
+  border-radius: 5px;
+  min-width: 0;
+  overflow: hidden;
 }
 
-.home-week-grid > * > p strong {
+.matchup-game-heading {
+  align-items: center;
+  border-bottom: 1px solid #2d4059;
+  display: flex;
+  gap: 0.75rem;
+  min-height: 2.8rem;
+  padding: 0.55rem 0.8rem;
+}
+
+.matchup-game-heading strong {
   color: #f4f7fb;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.matchup-kickoff {
+  color: #82c8ff;
+  flex: 0 0 auto;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.matchup-at {
+  color: #8f9daf;
+  font-weight: 400;
+}
+
+.matchup-division {
+  border: 1px solid #40556d;
+  border-radius: 3px;
+  color: #b9c5d6;
+  font-size: 0.62rem;
+  margin-left: auto;
+  padding: 0.16rem 0.35rem;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .home-page #matchupSelector {
@@ -1163,8 +1252,8 @@
 }
 
 .home-page .dropdown-table th {
-  background: #20354f;
-  border-bottom: 1px solid #40556d;
+  background: #111c2c;
+  border-bottom: 1px solid #2d4059;
   box-sizing: border-box;
   padding: 0.65rem;
   position: relative;
@@ -1179,6 +1268,11 @@
   padding: 0.2rem;
   vertical-align: middle;
   width: 42px;
+}
+
+.matchup-card .dropdown-table th img {
+  height: 34px;
+  width: 34px;
 }
 
 .home-page .dropdown-table td {
@@ -1557,6 +1651,16 @@
   .home-page .dropdown-table td {
     font-size: 0.75rem !important;
     padding: 0.45rem !important;
+  }
+
+  .matchup-game-heading {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.55rem;
+  }
+
+  .matchup-division {
+    margin-left: 0;
   }
 
   .fantasy-grudge-list {

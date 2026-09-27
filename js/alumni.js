@@ -137,6 +137,14 @@ function renderMap(players) {
   let originFilter = 'all';
   let chartMetric = 'count';
   let playerSort = 'tenure';
+  let distributionCharts = [];
+  const distributionResizeObserver = new ResizeObserver(entries => {
+    entries.forEach(entry => {
+      const chartCanvas = entry.target.querySelector('canvas');
+      const chart = chartCanvas && Chart.getChart(chartCanvas);
+      if (chart) chart.resize(entry.contentRect.width, entry.contentRect.height);
+    });
+  });
   const updateTeamOptions = () => {
     const currentTeam = selector.value || 'all';
     const sortedTeams = getTeamCounts(alumni, columns, originFilter, chartMetric);
@@ -179,6 +187,9 @@ function renderMap(players) {
   };
 
   const renderSelectedTeam = selectedCode => {
+    distributionResizeObserver.disconnect();
+    distributionCharts.forEach(chart => chart.destroy());
+    distributionCharts = [];
     const topTeam = getTeamCounts(alumni, columns, originFilter, chartMetric)[0];
     const rosterTeamCode = selectedCode === 'all' ? topTeam?.code : selectedCode;
     const selected = columns.find(column => column.code === rosterTeamCode);
@@ -204,7 +215,62 @@ function renderMap(players) {
     heatmap.innerHTML = `<div class="alumni-selected-team" style="--team-color: ${selected.color}; --team-text-color: ${selected.textColor}">
       <div class="alumni-selected-team-heading"><img src="${selectedLogo}" alt="${selected.name} logo"><div><span>Ex-players of</span><h2>${selected.name}</h2><p>${exPlayers.length} active ${exPlayers.length === 1 ? 'ex-player' : 'ex-players'} · Sorted by ${playerSort === 'experience' ? 'overall experience' : 'time spent with this team'}</p></div><div class="alumni-player-sort" role="group" aria-label="Sort players"><span>Sort By:</span><div class="alumni-origin-filter-buttons"><button type="button" class="${playerSort === 'tenure' ? 'active' : ''}" data-player-sort="tenure">Seasons with team</button><button type="button" class="${playerSort === 'experience' ? 'active' : ''}" data-player-sort="experience">Overall experience</button></div></div></div>
       <div class="alumni-player-grid">${cards || '<p class="alumni-heatmap-empty">No active ex-players found for this team.</p>'}</div>
+      ${exPlayers.length ? `<section class="alumni-distribution" aria-label="Alumni distribution">
+        <h3>Alumni distribution</h3>
+        <div class="alumni-distribution-grid">
+          <figure class="alumni-pie-chart"><figcaption>Current teams</figcaption><div class="alumni-pie-canvas"><canvas id="alumniCurrentTeamsChart" role="img" aria-label="Distribution of alumni by current team"></canvas></div></figure>
+          <figure class="alumni-pie-chart"><figcaption>Positions</figcaption><div class="alumni-pie-canvas"><canvas id="alumniPositionsChart" role="img" aria-label="Distribution of alumni by position"></canvas></div></figure>
+        </div>
+      </section>` : ''}
     </div>`;
+
+    if (exPlayers.length) {
+      const getDistribution = getLabel => {
+        const counts = new Map();
+        exPlayers.forEach(player => {
+          const label = getLabel(player);
+          counts.set(label, (counts.get(label) || 0) + 1);
+        });
+        return [...counts.entries()].sort((entryA, entryB) => entryB[1] - entryA[1] || entryA[0].localeCompare(entryB[0]));
+      };
+      const currentTeamDistribution = getDistribution(player => getCurrentTeam(player)?.name || player.team || 'Unknown');
+      const positionDistribution = getDistribution(player => player.position || 'Unknown');
+      const positionColors = ['#e76f51', '#2a9d8f', '#e9c46a', '#457b9d', '#9b5de5', '#f15bb5', '#00bbf9', '#8ac926', '#ffca3a', '#1982c4', '#6a4c93', '#ff595e', '#42a5f5', '#ab47bc', '#26a69a'];
+      const renderPieChart = (canvasId, distribution, colors) => {
+        const total = distribution.reduce((sum, entry) => sum + entry[1], 0);
+        const chart = new Chart(document.getElementById(canvasId), {
+          type: 'pie',
+          data: {
+            labels: distribution.map(entry => entry[0]),
+            datasets: [{
+              data: distribution.map(entry => entry[1]),
+              backgroundColor: colors,
+              borderColor: '#111c2c',
+              borderWidth: 2
+            }]
+          },
+          options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+              legend: {
+                labels: {color: '#d5e0ee', padding: 12, usePointStyle: true, boxWidth: 10}
+              },
+              tooltip: {
+                callbacks: {
+                  label: context => `${context.label}: ${context.parsed} (${Math.round((context.parsed / total) * 100)}%)`
+                }
+              }
+            }
+          }
+        });
+        distributionCharts.push(chart);
+        distributionResizeObserver.observe(chart.canvas.parentElement);
+      };
+      const currentTeamColors = currentTeamDistribution.map(([teamName]) => columns.find(column => column.name === teamName)?.color || '#708090');
+      renderPieChart('alumniCurrentTeamsChart', currentTeamDistribution, currentTeamColors);
+      renderPieChart('alumniPositionsChart', positionDistribution, positionColors);
+    }
   };
 
   const selectChartTeam = event => {
