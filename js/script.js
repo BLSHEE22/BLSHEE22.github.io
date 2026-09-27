@@ -126,20 +126,39 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
    * @param {string} opposingTeam - Abbreviation of the opposing team.
    * @returns {list[string]} - List of HTML strings representing each player.
    */
-  function formatQueryData(result, currTeam, opposingTeam, opposingTeamCodes) {
+  function formatQueryData(result, currTeam, opposingTeam, opposingTeamCodes, compact = false) {
     let htmlList = [];
     const columnNames = result['columns'];
     const players = result['values'];
-    // sort by career av instead of position!
-    //const sortedPlayers = players.sort((a, b) => position_order[a[2].trim()] - position_order[b[2].trim()]);
-    const sortedPlayers = players.sort((a, b) => b[6] - a[6]);
+    const historyColumn = columnNames.indexOf('team_history');
+    const initialTeamColumn = columnNames.indexOf('initial_team');
+    const yearsExpColumn = columnNames.indexOf('years_exp');
+    const nameColumn = columnNames.indexOf('name');
+    const sortedPlayers = players.map(player => {
+      const playerHistory = JSON.parse(player[historyColumn].replace(/'/g, '"'));
+      const opposingHistoryCode = opposingTeamCodes.find(code => Object.hasOwn(playerHistory, code));
+      const grudgeSeasons = opposingHistoryCode ? [...new Set(playerHistory[opposingHistoryCode])] : [];
+      return {
+        player,
+        playerHistory,
+        opposingHistoryCode,
+        grudgeSeasons,
+        primary: opposingTeamCodes.includes(player[initialTeamColumn])
+      };
+    }).sort((entryA, entryB) => {
+      const experienceA = Number(entryA.player[yearsExpColumn]);
+      const experienceB = Number(entryB.player[yearsExpColumn]);
+      return Number(entryB.primary) - Number(entryA.primary)
+        || entryB.grudgeSeasons.length - entryA.grudgeSeasons.length
+        || (Number.isFinite(experienceB) ? experienceB : -1) - (Number.isFinite(experienceA) ? experienceA : -1)
+        || String(entryA.player[nameColumn]).localeCompare(String(entryB.player[nameColumn]));
+    });
     console.log(`Sorted list of grudged players on ${currTeam}:`)
     console.log(sortedPlayers);
-    for (let player of sortedPlayers) {
+    for (const matchupPlayer of sortedPlayers) {
+      const {player, playerHistory, opposingHistoryCode, grudgeSeasons, primary} = matchupPlayer;
       let html = "";
-      const playerHistory = JSON.parse(player[columnNames.indexOf('team_history')].replace(/'/g, '"'));
       const headshots = JSON.parse(player[columnNames.indexOf('headshot_url')].replace(/'/g, '"'));
-      const opposingHistoryCode = opposingTeamCodes.find(code => Object.hasOwn(playerHistory, code));
       const headshotUrl = headshots[player[columnNames.indexOf('team')]];
       const grudgeHeadshotUrl = opposingHistoryCode ? headshots[opposingHistoryCode] : null;
       console.log(grudgeHeadshotUrl)
@@ -149,11 +168,10 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
       const position = player[columnNames.indexOf('position')];
       // if opposing team is player's original team, mark the grudge primary
       let grudgeType = 'Formerly on the ' + teams[opposingTeam]["name"];
-      if (opposingTeamCodes.includes(player[columnNames.indexOf('initial_team')])) {
+      if (primary) {
           grudgeType = '<span><u>Started with the ' + teams[opposingTeam]["name"] + '</u></span>';
       }
       // store only relevant player team history
-      const grudgeSeasons = opposingHistoryCode ? [...new Set(playerHistory[opposingHistoryCode])] : [];
       let seasons = [...grudgeSeasons];
       let grudge_season_count = seasons.length
       if (seasons.length > 1) {
@@ -187,35 +205,33 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
         positionRk = 'N/A';
       }
       // start splicing together data with html code
-      if (headshotUrl != null) {
-        const first_grudge_season = seasons.slice(0, 4);
-        console.log("Grudge Season: ")
-        console.log(first_grudge_season)
-        // html += `<img src="${headshotUrl}_${headshotYear}.jpg", 
-        //             data-hover="${headshotUrl}_${first_grudge_season}.jpg",
-        //             data-normal="${headshotUrl}_${headshotYear}.jpg",
-        //             width="74",
-        //             height="110",
-        //             alt="",
-        //             onerror="this.style.display='none'">
-        //          <br>`;
-        html += `<img src="${headshotUrl}", 
-                    data-hover="${grudgeHeadshotUrl}",
-                    data-normal="${headshotUrl}",
-                    width="74",
-                    height="110",
-                    alt="",
-                    onerror="this.style.display='none'">
-                 <br>`;
-      }
-      html += `<strong style="font-size: 18px;">${name}</strong><br/>`;
-      html += `${position}<br/>`;
-      html += `${grudgeType}<br/>`;
-      console.log(`Opposing Team: ${opposingTeam}`);
       const currTeamTranslated = team_db_name_to_irl_name[currTeam] || currTeam;
       const opposingTeamTranslated = team_db_name_to_irl_name[opposingTeam] || opposingTeam;
-      html += `Seasons with ${opposingTeamTranslated}: ${seasons}<br/>`;
-      html += `Years Spent: ${positionRk}${playerCareerValue}<br/><br/>`;
+      const headshotMarkup = headshotUrl != null
+        ? `<img src="${headshotUrl}" data-hover="${grudgeHeadshotUrl}" data-normal="${headshotUrl}" alt="${name}" onerror="this.style.display='none'">`
+        : '';
+      if (compact) {
+        const compactSeasons = getSeasonRanges(grudgeSeasons)
+          .map(({start, end}) => start === end ? `${start}` : `${start}-${end}`)
+          .join(', ');
+        const startedWithOpponent = primary;
+        const relationshipTitle = `${startedWithOpponent ? 'Started with' : 'Formerly with'} ${opposingTeamTranslated}`;
+        html = `<span class="fantasy-player-photo matchup-player-photo">${headshotMarkup}</span>
+          <span class="fantasy-position matchup-player-position">${position}</span>
+          <div class="fantasy-player-info matchup-player-info">
+            <strong>${name}</strong>
+            <span title="${relationshipTitle}">${startedWithOpponent ? 'Started with opponent' : 'Formerly with opponent'}</span>
+            <small title="Seasons with ${opposingTeamTranslated}: ${compactSeasons}">${compactSeasons} · ${positionRk} ${positionRk === 1 ? 'season' : 'seasons'}${playerCareerValue}</small>
+          </div>`;
+      } else {
+        if (headshotMarkup) html += `${headshotMarkup}<br>`;
+        html += `<strong style="font-size: 18px;">${name}</strong><br/>`;
+        html += `${position}<br/>`;
+        html += `${grudgeType}<br/>`;
+        console.log(`Opposing Team: ${opposingTeam}`);
+        html += `Seasons with ${opposingTeamTranslated}: ${seasons}<br/>`;
+        html += `Years Spent: ${positionRk}${playerCareerValue}<br/><br/>`;
+      }
       htmlList.push(html);
       console.log(`Converted ${name} player information to HTML.`);
       if (!custom) {
@@ -226,7 +242,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
             currentTeam: currTeamTranslated,
             opposingTeam: opposingTeamTranslated,
             seasons: grudgeSeasons,
-            primary: opposingTeamCodes.includes(player[columnNames.indexOf('initial_team')]),
+            primary,
             headshotUrl
           };
           if (fantasyPositions.includes(position)) {
@@ -271,7 +287,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
         //   const rows = res.values.map(row => row.join('\t')).join('\n');
         //   return headers + '\n' + rows;
         // }).join('\n\n');
-        let formattedPlayers = formatQueryData(results[0], currTeam, opposingTeam, opposingTeamCodes, custom);
+        let formattedPlayers = formatQueryData(results[0], currTeam, opposingTeam, opposingTeamCodes, true);
         for (let player of formattedPlayers) {
           grudges.push(player);
         }
@@ -302,10 +318,13 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
     // Create header row and add to thead
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    [`<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[aTeam]['logo']}.png", width="50", height="50", alt="">`,
-     `<img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[hTeam]['logo']}.png", width="50", height="50", alt="">`].forEach(html => {
+    [{teamCode: aTeam, side: 'AWAY'}, {teamCode: hTeam, side: 'HOME'}].forEach(({teamCode, side}) => {
         const th = document.createElement('th');
-        th.innerHTML = html;
+        const teamName = teams[teamCode]['name'];
+        th.innerHTML = `<div class="matchup-team-heading">
+          <img src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${teams[teamCode]['logo']}.png" alt="${teamName} logo">
+          <span><small>${side}</small><strong>${teamName}</strong></span>
+        </div>`;
         headerRow.appendChild(th);
     });
     // Add drop-down caret
@@ -325,62 +344,41 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
     const tbody = document.createElement('tbody');
     console.log(`Away rows: ${htmlCustomAwayGrudges.length}`);
     console.log(`Home rows: ${htmlCustomHomeGrudges.length}`);
-    for (let i = 0; i < Math.max(htmlCustomAwayGrudges.length, htmlCustomHomeGrudges.length); i++) {
-      const dataRow = document.createElement('tr');
-
-      // Add away team data to left column
-      const td1 = document.createElement('td');
-      const pulseBox1 = document.createElement('div');
-      if (i < htmlCustomAwayGrudges.length) {
-        const htmlToAdd = htmlCustomAwayGrudges[i];
-        pulseBox1.innerHTML = htmlToAdd;
-        if (!htmlToAdd.includes('>None<')) {
-          if (htmlToAdd.includes('Primary Grudge')) {
-            // td1.className = "primary-cell";
-            pulseBox1.className = "pulse-box-primary";
-          } else {
-            // td1.className = "secondary-cell"
-            pulseBox1.className = "pulse-box-secondary";
-          }
-        }
-      } else {
-        pulseBox1.innerHTML = '';
+    const dataRow = document.createElement('tr');
+    [htmlCustomAwayGrudges, htmlCustomHomeGrudges].forEach(playerHtmlList => {
+      const cell = document.createElement('td');
+      if (playerHtmlList.length === 1 && playerHtmlList[0].includes('>None<')) {
+        cell.className = 'matchup-empty-cell';
       }
-      td1.style.fontSize = '12px';
-      td1.appendChild(pulseBox1);
-      dataRow.appendChild(td1);
-
-      // Add home team data to right column
-      const td2 = document.createElement('td');
-      const pulseBox2 = document.createElement('div')
-      if (i < htmlCustomHomeGrudges.length) {
-        const htmlToAdd = htmlCustomHomeGrudges[i];
-        pulseBox2.innerHTML = htmlToAdd;
-        if (!htmlToAdd.includes('>None<')) {
-          if (htmlToAdd.includes('Primary Grudge')) {
-            // td2.className = "primary-cell";
-            pulseBox2.className = "pulse-box-primary";
-          } else {
-            // td2.className = "secondary-cell";
-            pulseBox2.className = "pulse-box-secondary";
-          }
-        }
-      } else {
-        pulseBox2.innerHTML = '';
-      }
-      td2.style.fontSize = '12px';
-      td2.appendChild(pulseBox2);
-      dataRow.appendChild(td2);
-      
-      // Append row to body
-      tbody.appendChild(dataRow);
-    }
+      const playerGrid = document.createElement('div');
+      playerGrid.className = `matchup-player-grid${playerHtmlList.length === 1 ? ' single-player' : ''}`;
+      playerHtmlList.forEach(playerHtml => {
+        const playerCard = document.createElement('div');
+        const isEmpty = playerHtml.includes('>None<');
+        const isPrimary = playerHtml.includes('Started with');
+        playerCard.className = isEmpty
+          ? 'matchup-player-empty'
+          : `matchup-player-card${isPrimary ? ' primary-grudge' : ''}`;
+        playerCard.innerHTML = playerHtml;
+        playerGrid.appendChild(playerCard);
+      });
+      cell.appendChild(playerGrid);
+      dataRow.appendChild(cell);
+    });
+    tbody.appendChild(dataRow);
 
     // Add body to table
     customTable.appendChild(tbody);
 
     // Add table to response area
-    responseArea.appendChild(customTable);
+    if (custom) {
+      const matchupCard = document.createElement('article');
+      matchupCard.className = 'matchup-card';
+      matchupCard.appendChild(customTable);
+      responseArea.appendChild(matchupCard);
+    } else {
+      responseArea.appendChild(customTable);
+    }
     console.log(`Added table to document.`)
 
   } else {

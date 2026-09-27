@@ -1219,11 +1219,16 @@
 }
 
 .matchup-card {
-  background: #0b1524;
-  border: 1px solid #2d4059;
+  background: #111c2c;
+  border: 1px solid #40556d;
   border-radius: 5px;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.24);
   min-width: 0;
   overflow: hidden;
+}
+
+.matchup-card + .matchup-card {
+  margin-top: 5cqmax;
 }
 
 .matchup-game-heading {
@@ -1337,6 +1342,44 @@
   width: 34px;
 }
 
+.matchup-card .dropdown-table th {
+  background: #20354f;
+  border-bottom-color: #40556d;
+}
+
+.matchup-card .dropdown-table th:first-child,
+.matchup-card .dropdown-table td:first-child {
+  border-right: 1px solid #40556d;
+}
+
+.matchup-team-heading {
+  align-items: center;
+  display: flex;
+  gap: 0.65rem;
+  justify-content: center;
+  min-height: 2.6rem;
+  text-align: left;
+}
+
+.matchup-team-heading > span {
+  display: grid;
+  gap: 0.08rem;
+  min-width: 0;
+}
+
+.matchup-team-heading small {
+  color: #82c8ff;
+  font-size: 0.58rem;
+  font-weight: 700;
+}
+
+.matchup-team-heading strong {
+  color: #f4f7fb;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
 .home-page .dropdown-table td {
   background: #0b1524;
   border-bottom: 1px solid #2d4059;
@@ -1346,6 +1389,68 @@
   text-align: center;
   vertical-align: top;
   white-space: normal;
+}
+
+.matchup-card .dropdown-table td {
+  background: #111c2c;
+  padding: 0.45rem !important;
+  text-align: left;
+}
+
+.matchup-card .dropdown-table td.matchup-empty-cell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.matchup-player-grid {
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(auto-fill, minmax(0, 280px));
+  justify-content: center;
+}
+
+.matchup-player-grid.single-player {
+  grid-template-columns: minmax(0, min(100%, 280px));
+}
+
+.matchup-player-card {
+  align-items: center;
+  background: #0b1524;
+  border: 1px solid #2d4059;
+  border-left: 1px solid #2d4059;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: 72px 34px minmax(0, 1fr);
+  min-height: 106px;
+  min-width: 0;
+  padding: 0.35rem;
+}
+
+.matchup-player-card.primary-grudge {
+  border-left: 3px solid #82c8ff;
+}
+
+.matchup-player-photo .fade-wrapper {
+  display: block;
+  height: 100%;
+  margin: 0;
+  width: 100%;
+}
+
+.matchup-player-empty {
+  align-self: center;
+  color: #b9c5d6;
+  font-size: 0.8rem;
+  grid-column: 1 / -1;
+  justify-self: center;
+  padding: 0.35rem;
+  text-align: center;
+}
+
+.matchup-player-empty p {
+  margin: 0;
 }
 
 .home-page .dropdown-table tbody {
@@ -1429,7 +1534,7 @@
 }
 
 .fantasy-grudge-item.primary-grudge {
-  border-left-color: red;
+  border-left-color: #82c8ff;
 }
 
 .fantasy-player-photo {
@@ -1715,6 +1820,14 @@
     padding: 0.45rem !important;
   }
 
+  .matchup-player-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .matchup-player-grid.single-player {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .matchup-game-heading {
     align-items: flex-start;
     flex-wrap: wrap;
@@ -1732,6 +1845,20 @@
   .fantasy-grudge-item {
     gap: 0.4rem;
     grid-template-columns: 56px 34px minmax(0, 1fr);
+  }
+
+  .matchup-player-card {
+    gap: 0.4rem;
+    grid-template-columns: 56px minmax(0, 1fr);
+    min-height: 0;
+    position: relative;
+  }
+
+  .matchup-player-position {
+    bottom: 0.55rem;
+    left: 0.55rem;
+    position: absolute;
+    width: 34px;
   }
 
   .fantasy-player-photo {
