@@ -32,6 +32,30 @@ function getTeamSeasons(player, team) {
   return getTeamHistoryCodes(team).reduce((seasons, code) => seasons.concat(player.history[code] || []), []);
 }
 
+function formatSeasonRanges(seasons) {
+  const ranges = [];
+  let rangeStart = null;
+  let previousSeason = null;
+
+  for (const season of seasons) {
+    if (rangeStart === null) {
+      rangeStart = season;
+      previousSeason = season;
+      continue;
+    }
+    if (season !== previousSeason + 1) {
+      ranges.push(rangeStart === previousSeason ? `${rangeStart}` : `${rangeStart}-${previousSeason}`);
+      rangeStart = season;
+    }
+    previousSeason = season;
+  }
+
+  if (rangeStart !== null) {
+    ranges.push(rangeStart === previousSeason ? `${rangeStart}` : `${rangeStart}-${previousSeason}`);
+  }
+  return ranges.join(', ');
+}
+
 function renderCountChart(alumni, columns, originFilter, selectedCode, chartMetric, highlightedTeam = null) {
   const chart = document.getElementById('alumniCountBars');
   const chartTitle = document.getElementById('alumniCountChartTitle');
@@ -132,7 +156,11 @@ function renderMap(players) {
   const renderPlayerCard = (player, selected, maxSeasons) => {
     const currentTeam = getCurrentTeam(player);
     const headshot = player.headshots[player.team] || '';
-    const tenure = selected ? getTeamSeasons(player, selected).length : 0;
+    const teamSeasons = selected
+      ? [...new Set(getTeamSeasons(player, selected).map(season => Number.parseInt(season, 10)).filter(Number.isInteger))].sort((seasonA, seasonB) => seasonA - seasonB)
+      : [];
+    const tenure = teamSeasons.length;
+    const seasonRanges = teamSeasons.length ? formatSeasonRanges(teamSeasons) : 'Years unavailable';
     const overallExperience = Number(player.years_exp) || 0;
     const shadeValue = playerSort === 'experience' ? overallExperience : tenure;
     const shadeClass = playerSort === 'experience'
@@ -144,7 +172,7 @@ function renderMap(players) {
       ${headshot ? `<img class="alumni-player-photo" src="${headshot}" alt="${player.name}" loading="lazy" onerror="this.style.display='none'">` : '<div class="alumni-player-photo alumni-player-photo-empty">?</div>'}
       <div class="alumni-player-card-info"><div class="alumni-player-name-row"><h3>${player.name}</h3>${selected ? `<span class="alumni-origin-badge">${startedHere ? 'Started here' : 'Joined later'}</span>` : ''}</div><p>${player.position || 'Position unknown'} · Now with ${currentTeam?.name || player.team}</p>
         <div class="alumni-experience">${player.years_exp ?? 'N/A'} total league ${Number(player.years_exp) === 1 ? 'season' : 'seasons'}</div>
-        ${selected ? `<div class="alumni-tenure"><strong>${tenure} ${tenure === 1 ? 'season' : 'seasons'}</strong> with ${selected.name}<span><i style="width: ${Math.round((tenure / maxSeasons) * 100)}%"></i></span></div>` : `<div class="alumni-former-teams">Formerly: ${formerTeams.map(team => team.name).join(', ')}</div>`}
+        ${selected ? `<div class="alumni-tenure"><strong>${tenure} ${tenure === 1 ? 'season' : 'seasons'}</strong> with ${selected.name} <small class="alumni-tenure-range">(${seasonRanges})</small><span><i style="width: ${Math.round((tenure / maxSeasons) * 100)}%"></i></span></div>` : `<div class="alumni-former-teams">Formerly: ${formerTeams.map(team => team.name).join(', ')}</div>`}
       </div>
       ${currentTeam ? `<img class="alumni-current-team-logo" src="https://cdn.ssref.net/req/202508011/tlogo/pfr/${currentTeam.logo}.png" alt="${currentTeam.name} logo" loading="lazy">` : ''}
     </article>`;

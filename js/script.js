@@ -92,6 +92,22 @@ const position_order = {"QB": 0, // fantasy
                         "P": 22,
                         "Unknown": 1000}
 
+function getSeasonRanges(seasons) {
+  const years = [...new Set(seasons.map(season => Number.parseInt(season, 10)).filter(Number.isInteger))]
+    .sort((seasonA, seasonB) => seasonA - seasonB);
+  const ranges = [];
+
+  for (const season of years) {
+    const currentRange = ranges[ranges.length - 1];
+    if (currentRange && season === currentRange.end + 1) {
+      currentRange.end = season;
+    } else {
+      ranges.push({start: season, end: season});
+    }
+  }
+  return ranges;
+}
+
 /**
  * Upate matchup table content.
  *
@@ -817,9 +833,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const nonFantasyToggle = document.getElementById('nonFantasyGrudgeToggle');
       const renderGrudgeCards = (players, emptyMessage) => players.length
         ? players.map(player => {
-            const seasons = player.primary
-              ? `<span class="rookie-season">${player.seasons[0]}</span><span class="rookie-year-note"></span>${player.seasons.length > 1 ? `, ${player.seasons.slice(1).join(', ')}` : ''}`
-              : player.seasons.join(', ');
+            const seasons = getSeasonRanges(player.seasons).map((range, index) => {
+              const firstSeason = player.primary && index === 0
+                ? `<span class="rookie-season">${range.start}</span><span class="rookie-year-note"></span>`
+                : range.start;
+              return `${firstSeason}${range.end > range.start ? `-${range.end}` : ''}`;
+            }).join(', ');
             return `<li class="fantasy-grudge-item ${player.primary ? 'primary-grudge' : ''}">
               <span class="fantasy-player-photo">${player.headshotUrl ? `<img src="${player.headshotUrl}" alt="${player.name}" loading="lazy" onerror="this.style.display='none'">` : ''}</span>
               <span class="fantasy-position">${player.position}</span>
