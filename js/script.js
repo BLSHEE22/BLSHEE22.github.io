@@ -457,15 +457,13 @@ function createWeekSlateTables(weekSlate) {
 
   for (let day of days) {
       console.log(`Getting game time for ${day}...`);
-      const gameStart = getScheduledDate(day, weekSlate[day][0]['time']);
-      const gameEnd = new Date(gameStart.getTime() + (3.5 * 60 * 60 * 1000));
-      console.log(`Game start: ${gameStart}`);
-      console.log(`Game end: ${gameEnd}`);
-      console.log(`Now: ${now}`);
-      console.log(`Game ended? ${gameEnd < now}`);
-      const upcomingMatchups = weekSlate[day].filter(matchup =>
-        gameEnd > now // filter out games which started more than 3.5 hours ago
-      );
+      const upcomingMatchups = weekSlate[day].filter(matchup => {
+        const gameStart = getScheduledDate(day, matchup['time']);
+        const gameEnd = new Date(gameStart.getTime() + (3.5 * 60 * 60 * 1000));
+        console.log(`Game ${matchup['awayTeam']} @ ${matchup['homeTeam']} start: ${gameStart}`);
+        console.log(`Game end: ${gameEnd}; now: ${now}`);
+        return gameEnd > now; // hide the matchup at or after 3.5 hours past kickoff
+      });
 
       if (upcomingMatchups.length === 0) {
         continue;
