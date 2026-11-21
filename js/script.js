@@ -452,7 +452,7 @@ function createWeekSlateTables(weekSlate) {
 
   function getScheduledDate(day, time) {
     const dayWithoutOrdinal = day.replace(/(\d+)(st|nd|rd|th)/, '$1');
-    return new Date(`${dayWithoutOrdinal}, ${seasonYear} ${time} GMT-0400`);
+    return new Date(`${dayWithoutOrdinal}, ${seasonYear} ${time} GMT-0500`);
   }
 
   for (let day of days) {
@@ -777,7 +777,7 @@ const weekElement = document.getElementById('weekSlate');
 
 // Add week slate header
 weekSlateHeader.innerHTML = `<h2 id="upcoming-week">Week ${weekNum}</h2>
-                             <p style="font-size: 12px;">**All game times are in EDT.</p>`;
+                             <p style="font-size: 12px;">**All game times are in ET.</p>`;
 
 // Wait for all content to load
 document.addEventListener('DOMContentLoaded', () => {
