@@ -1270,6 +1270,45 @@
   white-space: nowrap;
 }
 
+.roster-changes .home-section-heading h2 {
+  font-size: 1.4rem;
+}
+
+.roster-changes .home-section-heading > div > span {
+  font-size: 0.7rem;
+}
+
+.roster-changes-note {
+  color: #b9c5d6;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+#rosterChanges {
+  color: #d5e0ee;
+  font-size: 0.8rem;
+}
+
+.roster-update {
+  background: #0b1524;
+  border: 1px solid #40556d;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
+.roster-update summary {
+  color: #f4f7fb;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.roster-update ul {
+  line-height: 1.7;
+  margin-bottom: 0;
+  padding-left: 1.25rem;
+}
+
 .home-page #matchupSelector {
   display: grid;
   gap: 1rem;

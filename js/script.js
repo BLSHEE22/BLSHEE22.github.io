@@ -14,8 +14,14 @@ initSqlJs({
   db = new SQL.Database(new Uint8Array(buffer));
   console.log("Database loaded successfully.");
 
+  renderRosterChanges(db);
+
   // broadcast db ready
   document.dispatchEvent(new Event("db-ready"));
+}).catch(error => {
+  console.error("Could not load the database:", error);
+  const container = document.getElementById('rosterChanges');
+  if (container) container.textContent = 'Unable to load roster changes.';
 });
 
 // Handle query execution
@@ -65,6 +71,87 @@ const team_name_map = {'LAC': 'SDG', 'TEN': 'OTI', 'NE': 'NWE'};
 
 // translate database id to modern team id
 const team_db_name_to_irl_name = {'SDG': 'LAC', 'OTI': 'TEN', 'NWE': 'NE'};
+
+function renderRosterChanges(database) {
+  const container = document.getElementById('rosterChanges');
+  if (!container) return;
+  try {
+    const tables = database.exec("SELECT name FROM sqlite_master WHERE type = 'table' AND name IN ('roster_update_runs', 'roster_changes')");
+    if (!tables.length || tables[0].values.length === 0) {
+      container.textContent = 'Roster change tracking will begin with the next successful update.';
+      return;
+    }
+    if (tables[0].values.length !== 2) {
+      throw new Error('Roster change tables are incomplete.');
+    }
+    const easternDateFormatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit'
+    });
+    const easternDate = date => {
+      const parts = Object.fromEntries(easternDateFormatter.formatToParts(date).map(part => [part.type, part.value]));
+      return `${parts.year}-${parts.month}-${parts.day}`;
+    };
+    const today = easternDate(new Date());
+    const firstDay = new Date(`${today}T00:00:00Z`);
+    firstDay.setUTCDate(firstDay.getUTCDate() - 6);
+    const firstDate = firstDay.toISOString().slice(0, 10);
+    const result = database.exec(`
+      SELECT r.id, r.updated_at, c.name, c.position, c.from_team, c.to_team
+      FROM roster_update_runs r
+      LEFT JOIN roster_changes c ON c.update_id = r.id
+      WHERE date(r.updated_at) BETWEEN date(?, '-1 day') AND date(?, '+1 day')
+      ORDER BY r.updated_at DESC, r.id DESC, c.name, c.gsis_id
+    `, [firstDate, today]);
+
+    const teamName = code => teams[team_db_name_to_irl_name[code] || code]?.name || code;
+    const runs = new Map();
+    (result[0]?.values || []).forEach(([id, updatedAt, name, position, fromTeam, toTeam]) => {
+      const timestamp = new Date(updatedAt);
+      if (Number.isNaN(timestamp.getTime())) throw new Error(`Invalid roster update timestamp: ${updatedAt}`);
+      const updateDate = easternDate(timestamp);
+      if (updateDate < firstDate || updateDate > today) return;
+      if (!runs.has(id)) runs.set(id, {updatedAt, changes: []});
+      if (name !== null) runs.get(id).changes.push({name, position, fromTeam, toTeam});
+    });
+    if (!runs.size) {
+      container.textContent = 'No roster updates recorded in the last 7 days.';
+      return;
+    }
+    container.replaceChildren();
+    runs.forEach(({updatedAt, changes}) => {
+      const details = document.createElement('details');
+      details.className = 'roster-update';
+      const summary = document.createElement('summary');
+      const timestamp = new Date(updatedAt);
+      if (Number.isNaN(timestamp.getTime())) throw new Error(`Invalid roster update timestamp: ${updatedAt}`);
+      const date = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/New_York', dateStyle: 'medium', timeStyle: 'short'
+      }).format(timestamp);
+      summary.textContent = `${date} ET · ${changes.length} ${changes.length === 1 ? 'change' : 'changes'}`;
+      details.appendChild(summary);
+      if (!changes.length) {
+        const empty = document.createElement('p');
+        empty.textContent = 'No active-roster changes in this update.';
+        details.appendChild(empty);
+      } else {
+        const list = document.createElement('ul');
+        changes.forEach(({name, position, fromTeam, toTeam}) => {
+          const item = document.createElement('li');
+          const movement = fromTeam && toTeam
+            ? `${teamName(fromTeam)} → ${teamName(toTeam)}`
+            : fromTeam ? `Removed from ${teamName(fromTeam)}` : `Added to ${teamName(toTeam)}`;
+          item.textContent = `${name}${position ? ` (${position})` : ''} — ${movement}`;
+          list.appendChild(item);
+        });
+        details.appendChild(list);
+      }
+      container.appendChild(details);
+    });
+  } catch (error) {
+    console.error('Could not render roster changes:', error);
+    container.textContent = 'Unable to display roster changes.';
+  }
+}
 
 // define position order for use in tables
 const position_order = {"QB": 0, // fantasy

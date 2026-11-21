@@ -3,6 +3,7 @@ import sqlite3
 from collections import defaultdict
 from time import sleep
 import sys
+from roster_changes import record_roster_update, snapshot_players
 
 # path to database
 DB_PATH = "data/nfl.db"
@@ -264,6 +265,8 @@ conn.commit()
 
 
 ### ### ###
+previous_players = snapshot_players(conn)
+conn.execute("BEGIN")
 print("Creating new table...")
 # delete old table
 cur.execute('''DROP TABLE IF EXISTS players''')
@@ -292,5 +295,7 @@ cur.executemany("""INSERT INTO players (team, name, gsis_id, height, weight, pos
 # remove duplicate players
 cur.execute('''DELETE FROM players WHERE id NOT IN 
                 (SELECT MAX(id) FROM players GROUP BY gsis_id)''')
+current_players = snapshot_players(conn)
+change_count = record_roster_update(conn, previous_players, current_players)
 conn.commit()
-print("Done.")
+print(f"Done. Recorded {change_count} active-roster changes.")
