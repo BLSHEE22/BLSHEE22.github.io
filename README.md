@@ -10,3 +10,5 @@ Examples
 - Saquon Barkley holds a primary grudge against the New York Giants and does not hold any secondary grudges.
 - JuJu Smith-Schuster holds a primary grudge against the Pittsburgh Steelers and a secondary grudge against the New England Patriots.
 - Sam Darnold holds a primary grudge against the New York Jets and secondary grudges against the Carolina Panthers, San Francisco 49ers, and Minnesota Vikings.
+
+Players are ranked first by whether the opponent was their original team, then by the number of seasons spent there, and then by how recently they played for that team.

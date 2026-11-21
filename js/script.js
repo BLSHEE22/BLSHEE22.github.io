@@ -108,6 +108,19 @@ function getSeasonRanges(seasons) {
   return ranges;
 }
 
+function compareGrudgeRank(a, b) {
+  const lastSeason = seasons => getSeasonRanges(seasons).at(-1)?.end ?? 0;
+  return Number(b.primary) - Number(a.primary)
+    || b.seasons.length - a.seasons.length
+    || lastSeason(b.seasons) - lastSeason(a.seasons);
+}
+
+function formatGrudgeSeasons(seasons) {
+  return getSeasonRanges(seasons)
+    .map(({start, end}) => start === end ? `${start}` : `${start}-${end}`)
+    .join(', ');
+}
+
 /**
  * Upate matchup table content.
  *
@@ -137,7 +150,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
     const sortedPlayers = players.map(player => {
       const playerHistory = JSON.parse(player[historyColumn].replace(/'/g, '"'));
       const opposingHistoryCode = opposingTeamCodes.find(code => Object.hasOwn(playerHistory, code));
-      const grudgeSeasons = opposingHistoryCode ? [...new Set(playerHistory[opposingHistoryCode])] : [];
+      const grudgeSeasons = [...new Set(opposingTeamCodes.flatMap(code => playerHistory[code] || []))];
       return {
         player,
         playerHistory,
@@ -148,8 +161,10 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
     }).sort((entryA, entryB) => {
       const experienceA = Number(entryA.player[yearsExpColumn]);
       const experienceB = Number(entryB.player[yearsExpColumn]);
-      return Number(entryB.primary) - Number(entryA.primary)
-        || entryB.grudgeSeasons.length - entryA.grudgeSeasons.length
+      return compareGrudgeRank(
+        {primary: entryA.primary, seasons: entryA.grudgeSeasons},
+        {primary: entryB.primary, seasons: entryB.grudgeSeasons}
+      )
         || (Number.isFinite(experienceB) ? experienceB : -1) - (Number.isFinite(experienceA) ? experienceA : -1)
         || String(entryA.player[nameColumn]).localeCompare(String(entryB.player[nameColumn]));
     });
@@ -211,9 +226,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
         ? `<img src="${headshotUrl}" data-hover="${grudgeHeadshotUrl}" data-normal="${headshotUrl}" alt="${name}" onerror="this.style.display='none'">`
         : '';
       if (compact) {
-        const compactSeasons = getSeasonRanges(grudgeSeasons)
-          .map(({start, end}) => start === end ? `${start}` : `${start}-${end}`)
-          .join(', ');
+        const compactSeasons = formatGrudgeSeasons(grudgeSeasons);
         const startedWithOpponent = primary;
         const relationshipTitle = `${startedWithOpponent ? 'Started with' : 'Formerly with'} ${opposingTeamTranslated}`;
         html = `<span class="fantasy-player-photo matchup-player-photo">${headshotMarkup}</span>
@@ -229,7 +242,7 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
         html += `${position}<br/>`;
         html += `${grudgeType}<br/>`;
         console.log(`Opposing Team: ${opposingTeam}`);
-        html += `Seasons with ${opposingTeamTranslated}: ${seasons}<br/>`;
+        html += `Seasons with ${opposingTeamTranslated}: ${formatGrudgeSeasons(grudgeSeasons)}<br/>`;
         html += `Years Spent: ${positionRk}${playerCareerValue}<br/><br/>`;
       }
       htmlList.push(html);
@@ -800,13 +813,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (weekNum > 0) {
       const fantasyPlayers = [...fantasyGrudges].sort((playerA, playerB) =>
-        Number(playerB.primary) - Number(playerA.primary)
-        || playerB.seasons.length - playerA.seasons.length
+        compareGrudgeRank(playerA, playerB)
         || fantasyPositions.indexOf(playerA.position) - fantasyPositions.indexOf(playerB.position)
         || playerA.name.localeCompare(playerB.name));
       const otherPositionPlayers = [...nonFantasyGrudges].sort((playerA, playerB) =>
-        Number(playerB.primary) - Number(playerA.primary)
-        || playerB.seasons.length - playerA.seasons.length
+        compareGrudgeRank(playerA, playerB)
         || (position_order[playerA.position] ?? 999) - (position_order[playerB.position] ?? 999)
         || playerA.name.localeCompare(playerB.name));
       const fantasySection = document.getElementById('fantasyGrudgeSection');
@@ -816,12 +827,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const nonFantasyToggle = document.getElementById('nonFantasyGrudgeToggle');
       const renderGrudgeCards = (players, emptyMessage) => players.length
         ? players.map(player => {
-            const seasons = getSeasonRanges(player.seasons).map((range, index) => {
-              const firstSeason = player.primary && index === 0
-                ? `<span class="rookie-season">${range.start}</span><span class="rookie-year-note"></span>`
-                : range.start;
-              return `${firstSeason}${range.end > range.start ? `-${range.end}` : ''}`;
-            }).join(', ');
+            const seasons = formatGrudgeSeasons(player.seasons);
             return `<li class="fantasy-grudge-item ${player.primary ? 'primary-grudge' : ''}">
               <span class="fantasy-player-photo">${player.headshotUrl ? `<img src="${player.headshotUrl}" alt="${player.name}" loading="lazy" onerror="this.style.display='none'">` : ''}</span>
               <span class="fantasy-position">${player.position}</span>
