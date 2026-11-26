@@ -104,48 +104,201 @@ function renderRosterChanges(database) {
     `, [firstDate, today]);
 
     const teamName = code => teams[team_db_name_to_irl_name[code] || code]?.name || code;
-    const runs = new Map();
+    
+    // Build a dataset grouped by team, showing only today's changes
+    const todayChanges = new Map(); // team -> {additions, deletions}
     (result[0]?.values || []).forEach(([id, updatedAt, name, position, fromTeam, toTeam]) => {
       const timestamp = new Date(updatedAt);
       if (Number.isNaN(timestamp.getTime())) throw new Error(`Invalid roster update timestamp: ${updatedAt}`);
       const updateDate = easternDate(timestamp);
-      if (updateDate < firstDate || updateDate > today) return;
-      if (!runs.has(id)) runs.set(id, {updatedAt, changes: []});
-      if (name !== null) runs.get(id).changes.push({name, position, fromTeam, toTeam});
-    });
-    if (!runs.size) {
-      container.textContent = 'No roster updates recorded in the last 7 days.';
-      return;
-    }
-    container.replaceChildren();
-    runs.forEach(({updatedAt, changes}) => {
-      const details = document.createElement('details');
-      details.className = 'roster-update';
-      const summary = document.createElement('summary');
-      const timestamp = new Date(updatedAt);
-      if (Number.isNaN(timestamp.getTime())) throw new Error(`Invalid roster update timestamp: ${updatedAt}`);
-      const date = new Intl.DateTimeFormat('en-US', {
-        timeZone: 'America/New_York', dateStyle: 'medium', timeStyle: 'short'
-      }).format(timestamp);
-      summary.textContent = `${date} ET · ${changes.length} ${changes.length === 1 ? 'change' : 'changes'}`;
-      details.appendChild(summary);
-      if (!changes.length) {
-        const empty = document.createElement('p');
-        empty.textContent = 'No active-roster changes in this update.';
-        details.appendChild(empty);
-      } else {
-        const list = document.createElement('ul');
-        changes.forEach(({name, position, fromTeam, toTeam}) => {
-          const item = document.createElement('li');
-          const movement = fromTeam && toTeam
-            ? `${teamName(fromTeam)} → ${teamName(toTeam)}`
-            : fromTeam ? `Removed from ${teamName(fromTeam)}` : `Added to ${teamName(toTeam)}`;
-          item.textContent = `${name}${position ? ` (${position})` : ''} — ${movement}`;
-          list.appendChild(item);
-        });
-        details.appendChild(list);
+      if (updateDate !== today) return; // Only include today's changes
+      if (!name) return; // Skip null rows
+      
+      // Process addition: player added to toTeam
+      if (toTeam) {
+        if (!todayChanges.has(toTeam)) todayChanges.set(toTeam, { additions: [], deletions: [] });
+        todayChanges.get(toTeam).additions.push({ name, position, fromTeam });
       }
-      container.appendChild(details);
+      
+      // Process deletion: player removed from fromTeam
+      if (fromTeam && (!toTeam || toTeam !== fromTeam)) {
+        if (!todayChanges.has(fromTeam)) todayChanges.set(fromTeam, { additions: [], deletions: [] });
+        todayChanges.get(fromTeam).deletions.push({ name, position, toTeam });
+      }
+    });
+    
+    container.replaceChildren();
+    
+    // Group all teams by division (including those without changes today)
+    const teamsByDivision = new Map();
+    const divisionOrder = [
+      'AFC East', 'AFC North', 'AFC South', 'AFC West',
+      'NFC East', 'NFC North', 'NFC South', 'NFC West'
+    ];
+    
+    // Initialize divisions with all teams
+    divisionOrder.forEach(division => {
+      teamsByDivision.set(division, []);
+    });
+    
+    // Add all teams to their divisions
+    Object.entries(teams).forEach(([teamCode, teamData]) => {
+      const division = teamData.division || 'Other';
+      if (teamsByDivision.has(division)) {
+        teamsByDivision.get(division).push(teamCode);
+      }
+    });
+    
+    // Sort teams alphabetically within each division
+    teamsByDivision.forEach((teamCodes, division) => {
+      teamCodes.sort((a, b) => teamName(a).localeCompare(teamName(b)));
+    });
+    
+    // Sort divisions in NFL order
+    const sortedDivisions = divisionOrder;
+    
+    // Create main container with two conferences (AFC left, NFC right)
+    const mainContainer = document.createElement('div');
+    mainContainer.className = 'roster-changes-conferences';
+    
+    // Separate divisions by conference
+    const afcDivisions = sortedDivisions.filter(d => d.startsWith('AFC'));
+    const nfcDivisions = sortedDivisions.filter(d => d.startsWith('NFC'));
+    
+    // Helper function to create a division column with single table
+    const createDivisionColumn = (division) => {
+      const divisionSection = document.createElement('div');
+      divisionSection.className = 'division-section';
+      
+      const divisionHeader = document.createElement('div');
+      divisionHeader.className = 'division-header';
+      divisionHeader.textContent = division;
+      divisionSection.appendChild(divisionHeader);
+      
+      // Create single table for entire division
+      const table = document.createElement('div');
+      table.className = 'division-table';
+      
+      const teamsInDivision = teamsByDivision.get(division);
+      
+      teamsInDivision.forEach(team => {
+        const changes = todayChanges.get(team) || { additions: [], deletions: [] };
+        const totalRows = Math.max(changes.additions.length, changes.deletions.length, 1);
+        
+        // Team row
+        const teamRow = document.createElement('div');
+        teamRow.className = 'division-table-team-row';
+        
+        // Team name label
+        const teamNameCell = document.createElement('div');
+        teamNameCell.className = 'team-name-cell';
+        teamNameCell.textContent = teamName(team);
+        
+        // Additions column
+        const additionsCell = document.createElement('div');
+        additionsCell.className = 'changes-cell additions-cell';
+        changes.additions.forEach(({ name, position }) => {
+          const item = document.createElement('div');
+          item.className = 'roster-item addition-item';
+          const badge = document.createElement('span');
+          badge.className = 'change-badge addition-badge';
+          badge.textContent = '+';
+          const text = document.createElement('span');
+          text.className = 'player-info';
+          text.textContent = `${name}${position ? ` (${position})` : ''}`;
+          item.appendChild(badge);
+          item.appendChild(text);
+          additionsCell.appendChild(item);
+        });
+        
+        // Deletions column
+        const deletionsCell = document.createElement('div');
+        deletionsCell.className = 'changes-cell deletions-cell';
+        changes.deletions.forEach(({ name, position }) => {
+          const item = document.createElement('div');
+          item.className = 'roster-item deletion-item';
+          const badge = document.createElement('span');
+          badge.className = 'change-badge deletion-badge';
+          badge.textContent = '−';
+          const text = document.createElement('span');
+          text.className = 'player-info';
+          text.textContent = `${name}${position ? ` (${position})` : ''}`;
+          item.appendChild(badge);
+          item.appendChild(text);
+          deletionsCell.appendChild(item);
+        });
+        
+        teamRow.appendChild(teamNameCell);
+        teamRow.appendChild(additionsCell);
+        teamRow.appendChild(deletionsCell);
+        table.appendChild(teamRow);
+      });
+      
+      divisionSection.appendChild(table);
+      return divisionSection;
+    };
+    
+    // Helper function to create a conference row (4 divisions side-by-side)
+    const createConferenceRow = (divisions) => {
+      const conferenceRow = document.createElement('div');
+      conferenceRow.className = 'conference-section';
+      
+      divisions.forEach(division => {
+        const divisionCol = createDivisionColumn(division);
+        const wrapper = document.createElement('div');
+        wrapper.className = 'conference-column';
+        wrapper.appendChild(divisionCol);
+        conferenceRow.appendChild(wrapper);
+      });
+      
+      return conferenceRow;
+    };
+    
+    // Create pagination controls
+    const paginationContainer = document.createElement('div');
+    paginationContainer.className = 'roster-pagination';
+    
+    const afcButton = document.createElement('button');
+    afcButton.className = 'pagination-button active';
+    afcButton.textContent = 'AFC';
+    afcButton.setAttribute('data-conference', 'afc');
+    
+    const nfcButton = document.createElement('button');
+    nfcButton.className = 'pagination-button';
+    nfcButton.textContent = 'NFC';
+    nfcButton.setAttribute('data-conference', 'nfc');
+    
+    paginationContainer.appendChild(afcButton);
+    paginationContainer.appendChild(nfcButton);
+    
+    container.appendChild(paginationContainer);
+    
+    // Create AFC row (4 divisions side-by-side)
+    const afcRow = createConferenceRow(afcDivisions);
+    afcRow.setAttribute('data-conference', 'afc');
+    mainContainer.appendChild(afcRow);
+    
+    // Create NFC row (4 divisions side-by-side)
+    const nfcRow = createConferenceRow(nfcDivisions);
+    nfcRow.setAttribute('data-conference', 'nfc');
+    nfcRow.style.display = 'none';
+    mainContainer.appendChild(nfcRow);
+    
+    container.appendChild(mainContainer);
+    
+    // Add pagination button event listeners
+    afcButton.addEventListener('click', () => {
+      afcRow.style.display = 'flex';
+      nfcRow.style.display = 'none';
+      afcButton.classList.add('active');
+      nfcButton.classList.remove('active');
+    });
+    
+    nfcButton.addEventListener('click', () => {
+      afcRow.style.display = 'none';
+      nfcRow.style.display = 'flex';
+      afcButton.classList.remove('active');
+      nfcButton.classList.add('active');
     });
   } catch (error) {
     console.error('Could not render roster changes:', error);
