@@ -1,6 +1,35 @@
 import {teams, weekLengthInfo} from './data.js';
 
 let db = null;
+let injuredPlayers = new Map(); // gsis_id -> injury info
+
+// Load injury data from database
+function loadInjuries(database) {
+  try {
+    const result = database.exec(`
+      SELECT gsis_id, player_name, injury_type, status 
+      FROM injuries 
+      WHERE status IN ('Out', 'Questionable', 'Doubtful', 'Day-to-Day')
+      ORDER BY gsis_id
+    `);
+    
+    if (result.length > 0 && result[0].values.length > 0) {
+      result[0].values.forEach(([gsisId, name, injuryType, status]) => {
+        if (gsisId) {
+          injuredPlayers.set(gsisId, { name, injuryType, status });
+        }
+      });
+      console.log(`Loaded ${injuredPlayers.size} injured players`);
+    }
+  } catch (error) {
+    console.warn('Could not load injuries:', error);
+  }
+}
+
+// Check if a player is injured
+function isPlayerInjured(gsisId) {
+  return injuredPlayers.has(gsisId);
+}
 
 // Initialize SQL.js
 initSqlJs({
@@ -13,6 +42,9 @@ initSqlJs({
   // Load the database from the buffer
   db = new SQL.Database(new Uint8Array(buffer));
   console.log("Database loaded successfully.");
+
+  // Load injuries if the table exists
+  loadInjuries(db);
 
   renderRosterChanges(db);
 
@@ -1068,8 +1100,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const renderGrudgeCards = (players, emptyMessage) => players.length
         ? players.map(player => {
             const seasons = formatGrudgeSeasons(player.seasons);
+            const injuryBadge = isPlayerInjured(player.gsis_id) 
+              ? '<span class="injury-badge" title="Player is injured"></span>' 
+              : '';
             return `<li class="fantasy-grudge-item ${player.primary ? 'primary-grudge' : ''}">
-              <span class="fantasy-player-photo">${player.headshotUrl ? `<img src="${player.headshotUrl}" alt="${player.name}" loading="lazy" onerror="this.style.display='none'">` : ''}</span>
+              <span class="fantasy-player-photo fade-wrapper">${player.headshotUrl ? `<img src="${player.headshotUrl}" alt="${player.name}" loading="lazy" onerror="this.style.display='none'">` : ''}${injuryBadge}</span>
               <span class="fantasy-position">${player.position}</span>
               <div class="fantasy-player-info"><strong>${player.name}</strong><span>${teams[player.currentTeam]?.name || player.currentTeam} vs. ${teams[player.opposingTeam]?.name || player.opposingTeam}</span><div class="fantasy-grudge-meta"><small>${player.seasons.length} ${player.seasons.length === 1 ? 'season' : 'seasons'} with opponent · ${seasons}</small>${player.primary ? `<small class="primary-origin">Started with ${teams[player.opposingTeam]?.name || player.opposingTeam}</small>` : ''}</div></div>
             </li>`;
