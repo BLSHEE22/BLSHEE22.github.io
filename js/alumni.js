@@ -213,9 +213,11 @@ function renderMap(players, coachData) {
       });
     const maxSeasons = Math.max(...exPlayers.map(player => player.seasonsWithSelectedTeam), 1);
     const selectedLogo = `https://cdn.ssref.net/req/202508011/tlogo/pfr/${selected.logo}.png`;
+    const getTeamLabel = player => getCurrentTeam(player)?.name || player.team || 'Unknown';
+    const getPositionLabel = player => player.position || 'Unknown';
     const visiblePlayers = exPlayers.filter(player =>
-      (!activePieFilters.currentTeam || (getCurrentTeam(player)?.name || player.team) === activePieFilters.currentTeam)
-      && (!activePieFilters.position || (player.position || 'Unknown') === activePieFilters.position));
+      (!activePieFilters.currentTeam || getTeamLabel(player) === activePieFilters.currentTeam)
+      && (!activePieFilters.position || getPositionLabel(player) === activePieFilters.position));
     const cards = visiblePlayers.map(player => renderPlayerCard(player, selected, maxSeasons)).join('');
     heatmap.innerHTML = `<div class="alumni-selected-team" style="--team-color: ${selected.color}; --team-text-color: ${selected.textColor}">
       <div class="alumni-selected-team-heading"><img src="${selectedLogo}" alt="${selected.name} logo"><div><span>Ex-players of</span><h2>${selected.name}</h2><p>${exPlayers.length} active ${exPlayers.length === 1 ? 'ex-player' : 'ex-players'} · Sorted by ${playerSort === 'experience' ? 'overall experience' : 'time spent with this team'}</p></div><div class="alumni-player-sort" role="group" aria-label="Sort players"><span>Sort By:</span><div class="alumni-origin-filter-buttons"><button type="button" class="${playerSort === 'tenure' ? 'active' : ''}" data-player-sort="tenure">Seasons with team</button><button type="button" class="${playerSort === 'experience' ? 'active' : ''}" data-player-sort="experience">Overall experience</button></div></div></div>
@@ -231,24 +233,43 @@ function renderMap(players, coachData) {
 
     heatmap.querySelectorAll('[data-clear-pie-filter]').forEach(button => {
       button.addEventListener('click', () => {
-        activePieFilters[button.dataset.clearPieFilter] = null;
+        const filterKey = button.dataset.clearPieFilter;
+        const statusRect = button.closest('[data-filter-kind]').getBoundingClientRect();
+        activePieFilters[filterKey] = null;
         renderSelectedTeam(selector.value);
+        const newStatus = heatmap.querySelector(`[data-filter-kind="${filterKey}"]`);
+        // Keep enough scroll range when the Clear button disappears.
+        newStatus.style.boxSizing = 'border-box';
+        newStatus.style.minHeight = `${statusRect.height}px`;
+        window.scrollBy(0, newStatus.getBoundingClientRect().top - statusRect.top);
       });
     });
 
     if (exPlayers.length) {
-      const getDistribution = getLabel => {
+      const getDistribution = (players, getLabel) => {
         const counts = new Map();
-        exPlayers.forEach(player => {
+        players.forEach(player => {
           const label = getLabel(player);
           counts.set(label, (counts.get(label) || 0) + 1);
         });
         return [...counts.entries()].sort((entryA, entryB) => entryB[1] - entryA[1] || entryA[0].localeCompare(entryB[0]));
       };
-      const currentTeamDistribution = getDistribution(player => getCurrentTeam(player)?.name || player.team || 'Unknown');
-      const positionDistribution = getDistribution(player => player.position || 'Unknown');
+      const currentTeamDistribution = getDistribution(
+        exPlayers.filter(player => !activePieFilters.position || getPositionLabel(player) === activePieFilters.position),
+        getTeamLabel
+      );
+      const positionDistribution = getDistribution(
+        exPlayers.filter(player => !activePieFilters.currentTeam || getTeamLabel(player) === activePieFilters.currentTeam),
+        getPositionLabel
+      );
+      const visibleTeamDistribution = activePieFilters.currentTeam
+        ? currentTeamDistribution.filter(([teamName]) => teamName === activePieFilters.currentTeam)
+        : currentTeamDistribution;
+      const visiblePositionDistribution = activePieFilters.position
+        ? positionDistribution.filter(([position]) => position === activePieFilters.position)
+        : positionDistribution;
       const coachMatches = new Map();
-      currentTeamDistribution.forEach(([teamName]) => {
+      visibleTeamDistribution.forEach(([teamName]) => {
         const team = columns.find(column => column.name === teamName);
         const coach = coachData?.coaches.find(entry => entry.team === team?.code);
         const formerTeam = coach?.former_teams.find(entry => entry.team === selected.code);
@@ -270,8 +291,10 @@ function renderMap(players, coachData) {
         coachNote.hidden = false;
       }
       const positionColors = ['#e76f51', '#2a9d8f', '#e9c46a', '#457b9d', '#9b5de5', '#f15bb5', '#00bbf9', '#8ac926', '#ffca3a', '#1982c4', '#6a4c93', '#ff595e', '#42a5f5', '#ab47bc', '#26a69a'];
-      const renderPieChart = (canvasId, distribution, colors, filterKey) => {
-        const total = distribution.reduce((sum, entry) => sum + entry[1], 0);
+      const positionColorByLabel = new Map(getDistribution(exPlayers, getPositionLabel)
+        .map(([position], index) => [position, positionColors[index % positionColors.length]]));
+      const renderPieChart = (canvasId, distribution, colors, filterKey, totalDistribution) => {
+        const total = totalDistribution.reduce((sum, entry) => sum + entry[1], 0);
         const chart = new Chart(document.getElementById(canvasId), {
           type: 'pie',
           data: {
@@ -280,8 +303,7 @@ function renderMap(players, coachData) {
               data: distribution.map(entry => entry[1]),
               backgroundColor: colors,
               borderColor: distribution.map(([label]) => filterKey === 'currentTeam' && coachMatches.has(label) ? '#ffffff' : '#111c2c'),
-              borderWidth: distribution.map(([label]) => filterKey === 'currentTeam' && coachMatches.has(label) ? 4 : 2),
-              offset: distribution.map(([label]) => activePieFilters[filterKey] === label ? 10 : 0)
+              borderWidth: distribution.map(([label]) => filterKey === 'currentTeam' && coachMatches.has(label) ? 4 : 2)
             }]
           },
           options: {
@@ -290,8 +312,17 @@ function renderMap(players, coachData) {
             onClick: (event, elements) => {
               if (!elements.length) return;
               const clickedLabel = distribution[elements[0].index][0];
-              activePieFilters[filterKey] = activePieFilters[filterKey] === clickedLabel ? null : clickedLabel;
+              const chartTop = document.getElementById(canvasId).getBoundingClientRect().top;
+              const statusHeight = heatmap.querySelector(`[data-filter-kind="${filterKey}"]`).getBoundingClientRect().height;
+              const clearing = activePieFilters[filterKey] === clickedLabel;
+              activePieFilters[filterKey] = clearing ? null : clickedLabel;
               renderSelectedTeam(selector.value);
+              if (clearing) {
+                const newStatus = heatmap.querySelector(`[data-filter-kind="${filterKey}"]`);
+                newStatus.style.boxSizing = 'border-box';
+                newStatus.style.minHeight = `${statusHeight}px`;
+              }
+              window.scrollBy(0, document.getElementById(canvasId).getBoundingClientRect().top - chartTop);
             },
             plugins: {
               legend: {
@@ -299,7 +330,7 @@ function renderMap(players, coachData) {
               },
               tooltip: {
                 callbacks: {
-                  label: context => `${context.label}: ${context.parsed} (${Math.round((context.parsed / total) * 100)}%)`
+                  label: context => `${context.label}: ${context.parsed} (${Math.round((context.parsed / total) * 100)}%${activePieFilters[filterKey] ? ' of matching alumni' : ''})`
                 }
               }
             }
@@ -308,9 +339,10 @@ function renderMap(players, coachData) {
         distributionCharts.push(chart);
         distributionResizeObserver.observe(chart.canvas.parentElement);
       };
-      const currentTeamColors = currentTeamDistribution.map(([teamName]) => columns.find(column => column.name === teamName)?.color || '#708090');
-      renderPieChart('alumniCurrentTeamsChart', currentTeamDistribution, currentTeamColors, 'currentTeam');
-      renderPieChart('alumniPositionsChart', positionDistribution, positionColors, 'position');
+      const currentTeamColors = visibleTeamDistribution.map(([teamName]) => columns.find(column => column.name === teamName)?.color || '#708090');
+      const visiblePositionColors = visiblePositionDistribution.map(([position]) => positionColorByLabel.get(position));
+      renderPieChart('alumniCurrentTeamsChart', visibleTeamDistribution, currentTeamColors, 'currentTeam', currentTeamDistribution);
+      renderPieChart('alumniPositionsChart', visiblePositionDistribution, visiblePositionColors, 'position', positionDistribution);
     }
   };
 

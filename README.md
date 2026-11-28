@@ -25,4 +25,4 @@ Matchup cards highlight current head coaches facing a team they previously coach
 
 The coach snapshot in `data/coaches.json` is updated daily at 05:00 UTC by GitHub Actions. Run `python3 update_coaches.py` to refresh it manually.
 
-On Alumni Statistics, a white outline marks a current-team pie slice when that team's head coach previously coached the selected former team. A note identifies each matching coach; the same head-coach-only history limitations apply.
+On Alumni Statistics, selecting a team or position pie slice filters the player list and fills that pie with the selection. Each chart reflects the other chart's filter; clear a filter to restore its distribution. A white outline marks a current-team slice when that team's head coach previously coached the selected former team. A note identifies each matching coach; the same head-coach-only history limitations apply.
