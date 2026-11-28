@@ -1,0 +1,332 @@
+{
+  "season": 2026,
+  "updated": "2026-11-28",
+  "coaches": [
+    {
+      "name": "Kevin Stefanski",
+      "team": "ATL",
+      "former_teams": [
+        {
+          "team": "CLE",
+          "seasons": [
+            2020,
+            2021,
+            2022,
+            2023,
+            2024,
+            2025
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Joe Brady",
+      "team": "BUF",
+      "former_teams": []
+    },
+    {
+      "name": "Dave Canales",
+      "team": "CAR",
+      "former_teams": []
+    },
+    {
+      "name": "Ben Johnson",
+      "team": "CHI",
+      "former_teams": []
+    },
+    {
+      "name": "Zac Taylor",
+      "team": "CIN",
+      "former_teams": []
+    },
+    {
+      "name": "Todd Monken",
+      "team": "CLE",
+      "former_teams": []
+    },
+    {
+      "name": "Shane Steichen",
+      "team": "CLT",
+      "former_teams": []
+    },
+    {
+      "name": "Mike LaFleur",
+      "team": "CRD",
+      "former_teams": []
+    },
+    {
+      "name": "Brian Schottenheimer",
+      "team": "DAL",
+      "former_teams": []
+    },
+    {
+      "name": "Sean Payton",
+      "team": "DEN",
+      "former_teams": [
+        {
+          "team": "NOR",
+          "seasons": [
+            2006,
+            2007,
+            2008,
+            2009,
+            2010,
+            2011,
+            2013,
+            2014,
+            2015,
+            2016,
+            2017,
+            2018,
+            2019,
+            2020,
+            2021
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dan Campbell",
+      "team": "DET",
+      "former_teams": []
+    },
+    {
+      "name": "Matt LaFleur",
+      "team": "GNB",
+      "former_teams": []
+    },
+    {
+      "name": "DeMeco Ryans",
+      "team": "HTX",
+      "former_teams": []
+    },
+    {
+      "name": "Liam Coen",
+      "team": "JAX",
+      "former_teams": []
+    },
+    {
+      "name": "Andy Reid",
+      "team": "KAN",
+      "former_teams": [
+        {
+          "team": "PHI",
+          "seasons": [
+            1999,
+            2000,
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010,
+            2011,
+            2012
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Jim Harbaugh",
+      "team": "LAC",
+      "former_teams": [
+        {
+          "team": "SFO",
+          "seasons": [
+            2011,
+            2012,
+            2013,
+            2014
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Jeff Hafley",
+      "team": "MIA",
+      "former_teams": []
+    },
+    {
+      "name": "Kevin O'Connell",
+      "team": "MIN",
+      "former_teams": []
+    },
+    {
+      "name": "Mike Vrabel",
+      "team": "NE",
+      "former_teams": [
+        {
+          "team": "TEN",
+          "seasons": [
+            2018,
+            2019,
+            2020,
+            2021,
+            2022,
+            2023
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kellen Moore",
+      "team": "NOR",
+      "former_teams": []
+    },
+    {
+      "name": "John Harbaugh",
+      "team": "NYG",
+      "former_teams": [
+        {
+          "team": "RAV",
+          "seasons": [
+            2008,
+            2009,
+            2010,
+            2011,
+            2012,
+            2013,
+            2014,
+            2015,
+            2016,
+            2017,
+            2018,
+            2019,
+            2020,
+            2021,
+            2022,
+            2023,
+            2024,
+            2025
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Aaron Glenn",
+      "team": "NYJ",
+      "former_teams": []
+    },
+    {
+      "name": "Nick Sirianni",
+      "team": "PHI",
+      "former_teams": []
+    },
+    {
+      "name": "Mike McCarthy",
+      "team": "PIT",
+      "former_teams": [
+        {
+          "team": "DAL",
+          "seasons": [
+            2020,
+            2021,
+            2022,
+            2023,
+            2024
+          ]
+        },
+        {
+          "team": "GNB",
+          "seasons": [
+            2006,
+            2007,
+            2008,
+            2009,
+            2010,
+            2011,
+            2012,
+            2013,
+            2014,
+            2015,
+            2016,
+            2017,
+            2018
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Klint Kubiak",
+      "team": "RAI",
+      "former_teams": []
+    },
+    {
+      "name": "Sean McVay",
+      "team": "RAM",
+      "former_teams": []
+    },
+    {
+      "name": "Jesse Minter",
+      "team": "RAV",
+      "former_teams": []
+    },
+    {
+      "name": "Mike Macdonald",
+      "team": "SEA",
+      "former_teams": []
+    },
+    {
+      "name": "Kyle Shanahan",
+      "team": "SFO",
+      "former_teams": []
+    },
+    {
+      "name": "Todd Bowles",
+      "team": "TAM",
+      "former_teams": [
+        {
+          "team": "MIA",
+          "seasons": [
+            2011
+          ]
+        },
+        {
+          "team": "NYJ",
+          "seasons": [
+            2015,
+            2016,
+            2017,
+            2018
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Robert Saleh",
+      "team": "TEN",
+      "former_teams": [
+        {
+          "team": "NYJ",
+          "seasons": [
+            2021,
+            2022,
+            2023,
+            2024
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dan Quinn",
+      "team": "WAS",
+      "former_teams": [
+        {
+          "team": "ATL",
+          "seasons": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019,
+            2020
+          ]
+        }
+      ]
+    }
+  ]
+}

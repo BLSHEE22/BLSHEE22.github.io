@@ -1728,6 +1728,29 @@
   border-left: 3px solid #82c8ff;
 }
 
+.coach-history-note {
+  color: #b9c5d6;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.matchup-coach-card {
+  background: #0b1524;
+  border: 1px solid #40556d;
+  border-left: 3px solid #f5c45d;
+  border-radius: 4px;
+  color: #f4f7fb;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.7rem;
+  text-align: left;
+}
+
+.matchup-coach-card span,
+.matchup-coach-card small {
+  color: #b9c5d6;
+}
+
 .matchup-player-photo .fade-wrapper {
   display: block;
   height: 100%;

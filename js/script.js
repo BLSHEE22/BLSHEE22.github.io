@@ -2,6 +2,35 @@ import {teams, weekLengthInfo} from './data.js';
 
 let db = null;
 let injuredPlayers = new Map(); // gsis_id -> injury info
+let coachHistory = [];
+let coachHistoryLoaded = false;
+
+async function loadCoachHistory() {
+  const status = document.getElementById('coachHistoryStatus');
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+  try {
+    const response = await fetch('data/coaches.json', {signal: controller.signal});
+    if (!response.ok) throw new Error(`Coach data request failed: ${response.status}`);
+    const data = await response.json();
+    if (!Array.isArray(data.coaches) || !data.updated || !data.season ||
+        !data.coaches.every(coach => typeof coach.name === 'string' && typeof coach.team === 'string' &&
+          Array.isArray(coach.former_teams) && coach.former_teams.every(entry =>
+            typeof entry.team === 'string' && Array.isArray(entry.seasons)))) {
+      throw new Error('Coach data is incomplete.');
+    }
+    coachHistory = data.coaches;
+    coachHistoryLoaded = true;
+    status.textContent = `Head coaches only; previous head-coaching stops since 1999 are matched by name. Assistant roles are not included. ${data.season} ESPN and nflverse data updated ${data.updated} UTC.`;
+  } catch (error) {
+    console.error('Could not load coach history:', error);
+    status.textContent = 'Coach history is unavailable; player matchups are still shown.';
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+const coachHistoryReady = loadCoachHistory();
 
 // Load injury data from database
 function loadInjuries(database) {
@@ -48,12 +77,15 @@ initSqlJs({
 
   renderRosterChanges(db);
 
+  await coachHistoryReady;
+
   // broadcast db ready
   document.dispatchEvent(new Event("db-ready"));
 }).catch(error => {
   console.error("Could not load the database:", error);
   const container = document.getElementById('rosterChanges');
   if (container) container.textContent = 'Unable to load roster changes.';
+  document.querySelector('#coachGrudgeList .fantasy-grudge-empty').textContent = 'Unable to load coach matchups.';
 });
 
 // Handle query execution
@@ -89,6 +121,7 @@ let totalGrudges = 0;
 
 let fantasyGrudges = [];
 let nonFantasyGrudges = [];
+let coachGrudges = [];
 
 const fantasyPositions = ['QB', 'RB', 'WR', 'TE', 'K'];
 
@@ -638,16 +671,36 @@ function updateMatchupTable(aTeam, hTeam, responseArea, custom=false) {
     console.log(`Away rows: ${htmlCustomAwayGrudges.length}`);
     console.log(`Home rows: ${htmlCustomHomeGrudges.length}`);
     const dataRow = document.createElement('tr');
-    [htmlCustomAwayGrudges, htmlCustomHomeGrudges].forEach(playerHtmlList => {
+    [htmlCustomAwayGrudges, htmlCustomHomeGrudges].forEach((playerHtmlList, index) => {
       const cell = document.createElement('td');
       if (playerHtmlList.length === 1 && playerHtmlList[0].includes('>None<')) {
         cell.className = 'matchup-empty-cell';
       }
       const playerGrid = document.createElement('div');
       playerGrid.className = `matchup-player-grid${playerHtmlList.length === 1 ? ' single-player' : ''}`;
+      const currentTeam = index === 0 ? aTeam : hTeam;
+      const opposingTeam = index === 0 ? hTeam : aTeam;
+      const coach = coachHistory.find(entry => entry.team === currentTeam);
+      const formerTeam = coach?.former_teams.find(entry => entry.team === opposingTeam);
+      if (formerTeam) {
+        if (!custom) {
+          coachGrudges.push({coach, currentTeam, opposingTeam, seasons: formerTeam.seasons});
+        }
+        const coachCard = document.createElement('div');
+        coachCard.className = 'matchup-coach-card';
+        const coachName = document.createElement('strong');
+        coachName.textContent = coach.name;
+        const coachRole = document.createElement('span');
+        coachRole.textContent = 'Head coach';
+        const coachPast = document.createElement('small');
+        coachPast.textContent = `Former ${teams[opposingTeam].name} head coach · ${formatGrudgeSeasons(formerTeam.seasons)}`;
+        coachCard.append(coachName, coachRole, coachPast);
+        playerGrid.appendChild(coachCard);
+      }
       playerHtmlList.forEach(playerHtml => {
         const playerCard = document.createElement('div');
         const isEmpty = playerHtml.includes('>None<');
+        if (isEmpty && formerTeam) return;
         const isPrimary = playerHtml.includes('Started with');
         playerCard.className = isEmpty
           ? 'matchup-player-empty'
@@ -1084,6 +1137,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // start creating tables per matchup
     createWeekSlateTables(jsonWeekSlate);
+
+    const coachList = document.getElementById('coachGrudgeList');
+    coachList.replaceChildren();
+    if (!coachHistoryLoaded || !coachGrudges.length) {
+      const empty = document.createElement('li');
+      empty.className = 'fantasy-grudge-empty';
+      empty.textContent = coachHistoryLoaded ? 'No head coach revenge games this week.' : 'Coach history is unavailable.';
+      coachList.appendChild(empty);
+    } else {
+      coachGrudges.forEach(({coach, currentTeam, opposingTeam, seasons}) => {
+        const item = document.createElement('li');
+        item.className = 'matchup-coach-card';
+        const name = document.createElement('strong');
+        name.textContent = coach.name;
+        const matchup = document.createElement('span');
+        matchup.textContent = `${teams[currentTeam].name} vs. ${teams[opposingTeam].name}`;
+        const history = document.createElement('small');
+        history.textContent = `Former ${teams[opposingTeam].name} head coach · ${formatGrudgeSeasons(seasons)}`;
+        item.append(name, matchup, history);
+        coachList.appendChild(item);
+      });
+    }
+    if (coachHistoryLoaded) {
+      document.getElementById('coachGrudgeCount').textContent = `${coachGrudges.length} eligible ${coachGrudges.length === 1 ? 'coach' : 'coaches'}`;
+    }
 
     // Log total number of player grudge matches
     console.log(`Total number of player grudge matches in week ${weekNum}: ${totalGrudges}`);

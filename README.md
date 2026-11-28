@@ -15,6 +15,12 @@ Players are ranked first by whether the opponent was their original team, then b
 
 ## Active roster changes
 
-Each successful roster update compares active players by their GSIS ID and records additions, removals, and moves between teams. The home page displays update dates and times in Eastern time and shows updates from the last seven Eastern calendar days, including updates with no changes. Tracking starts with the first update after this feature is deployed; older updates are not backfilled. Changes reflect roster snapshots, not confirmed signings or releases.
+Each successful roster update compares active players by their GSIS ID and records additions, removals, and moves between teams. Changes reflect roster snapshots, not confirmed signings or releases.
 
 The scheduled GitHub Actions update runs at 03:00 UTC, and can also be run manually. Change history is retained in `data/nfl.db`.
+
+## Coach matchups
+
+Matchup cards highlight current head coaches facing a team they previously coached as head coach. The Head Coach section between Fantasy and Other lists such matchups in the current week's upcoming games, or shows "No head coach revenge games this week" if there are none. Current coaches come from ESPN; previous head-coaching stops are matched by name from completed games in the [nflverse schedule data](https://github.com/nflverse/nfldata), maintained by Lee Sharpe. The history starts in 1999 and may be incomplete or affected by identical names. Assistant and coordinator roles are not included, so Ben Johnson's time with Detroit is not currently detected.
+
+The coach snapshot in `data/coaches.json` is updated daily at 05:00 UTC by GitHub Actions. Run `python3 update_coaches.py` to refresh it manually.
