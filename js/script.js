@@ -139,12 +139,14 @@ function renderRosterChanges(database) {
     
     // Build a dataset grouped by team, showing only today's changes
     const todayChanges = new Map(); // team -> {additions, deletions}
-    (result[0]?.values || []).forEach(([id, updatedAt, name, position, fromTeam, toTeam]) => {
+    (result[0]?.values || []).forEach(([id, updatedAt, name, position, fromCode, toCode]) => {
       const timestamp = new Date(updatedAt);
       if (Number.isNaN(timestamp.getTime())) throw new Error(`Invalid roster update timestamp: ${updatedAt}`);
       const updateDate = easternDate(timestamp);
       if (updateDate !== today) return; // Only include today's changes
       if (!name) return; // Skip null rows
+      const fromTeam = team_db_name_to_irl_name[fromCode] || fromCode;
+      const toTeam = team_db_name_to_irl_name[toCode] || toCode;
       
       // Process addition: player added to toTeam
       if (toTeam) {
@@ -181,9 +183,12 @@ function renderRosterChanges(database) {
       }
     });
     
-    // Sort teams alphabetically within each division
-    teamsByDivision.forEach((teamCodes, division) => {
-      teamCodes.sort((a, b) => teamName(a).localeCompare(teamName(b)));
+    const changeCount = team => {
+      const changes = todayChanges.get(team);
+      return changes ? changes.additions.length + changes.deletions.length : 0;
+    };
+    teamsByDivision.forEach(teamCodes => {
+      teamCodes.sort((a, b) => changeCount(b) - changeCount(a) || teamName(a).localeCompare(teamName(b)));
     });
     
     // Sort divisions in NFL order
@@ -192,6 +197,9 @@ function renderRosterChanges(database) {
     // Create main container with two conferences (AFC left, NFC right)
     const mainContainer = document.createElement('div');
     mainContainer.className = 'roster-changes-conferences';
+    mainContainer.setAttribute('role', 'region');
+    mainContainer.setAttribute('aria-label', 'Roster changes by division');
+    mainContainer.tabIndex = 0;
     
     // Separate divisions by conference
     const afcDivisions = sortedDivisions.filter(d => d.startsWith('AFC'));

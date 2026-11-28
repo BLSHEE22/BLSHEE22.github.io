@@ -1313,9 +1313,23 @@
 .roster-changes-conferences {
   display: flex;
   gap: 0.6rem;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-x: auto;
   padding: 0.5rem 0;
+  scrollbar-color: #708ca8 #0b1524;
+  scrollbar-width: auto;
+}
+
+.roster-changes-conferences::-webkit-scrollbar {
+  height: 12px;
+}
+
+.roster-changes-conferences::-webkit-scrollbar-track {
+  background: #0b1524;
+}
+
+.roster-changes-conferences::-webkit-scrollbar-thumb {
+  background: #708ca8;
+  border-radius: 6px;
 }
 
 /* Pagination controls */
@@ -1362,13 +1376,12 @@
   border-color: #4a8fff;
 }
 
-/* Scrollbar styling for horizontal scroll - removed, using pagination instead */
-
 .conference-section {
   display: flex;
   gap: 0.6rem;
   flex-shrink: 0;
-  min-width: 100%;
+  min-width: 69.8rem;
+  width: 100%;
 }
 
 /* AFC theme - light red division headers only */
@@ -1472,25 +1485,6 @@
   flex-direction: column;
   gap: 0;
   padding: 0.3rem 0.4rem;
-  overflow-y: auto;
-  max-height: 4.5rem;
-}
-
-.changes-cell::-webkit-scrollbar {
-  width: 4px;
-}
-
-.changes-cell::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.changes-cell::-webkit-scrollbar-thumb {
-  background: rgba(64, 85, 109, 0.5);
-  border-radius: 2px;
-}
-
-.changes-cell::-webkit-scrollbar-thumb:hover {
-  background: rgba(90, 122, 159, 0.7);
 }
 
 .additions-cell {
