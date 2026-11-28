@@ -1,4 +1,5 @@
 import {teams} from './data.js';
+import {fetchCoachHistory} from './coach-history.js';
 
 const teamNameMap = {LAC: 'SDG', TEN: 'OTI', NE: 'NWE'};
 const teamColors = {
@@ -114,7 +115,7 @@ function getTeamCounts(alumni, columns, originFilter, chartMetric = 'count') {
     || teamA.name.localeCompare(teamB.name));
 }
 
-function renderMap(players) {
+function renderMap(players, coachData) {
   const heatmap = document.getElementById('alumniHeatmap');
   const displayTeams = Object.keys(teams);
   const columns = displayTeams.map(code => ({
@@ -222,7 +223,7 @@ function renderMap(players) {
       ${exPlayers.length ? `<section class="alumni-distribution" aria-label="Alumni distribution">
         <h3>Alumni Profile</h3>
         <div class="alumni-distribution-grid">
-          <figure class="alumni-pie-chart"><figcaption>Which Teams Have the Most Ex-${selected.name}?</figcaption><div class="alumni-pie-canvas"><canvas id="alumniCurrentTeamsChart" role="img" aria-label="Distribution of alumni by current team"></canvas></div><div class="alumni-pie-filter-status ${activePieFilters.currentTeam ? 'filters-active' : 'filters-inactive'}" data-filter-kind="currentTeam" role="status" aria-live="polite"><span class="alumni-pie-filter-indicator" aria-hidden="true"></span><span>${activePieFilters.currentTeam ? `Current team filter: ${activePieFilters.currentTeam}` : 'No current team filter'}</span>${activePieFilters.currentTeam ? '<button type="button" data-clear-pie-filter="currentTeam">Clear</button>' : ''}</div></figure>
+          <figure class="alumni-pie-chart"><figcaption>Which Teams Have the Most Ex-${selected.name}?</figcaption><div class="alumni-pie-canvas"><canvas id="alumniCurrentTeamsChart" role="img" aria-label="Distribution of alumni by current team" aria-describedby="alumniCoachRelationships"></canvas></div><div id="alumniCoachRelationships" class="alumni-coach-note" aria-live="polite" hidden></div><div class="alumni-pie-filter-status ${activePieFilters.currentTeam ? 'filters-active' : 'filters-inactive'}" data-filter-kind="currentTeam" role="status" aria-live="polite"><span class="alumni-pie-filter-indicator" aria-hidden="true"></span><span>${activePieFilters.currentTeam ? `Current team filter: ${activePieFilters.currentTeam}` : 'No current team filter'}</span>${activePieFilters.currentTeam ? '<button type="button" data-clear-pie-filter="currentTeam">Clear</button>' : ''}</div></figure>
           <figure class="alumni-pie-chart"><figcaption>What Positions Are Most Common Among Ex-${selected.name}?</figcaption><div class="alumni-pie-canvas"><canvas id="alumniPositionsChart" role="img" aria-label="Distribution of alumni by position"></canvas></div><div class="alumni-pie-filter-status ${activePieFilters.position ? 'filters-active' : 'filters-inactive'}" data-filter-kind="position" role="status" aria-live="polite"><span class="alumni-pie-filter-indicator" aria-hidden="true"></span><span>${activePieFilters.position ? `Position filter: ${activePieFilters.position}` : 'No position filter'}</span>${activePieFilters.position ? '<button type="button" data-clear-pie-filter="position">Clear</button>' : ''}</div></figure>
         </div>
       </section>` : ''}
@@ -246,6 +247,28 @@ function renderMap(players) {
       };
       const currentTeamDistribution = getDistribution(player => getCurrentTeam(player)?.name || player.team || 'Unknown');
       const positionDistribution = getDistribution(player => player.position || 'Unknown');
+      const coachMatches = new Map();
+      currentTeamDistribution.forEach(([teamName]) => {
+        const team = columns.find(column => column.name === teamName);
+        const coach = coachData?.coaches.find(entry => entry.team === team?.code);
+        const formerTeam = coach?.former_teams.find(entry => entry.team === selected.code);
+        if (formerTeam) coachMatches.set(teamName, {coach, formerTeam});
+      });
+      const coachNote = document.getElementById('alumniCoachRelationships');
+      if (!coachData) {
+        coachNote.textContent = 'Head coach relationships are unavailable.';
+        coachNote.hidden = false;
+      } else if (coachMatches.size) {
+        const heading = document.createElement('strong');
+        heading.textContent = 'Head coach relationship';
+        coachNote.appendChild(heading);
+        coachMatches.forEach(({coach, formerTeam}, teamName) => {
+          const note = document.createElement('p');
+          note.textContent = `${coach.name}, ${teamName} head coach, was head coach of the ${selected.name} (${formatSeasonRanges([...formerTeam.seasons].sort((a, b) => a - b))}).`;
+          coachNote.appendChild(note);
+        });
+        coachNote.hidden = false;
+      }
       const positionColors = ['#e76f51', '#2a9d8f', '#e9c46a', '#457b9d', '#9b5de5', '#f15bb5', '#00bbf9', '#8ac926', '#ffca3a', '#1982c4', '#6a4c93', '#ff595e', '#42a5f5', '#ab47bc', '#26a69a'];
       const renderPieChart = (canvasId, distribution, colors, filterKey) => {
         const total = distribution.reduce((sum, entry) => sum + entry[1], 0);
@@ -256,8 +279,8 @@ function renderMap(players) {
             datasets: [{
               data: distribution.map(entry => entry[1]),
               backgroundColor: colors,
-              borderColor: '#111c2c',
-              borderWidth: 2,
+              borderColor: distribution.map(([label]) => filterKey === 'currentTeam' && coachMatches.has(label) ? '#ffffff' : '#111c2c'),
+              borderWidth: distribution.map(([label]) => filterKey === 'currentTeam' && coachMatches.has(label) ? 4 : 2),
               offset: distribution.map(([label]) => activePieFilters[filterKey] === label ? 10 : 0)
             }]
           },
@@ -342,6 +365,11 @@ function renderMap(players) {
   renderSelectedTeam(selector.value);
 }
 
+const coachHistoryReady = fetchCoachHistory().catch(error => {
+  console.error('Could not load coach history:', error);
+  return null;
+});
+
 initSqlJs({locateFile: file => `https://sql.js.org/dist/${file}`}).then(async SQL => {
   const response = await fetch('/data/nfl.db');
   const buffer = await response.arrayBuffer();
@@ -351,5 +379,5 @@ initSqlJs({locateFile: file => `https://sql.js.org/dist/${file}`}).then(async SQ
     gsis_id: row[0], name: row[1], position: row[2], team: row[3], team_history: row[4],
     initial_team: row[5], years_exp: row[6], headshot_url: row[7]
   }));
-  renderMap(players);
+  renderMap(players, await coachHistoryReady);
 });

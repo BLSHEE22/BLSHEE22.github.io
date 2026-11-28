@@ -755,6 +755,19 @@
   position: relative;
 }
 
+.alumni-page .alumni-coach-note {
+  border-left: 3px solid #ffffff;
+  color: #d5e0ee;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-top: 1rem;
+  padding-left: 0.75rem;
+}
+
+.alumni-page .alumni-coach-note p {
+  margin: 0.25rem 0 0;
+}
+
 @media (max-width: 900px) {
   .alumni-page .alumni-distribution-grid {
     grid-template-columns: minmax(0, 1fr);

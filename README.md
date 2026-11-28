@@ -24,3 +24,5 @@ The scheduled GitHub Actions update runs at 03:00 UTC, and can also be run manua
 Matchup cards highlight current head coaches facing a team they previously coached as head coach. The Head Coach section between Fantasy and Other lists such matchups in the current week's upcoming games, or shows "No head coach revenge games this week" if there are none. Current coaches come from ESPN; previous head-coaching stops are matched by name from completed games in the [nflverse schedule data](https://github.com/nflverse/nfldata), maintained by Lee Sharpe. The history starts in 1999 and may be incomplete or affected by identical names. Assistant and coordinator roles are not included, so Ben Johnson's time with Detroit is not currently detected.
 
 The coach snapshot in `data/coaches.json` is updated daily at 05:00 UTC by GitHub Actions. Run `python3 update_coaches.py` to refresh it manually.
+
+On Alumni Statistics, a white outline marks a current-team pie slice when that team's head coach previously coached the selected former team. A note identifies each matching coach; the same head-coach-only history limitations apply.

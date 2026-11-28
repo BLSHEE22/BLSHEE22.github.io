@@ -1,4 +1,5 @@
 import {teams, weekLengthInfo} from './data.js';
+import {fetchCoachHistory} from './coach-history.js';
 
 let db = null;
 let injuredPlayers = new Map(); // gsis_id -> injury info
@@ -7,26 +8,14 @@ let coachHistoryLoaded = false;
 
 async function loadCoachHistory() {
   const status = document.getElementById('coachHistoryStatus');
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 5000);
   try {
-    const response = await fetch('data/coaches.json', {signal: controller.signal});
-    if (!response.ok) throw new Error(`Coach data request failed: ${response.status}`);
-    const data = await response.json();
-    if (!Array.isArray(data.coaches) || !data.updated || !data.season ||
-        !data.coaches.every(coach => typeof coach.name === 'string' && typeof coach.team === 'string' &&
-          Array.isArray(coach.former_teams) && coach.former_teams.every(entry =>
-            typeof entry.team === 'string' && Array.isArray(entry.seasons)))) {
-      throw new Error('Coach data is incomplete.');
-    }
+    const data = await fetchCoachHistory();
     coachHistory = data.coaches;
     coachHistoryLoaded = true;
     status.textContent = `Head coaches only; previous head-coaching stops since 1999 are matched by name. Assistant roles are not included. ${data.season} ESPN and nflverse data updated ${data.updated} UTC.`;
   } catch (error) {
     console.error('Could not load coach history:', error);
     status.textContent = 'Coach history is unavailable; player matchups are still shown.';
-  } finally {
-    clearTimeout(timeout);
   }
 }
 
